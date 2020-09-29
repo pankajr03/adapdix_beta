@@ -1,0 +1,327 @@
+.strip-bg {
+    background-image: none;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.main-menu ul li a {
+    font-size: 16px!important;
+	font-weight: 300;
+}
+
+ul.post-categories li {
+	list-style-type: none!important;
+	padding-bottom: 2px;
+}
+
+span.box-head-title img, div.right-icon-coloum span img {
+	width:40px;
+}
+
+.header-banner.homepage-header {
+    height: auto;
+    padding: 100px 0px 50px 0px;
+}
+.margintp20 {
+	margin-top:60px;
+}
+
+.benifit_min_height {
+	min-height:140px;
+}
+.featured_content_p_height {
+	min-height: 105px;
+}
+
+.team-member {
+    text-align: center;
+    margin-bottom: 15px;
+    text-decoration: none;
+    display: block;
+    position: relative;
+}
+
+.sptp-member h5 {
+    color: #3ec4ff;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+
+.sptp-member p {
+    color: #fff;
+    font-size: 15px;
+    padding-top: 10px;
+	margin-top: 0;
+    margin-bottom: 1rem;
+	text-align: center;
+	line-height: 1.5;
+}
+
+.row.marginTop50 {
+	margin-top: 70px;
+}
+
+.widget.widget_ultimate_posts h1 {
+    font-size: 60px;
+    line-height: 68px;
+    color: #fff;
+    font-family: niveau-grotesk, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.img-fluid-edgeops {
+    max-width: 135%;
+    height: auto;
+}
+#over100 {
+	margin-bottom:18px;
+}
+
+
+.time-ico{ 
+	background-size: 30px;
+}
+
+.team-ico, .intg-ico, .cust-ico, .arrow-ico, .data-ico, .build-ico, .incor-ico {
+    background-size: 44px;
+}
+
+div.edgeOps ul li{
+	font-size:16px;
+}
+
+.edgeOps li {
+    padding: 10px 10px 10px 60px;
+}
+
+.sptp-member-social.icon_only .sptp-linkedin {
+    color: #ffffff!important; 
+}
+
+.sptp-member-social ul li {
+    padding-bottom: 2px;
+}
+
+.sptp-member p {
+    margin-bottom: -6px!important;
+}
+
+ul.navbar-nav li.current-menu-item {
+	border-bottom: 3px solid #3ec4ff;
+}
+ul.navbar-nav li.current-menu-item:last-child {
+	border-bottom: none;
+}
+
+div.edge_group button {
+	cursor: context-menu!important;
+}
+
+div.career-text .lead {
+    font-size: 16px;
+}
+
+.mt-2 {
+    margin-top: 1.1rem!important;
+}
+
+.feature-boxs.feature-boxsparts {
+    min-height: 698px;
+}
+
+.b-devbotom {
+     background-image: none;
+}
+
+.header-banner.homepage-header {
+    height: 90vh!important;
+    min-height: 500px!important;
+}
+
+.developer-bg {
+	background-image: url(img/header_img/header-bg1.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.devlop-bg {
+    background-size: 95% 100%!important;
+}
+
+div.career-text .lead {
+    font-size: 1.25rem;
+}
+.p-margintb {
+    margin-top: -80px;
+    margin-bottom: 60px;
+}
+
+.solutions-banner-bg {
+    background-image: url(img/header_img/header-bg9.png);
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.partner-banner-bg {
+    background-image: url(img/header_img/header-bg7.png);
+	background-size: 95% 100%!important;
+}
+
+.product-banner-bg {
+    background-image: url(img/header_img/header-bg3.png);
+}
+
+.company-banner-bg {
+    background-image: url(img/header_img/header-bg10.png);
+}
+
+.grecaptcha-badge {
+visibility: hidden;
+opacity: 0;
+transition: linear opacity 1s;
+}
+
+.grecaptcha-badge.showgr {
+visibility: visible;
+opacity: 1;
+transition: linear opacity 1s;
+}
+
+#customer_use_case p.lead {
+    font-size: 1.40rem;
+    width: 100%;
+}
+
+h1.mb-3 span {
+	color: #3ec4ff!important;
+}
+
+ul.Pro_text_left {
+    padding-left: 20px;
+}
+
+.tearn-btn {
+    letter-spacing: 2px;
+}
+.padding_20 {
+	padding-top:30px;
+}
+
+.lead_data {
+	margin-bottom: 3rem;
+}
+.image_div_margin_40 {
+	margin-top:40px;
+}
+
+p.margin_top_20 {
+	margin-top:20px;
+}
+.section-hp {
+	padding-top:100px;
+}
+.wordspacingedgeops {
+	letter-spacing:0.3px;
+}
+
+.member-row-two .team-member {
+    margin-bottom: 15px;
+}
+
+
+@media (max-width: 767px) {
+	.banner-mob-comp {
+		background-image: url(img/header_img/mobile/header-bg10.png)!important;
+	}
+	
+	.devlop-bg .banner-mob-part {
+		background-image: url(img/header_img/mobile/header-bg7.png)!important;
+	}
+	.developer-bg {
+		background-image: url(img/header_img/mobile/header-bg1.png)!important;
+    }
+	
+	.product-banner-bg {
+		background-image: url(img/header_img/mobile/header-bg3.png);
+	}
+	
+	.solutions-banner-bg {
+		background-image: url(img/header_img/mobile/header-bg9.png)!important;
+	}
+	.company-banner-bg {
+		background-image: url(img/header_img/mobile/header-bg10.png);
+	}
+	
+	.product-banner-bg .banner-mob-part {
+		background-image: url(img/header_img/mobile/header-bg3.png);
+	}
+	
+	div.sptp-member h4 {
+		font-size: 16px!important;
+		font-weight: 500!important;
+	}
+	
+	div.sptp-member h5 {
+		font-size: 12px!important;
+	}
+	
+	.member-row-two .team-member {
+		margin-bottom: 15px;
+	}
+	
+	div.social-menu-top ul li:last-child a {
+		padding-top: 15px;
+	}
+	
+	.section-hp {
+		padding-top: 50px;
+	}
+	
+	/*
+	.edgeOps.soluion-list li {
+		padding: 0px 0px 0px 56px;
+	}
+	*/
+	
+	
+	.time-ico{ 
+		background-size: 20px;
+	}
+
+	.team-ico, .intg-ico, .cust-ico, .arrow-ico, .data-ico, .build-ico, .incor-ico {
+		background-size: 26px;
+	}
+	h3.cust-text {
+		line-height: 28px;
+		padding: 30px 0 70px;
+	}
+	
+	.drive_sol .prod_icon_05 {
+		background-size: 30px;
+	}
+	.drive_sol li {
+		padding: 10px 76px 10px 48px;
+    }
+	.m-40 {
+		margin-bottom: 20px;
+	}
+	.mb-5, .my-5 {
+		margin-bottom: 2rem!important;
+	}
+	.parner-categories .box-head-title img {
+		margin-top: -6px;
+	}
+	
+	.action-btn {
+		margin: 0 auto;
+	}
+}
+
+@media (max-width: 991px) {
+	.main-menu ul li a {
+		padding: 16px 12px;
+    }
+}
