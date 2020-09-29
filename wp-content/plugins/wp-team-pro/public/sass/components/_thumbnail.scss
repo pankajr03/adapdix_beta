@@ -1,0 +1,148 @@
+.sptp-thumbnail-pager .sptp-team-inline-thumb {
+  text-align: center;
+  cursor: pointer;
+  .fa {
+    cursor: pointer;
+  }
+  .sptp-rounded {
+    img {
+      border-radius: 5px;
+    }
+    &.zoom_in:hover {
+      border-radius: 100%;
+      img {
+        transform: scale(1.2);
+      }
+    }
+    &.zoom_out:hover {
+      border-radius: 100%;
+      img {
+        transform: scale(0.9);
+      }
+    }
+  }
+  .sptp-circle {
+    border-radius: 50%;
+    img {
+      border-radius: 50%;
+    }
+    &.zoom_in:hover {
+      border-radius: 100%;
+      img {
+        transform: scale(1.2);
+      }
+    }
+    &.zoom_out:hover {
+      border-radius: 100%;
+      img {
+        transform: scale(0.9);
+      }
+    }
+  }
+  .on_hover {
+       &:hover {
+         img {
+           filter: grayscale(1);
+         }
+       } 
+  }
+  .always {
+    img {
+      filter: grayscale(1);
+    }
+  }
+  .normal_on_hover {
+    img {
+      filter: grayscale(1)
+    }
+    &:hover {
+      img {
+        filter: grayscale(0)
+      }
+    }
+  }
+  img {
+    cursor: pointer;
+  }
+}
+.sptp-thumbnail-pager {
+  position: relative;
+  z-index: 1;
+  justify-content: space-between;
+  &>div[id*=special-member] {
+    max-width: 30%;
+    flex: 0 0 100%;
+  }
+  .page-loading-image {
+    height: 100%;
+  }
+  .sptp-member {
+    position: relative;
+    .image {
+      width: 40%;
+      padding-top: 5%;
+      padding-left: 5%;
+      padding-right: 0;
+    }
+    .content {
+      width: 60%;
+      padding: 0 12px;
+      top: 50%;
+    }
+    .sptp-member-avatar {
+      width: 100%;
+      cursor: auto;
+      img {
+        cursor: auto;
+      }
+    }
+  }
+  .sptp-col-md-2-half {
+    margin-top: 0;
+    & ~ div {
+      margin-top: 0;
+    }
+    .sptp-row {
+      margin: 0;
+      & > div {
+        margin-top: 0;
+      }
+    }
+    .sptp-circle,
+    .sptp-square,
+    .sptp-rounded {
+      position: relative;
+      .sptp-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+        display: none;
+        line-height: 1;
+      }
+          &:hover {
+            .sptp-icon {
+              display: block;
+            }
+          }
+    }
+  }
+  .sptp-content-on-image {
+    .content,
+    .image {
+      width: 100%;
+    }
+    .image {
+      padding: 0;
+    }
+    &.sptp-circle {
+      .content {
+        border-radius: 50%;
+      }
+    }
+    .content {
+      top: 0;
+    }
+  }
+}

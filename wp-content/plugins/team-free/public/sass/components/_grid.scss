@@ -1,0 +1,36 @@
+.sptp-hidden {
+	display: none;
+}
+.sptp-show {
+	display: block;
+}
+.sptp-row>.first-row {
+	margin-top: 0;
+}
+.sptp-grid {
+	.sptp-icon-on-image {
+		cursor: pointer;
+		&.zoom_in {
+			&:hover {
+				z-index: 99;
+			}
+		}
+	}
+	.sptp-member-avatar {
+		overflow: hidden;
+	}
+}
+.sptp-member-post-link-fa {
+	font-size: 12px !important;
+	margin-right: 5px;
+}
+.sptp-member-post-link {
+	color: #000000;
+	font-weight: 900;
+	&:hover {
+		color: #4C7E5B;
+	}
+}
+.sptp-grid .sptp-row {
+	justify-content: flex-start;
+}

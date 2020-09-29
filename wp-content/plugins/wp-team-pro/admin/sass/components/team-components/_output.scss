@@ -1,0 +1,42 @@
+._sptp_output .spf-fieldset-content {
+  border: none;
+  display: flex;
+  justify-content: space-between;
+}
+._sptp_output .spf-fieldset-content .spf-field-text {
+  width: 45%;
+  display: inline-block;
+}
+
+.spf-field-fieldset._sptp_output {
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
+  .spf-fieldset-content {
+    border: none;
+  }
+  &::after {
+    display: inline-block;
+    content: "";
+    width: 1px;
+    height: 100%;
+    background-color: #e8e8e8;
+    position: absolute;
+    left: 46%;
+    z-index: 99999999;
+    top: 0;
+  }
+  .spf-field-text {
+    display: flex;
+    align-items: center;
+    .spf-title {
+      width: auto;
+    }
+    .spf-fieldset {
+      margin-left: 5px;
+    }
+  }
+  input {
+    background-color: rgba(99, 163, 123, 0.1);
+  }
+}

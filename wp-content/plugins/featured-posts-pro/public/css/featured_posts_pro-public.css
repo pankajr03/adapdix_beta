@@ -1,0 +1,35 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+.featured_posts_widget--thumb li {
+	list-style:none;
+    clear: both;
+    margin-bottom: 10px !important;
+    overflow: hidden;
+}
+
+.featured_posts_widget--thumb .featured_posts__thumb {
+    float: left;
+	width:30%;
+	max-width:62px;
+    /*margin-right: 11px;*/
+    /*width: 62px;*/
+}
+.featured_posts_widget--thumb li:hover .featured_posts__thumb img {
+	opacity:0.7
+}
+
+.featured_posts_widget--thumb .featured_posts__thumb img{
+	width:100% !important;
+	height: auto !important;
+}
+
+.featured_posts_widget--thumb li .featured_posts__thumb + .featured_posts__detail{
+	float: left;
+    width: calc(100% - 62px);
+	padding-left:10px;
+    line-height: normal;
+	box-sizing:border-box;
+}

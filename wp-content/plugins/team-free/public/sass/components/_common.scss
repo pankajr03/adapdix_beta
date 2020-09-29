@@ -1,0 +1,109 @@
+@import "common/title";
+@import "common/image";
+@import "common/icononimage";
+@import "common/name";
+@import "common/profession";
+@import "common/description";
+@import "common/social";
+
+select > option[value=""] {
+  display: none;
+}
+.sp-team * {
+  box-sizing: border-box;
+}
+.sp-team a {
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.text-center {
+  text-align: center;
+}
+.sptp-member {
+  margin-bottom: 30px;
+  cursor: pointer;
+  line-height: 0;
+}
+.sp-team img {
+	max-width: 100%;
+  }
+.sptp-member .sptp-member-desc,
+.sptp-member .sptp-member-social {
+  padding-top: 4px;
+  width: 100%;
+}
+.sp-team {
+  font-family: "Open Sans", sans-serif;
+}
+.sp-team .sptp-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.sptp-row.sptp-no-gutters > [class*="sptp-col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+.sptp-row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 80px;
+}
+.sptp-row [class*="sptp-col-"] {
+  position: relative;
+  width: 100%;
+}
+.sptp-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &.sptp-top-content {
+    flex-direction: column;
+    align-items: center;
+    .content {
+      order: 1;
+    }
+    .sptp-member-avatar {
+      order: 2;
+      width: 100%;
+      color: transparent;
+    }
+  }
+}
+.sptp-member .content {
+  word-break: break-all;
+}
+.sptp-member {
+  cursor: inherit;
+  overflow: hidden;
+}
+.sptp-member-name,
+.sptp-member-desc,
+.sptp-member-social {
+  display: block;
+  width: 100%;
+}
+.hidden {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.page-loading-image {
+  background-color: rgba(255, 255, 255, 1);
+  background-image: url(../img/Spinner-1s-50px.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+}
+.sp-team a:focus {
+  outline: 0;
+}
+.sptp-member-avatar {
+  color: transparent;
+}

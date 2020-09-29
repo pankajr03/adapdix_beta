@@ -1,0 +1,27 @@
+.sptp-inline .sptp-row>div {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.sptp-inline .sptp-member.border-bg-around-member {
+	border: 1px solid #cccccc;
+	.sptp-member-name,
+	.sptp-member-profession,
+	.sptp-member-desc,
+	.sptp-member-social,
+	.sptp-member-skill-progress {
+		padding: 0 25px;
+	}
+	.sptp-member-social {
+		padding-top: 25px;
+	}
+	.sptp-member-avatar {
+		margin-top: 0;
+		width: 100%;
+		img {
+			width: 100%;
+		}
+	}
+	.sptp-icon-on-image {
+		cursor: pointer;
+	}
+}

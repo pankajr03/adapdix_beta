@@ -1,0 +1,13 @@
+.sptp-member-name {
+  // margin-top: 0.8rem;
+}
+.sptp-member .sptp-member-name h2 {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  margin: 0;
+  padding-bottom: 0;
+  &::after {
+    display: none;
+  }
+}

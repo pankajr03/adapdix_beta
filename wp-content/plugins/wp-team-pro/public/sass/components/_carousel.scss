@@ -1,0 +1,211 @@
+.sptp-carousel {
+
+  .sptp-button-next {
+    &.vertically-center-outer {
+      top: 50%;
+      transform: translateY(-50%);
+      right: -35px;
+      background-color: #ffffff;
+      background-image: none;
+      color: #aaaaaa;
+      outline: 1px solid #63a37b;
+      width: 30px;
+      height: 30px;
+      font-family: "FontAwesome";
+      font-size: 20px;
+      line-height: 30px;
+      border: none;
+      text-align: center;
+      transition: 0.3s;
+      &:hover {
+        color: #ffffff;
+        background-color: #63a37b;
+        outline: 1px solid #63a37b;
+      }
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+  .sptp-button-prev {
+    &.vertically-center-outer {
+      top: 50%;
+      transform: translateY(-50%);
+      left: -35px;
+      background-color: #ffffff;
+      background-image: none;
+      color: #aaaaaa;
+      outline: 1px solid #63a37b;
+      width: 30px;
+      height: 30px;
+      font-family: "FontAwesome";
+      font-size: 20px;
+      line-height: 30px;
+      border: none;
+      text-align: center;
+      transition: 0.3s;
+      &:hover {
+        color: #ffffff;
+        background-color: #63a37b;
+        outline: 1px solid #63a37b;
+      }
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.sptp-main-carousel {
+  opacity: 0;
+  &.swiper-container {
+  }
+  &.vertically-center-outer,
+  &.vertically-center-inner {
+    padding-top: 55px;
+    padding-bottom: 52px;
+  }
+  &.top-left,
+  &.top-right,
+  &.top-center {
+    padding-top: 55px;
+    padding-bottom: 52px;
+  }
+  &.bottom-left,
+  &.bottom-right,
+  &.bottom-center {
+    padding-bottom: 52px;
+    .sptp-pagination {
+      bottom: 52px;
+    }
+  }
+  .swiper-slide {
+    &:focus {
+      outline: 0;
+    }
+    .sptp-member {
+      &:focus {
+        outline: 0;
+      }
+    }
+    .sptp-member-avatar {
+      &:focus {
+        outline: 0;
+      }
+    }
+  }
+}
+.sptp-main-carousel {
+  .sptp-button-next,
+  .sptp-button-prev {
+    top: 23px;
+    left: auto;
+    right: 1px;
+    height: 30px;
+    width: 30px;
+    background-image: none;
+    background-color: #ffffff;
+    color: #aaaaaa;
+    font-family: "FontAwesome";
+    font-size: 20px;
+    line-height: 30px;
+    border: none;
+    outline: 1px solid #63a37b;
+    transition: 0.3s;
+    text-align: center;
+    &:hover {
+      color: #ffffff;
+      background-color: #63a37b;
+    }
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .sptp-button-next {
+    &.top-left {
+      left: 45px;
+    }
+    &.top-center {
+      left: 50%;
+      margin-left: 22px;
+    }
+    &.top-right {
+    }
+    &.bottom-left {
+      top: 91.5%;
+      left: 45px;
+    }
+    &.bottom-center {
+      top: 98%;
+      left: 50%;
+      margin-left: 22px;
+    }
+    &.bottom-right {
+      top: 91.5%;
+      right: 3px;
+    }
+    &.vertically-center-inner {
+      top: 50%;
+      transform: translateY(-50%);
+      right: 3px;
+    }
+  }
+  .sptp-button-prev {
+    &.top-left {
+      left: 3px;
+    }
+    &.top-center {
+      left: 50%;
+      margin-left: -22px;
+    }
+    &.top-right {
+      right: 45px;
+    }
+    &.bottom-left {
+      top: 91.5%;
+      left: 3px;
+    }
+    &.bottom-center {
+      top: 98%;
+      left: 50%;
+      margin-left: -22px;
+    }
+    &.bottom-right {
+      top: 91.5%;
+      right: 45px;
+    }
+    &.vertically-center-inner {
+      top: 50%;
+      transform: translateY(-50%);
+      left: 3px;
+    }
+  }
+}
+.sp-team-pro.sptp-section {
+  position: relative;
+}
+.left_img_right_content,
+.left_content_right_img {
+  .swiper-slide-prev {
+    margin-right: 0 !important;
+  }
+}
+.sptp-main-carousel .bx-wrapper {
+  box-shadow: none !important;
+}
+.sptp-pagination > .swiper-pagination-bullet {
+  width: 11px;
+  height: 11px;
+  &:focus {
+    outline: 0;
+  }
+  &.swiper-pagination-bullet-active {
+    background-color: #63a37b;
+  }
+}
+.sptp-main-carousel .swiper-container-horizontal > .swiper-pagination-bullets {
+  bottom: 18px;
+}
+.page-loading-image {
+  visibility: visible;
+}

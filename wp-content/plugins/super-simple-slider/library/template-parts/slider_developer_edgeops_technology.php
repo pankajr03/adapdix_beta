@@ -1,0 +1,73 @@
+<?php 
+if ( $slides ) :
+	$has_min_width		= $slider_settings['super_simple_slider_has_min_width'];
+	$min_width			= $slider_settings['super_simple_slider_min_width'];
+
+	$container_classes = array();
+			
+	$arrow_style = null;
+
+	$slider_id = uniqid();
+	
+	include($this->parent->assets_dir . '/includes/dynamic-css-slider.php');
+	$first_li_title = $slides[0]['super_simple_slider_slide_title'];
+	$first_li_text = $slides[0]['super_simple_slider_slide_text'];
+?>
+	<div class="col-lg-12 col-md-12">
+		<div class="row">
+			<div class="col-md-3 offset-md-1 specil">
+				<h3 class="l-text-p mb-5 heding-style-two headingTopLine"><?php echo $post_title?></h3>
+			</div>
+			
+			<div class="col-md-8">
+				<div class="row">
+	
+					<?php
+					$count_slider = 1;
+					foreach ( $slides as $slide ) :
+						
+						$image_id 	 = $slide['super_simple_slider_slide_image'];
+						$slide_image = wp_get_attachment_image_src( $image_id, 'full' );
+						
+						$slide_image_alt 	= $slide['super_simple_slider_slide_image_alt'];
+						$slide_image_title 	= $slide['super_simple_slider_slide_image_title'];
+
+						$overlay_color_rgb 		= 'rgba(0, 0, 0, ' .$slide['super_simple_slider_slide_overlay_opacity']. ')';
+						$text_overlay_color_rgb = 'rgba(0, 0, 0, ' .$slide['super_simple_slider_slide_text_overlay_opacity']. ')';
+						
+						$text_overlay_text_shadow = $this->getIfSet( $slide['super_simple_slider_slide_text_overlay_text_shadow'], false);
+						
+						$opacity_classes = array();
+						
+						if ( $text_overlay_text_shadow ) {
+							$opacity_classes[] = 'text-shadow';
+						}
+						
+						$title = trim( $slide['super_simple_slider_slide_title'] );
+						$text  = trim( $slide['super_simple_slider_slide_text'] );
+						$text_2  = trim( $slide['super_simple_slider_slide_text_2'] );
+						$ico_company 	 = $slide['super_simple_slider_slide_company'];
+					?>
+					
+						<div class="col-md-6  mb-4">
+							<div class="right-icon-coloum">
+								<span><img src="<?php echo esc_url( $slide_image[0] ); ?>"></span><p></p>
+								<div>
+									<p class="font-weight-bold"><?php echo $text?></p>
+									<p class=""><?php echo $text_2?></p>
+									<p><a class="tearn-btn  mb-4" href="<?php echo $ico_company?>">Learn More</a></p>
+								</div>
+							</div>
+						</div>
+					<?php $count_slider++; endforeach; ?>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+<?php else : ?>
+	<div class="placeholder">
+		<?php esc_html_e( 'Invalid Shortcode ID,', 'super-simple-slider' ); ?> <a href="<?php echo esc_url( admin_url( 'post-new.php?post_type=super-simple-slider' ) ); ?>" target="_blank"><?php esc_html_e( 'Create a new Slider', 'super-simple-slider' ); ?></a>
+	</div>
+<?php endif; ?>

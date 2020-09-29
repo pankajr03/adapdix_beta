@@ -1,0 +1,18 @@
+/* spf typography field styles */
+.spf-field-typography .spf--blocks-selects .spf--block select {
+	height: 31px;
+}
+.spf-field-typography .spf--blocks-selects .spf--block {
+	flex: 1 25% !important;
+}
+.spf-field-typography .spf--blocks-selects .spf--block:nth-child(n + 5) {
+	flex: 1 33.3% !important;
+}
+.spf-field-typography .spf--blocks-selects .spf--block.spf--block-font-color {
+	flex: 0 !important;
+}
+.spf-field-typography.color-disabled .spf-field-color {
+  pointer-events: none;
+  opacity: .6;
+}
+/* spf typography field styles end */

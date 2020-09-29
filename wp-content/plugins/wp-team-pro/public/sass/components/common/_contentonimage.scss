@@ -1,0 +1,111 @@
+.sptp-member.sptp-content-on-image .sptp-member-info .sptp-member-name h2 {
+  color: #fff;
+}
+.sptp-member.sptp-content-on-image
+  .sptp-member-info
+  .sptp-member-profession
+  h4 {
+  color: #fff;
+}
+.sptp-member.sptp-content-on-image .sptp-member-info .sptp-member-desc {
+  color: #fff;
+}
+.sptp-content-on-image {
+  position: relative;
+  .content {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    li {
+      .sptp-member-avatar {
+        display: none;
+      }
+    }
+    .sptp-member-name {
+      margin-top: 0;
+    }
+    .caption {
+      position: absolute;
+      width: 100%;
+    }
+    &.sptp-circle {
+      border-radius: 50%;
+    }
+    &.covered {
+      padding: 20px;
+      width: 100%;
+      &.top {
+      }
+      &.middle {
+        justify-content: center;
+      }
+      &.bottom {
+        justify-content: flex-end;
+      }
+    }
+    &.lower {
+      // position: relative;
+      .caption {
+        position: relative;
+        padding: 8px;
+      }
+      &.top {
+        position: absolute;
+      }
+      &.middle {
+        justify-content: flex-start;
+        .caption {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+      &.bottom {
+        position: absolute;
+        justify-content: flex-end;
+        .caption {
+          position: absolute;
+          bottom: 0;
+        }
+      }
+    }
+    &.clickable {
+      &.lower {
+        &>.sptp-member-avatar {
+          flex-direction: column;
+          height: 100%;
+        }
+      }
+    }
+    &.not-clickable {
+      cursor: default;
+      .sptp-member-avatar {
+        cursor: default;
+        position: relative;
+        display: block;
+      }
+    }
+  }
+}
+.overlay-always {
+  .content {
+    opacity: 1;
+  }
+}
+.overlay-hover {
+  .content {
+    opacity: 0;
+  }
+  &:hover {
+    .content {
+      opacity: 1;
+    }
+  }
+}

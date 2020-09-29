@@ -1,0 +1,16 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+
+.column-is_featured{
+	text-align:center !important;		
+}
+
+.admin-fppro-tbl-small{
+	max-width:600px;
+}
+.admin-fppro-tbl-medium{
+	max-width:1000px;
+}

@@ -1,0 +1,11 @@
+.sptp-generator-tabs .spf-wrapper {
+	min-height: 200px;
+	z-index: 999;
+	background-image: url('../img/preloader.gif');
+	background-repeat: no-repeat; 
+	background-color: #fff;
+	background-position: center;
+	li {
+		opacity: 0;
+	}
+}

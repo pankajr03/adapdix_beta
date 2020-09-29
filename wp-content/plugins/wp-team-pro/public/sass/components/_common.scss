@@ -1,0 +1,152 @@
+@import "common/title";
+@import "common/topcontent";
+@import "common/leftcontent";
+@import "common/contentonimage";
+@import "common/image";
+@import "common/icononimage";
+@import "common/name";
+@import "common/profession";
+@import "common/description";
+@import "common/skill";
+@import "common/social";
+@import "common/pagination";
+
+@import "common/modal";
+@import "common/simplebar";
+
+@import "common/drawer";
+
+select > option[value=""] {
+  display: none;
+}
+.sp-team-pro * {
+  box-sizing: border-box;
+}
+.sp-team-pro a {
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+.text-center {
+  text-align: center;
+}
+.sptp-team-inline-thumb .sptp-circle img {
+  border-radius: 100%;
+}
+.sptp-member {
+  margin-bottom: 30px;
+  cursor: pointer;
+  line-height: 0;
+}
+.sp-team-pro img {
+	max-width: 100%;
+  }
+.sptp-member .sptp-name-profession,
+.sptp-member .sptp-member-desc,
+.sptp-member .sptp-member-meta,
+.sptp-member .sptp-member-skill-progress,
+.sptp-member .sptp-member-social {
+  padding-top: 4px;
+  width: 100%;
+}
+.sptp-member .sptp-member-meta .sptp-member-location span {
+  margin-left: 5px;
+}
+.sptp-member .sptp-member-meta .sptp-member-email > a,
+.sptp-member .sptp-member-meta .sptp-member-phone > a,
+.sptp-member .sptp-member-meta .sptp-member-website > a {
+  text-decoration: none;
+  display: inline-block;
+}
+.sptp-member .sptp-member-meta div:last-child {
+  margin-bottom: 0;
+}
+.sp-team-pro {
+  font-family: "Open Sans", sans-serif;
+}
+.sp-team-pro .sptp-container {
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.sptp-row.sptp-no-gutters > [class*="sptp-col-"] {
+  padding-right: 0;
+  padding-left: 0;
+}
+.sptp-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.sptp-row [class*="sptp-col-"] {
+  position: relative;
+  width: 100%;
+}
+.sptp-member {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &.sptp-top-content {
+    flex-direction: column;
+    align-items: center;
+    .content {
+      order: 1;
+    }
+    .sptp-member-avatar {
+      order: 999!important;
+      width: 100%;
+    }
+  }
+}
+.sptp-member {
+  cursor: inherit;
+}
+.sptp-member-profession,
+.sptp-member-name,
+.sptp-member-desc,
+.sptp-member-social {
+  // text-align: center;
+  display: block;
+  width: 100%;
+}
+.sptp-member-email span,
+.sptp-member-phone span,
+.sptp-member-mobile span,
+.sptp-member-website span {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 24px;
+  color: #333333;
+  margin-bottom: 0px;
+}
+.sptp-member-email a,
+.sptp-member-phone a,
+.sptp-member-mobile a,
+.sptp-member-website a {
+  text-decoration: none;
+  color: #ffffff;
+}
+.hidden {
+  display: none !important;
+}
+.show {
+  display: block !important;
+}
+.page-loading-image {
+  background-color: rgba(255, 255, 255, 1);
+  background-image: url(../img/Spinner-1s-50px.gif);
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  visibility: visible;
+}
+.sp-team-pro a:focus {
+  outline: 0;
+}
+
+.simplebar-content-wrapper {
+  visibility: visible !important;
+}

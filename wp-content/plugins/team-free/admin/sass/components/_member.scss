@@ -1,0 +1,213 @@
+/**
+ * Memer of WP Team
+ */
+.spf-field-repeater .spf-repeater-wrapper .spf-repeater-item {
+  border: none;
+}
+.spf-field-repeater .spf-repeater-helper {
+  background-color: transparent;
+  border: none;
+}
+#_sptp_add_member .spf-repeater-item {
+  position: relative;
+}
+.inline-repeater .spf-field-spinner {
+  display: inline-block;
+  width: 20%;
+}
+#_sptp_add_member .spf-repeater-helper {
+  width: 80px;
+  position: absolute;
+  left: 52%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.inline-repeater-1 .spf-repeater-content > div:first-of-type,
+.inline-repeater-2 .spf-repeater-content > div:nth-of-type(2) {
+  position: absolute;
+}
+.inline-repeater-1 .repeater-text {
+  width: 35%;
+  padding-left: 0;
+  left: 0;
+}
+.inline-repeater-1 .repeater-select {
+  left: 35%;
+}
+.inline-repeater-2 .spf-repeater-content > div:nth-of-type(2) {
+  top: 0;
+  left: 14%;
+  width: 35%;
+}
+.inline-repeater-2 .repeater-select {
+  padding-left: 0;
+}
+.inline-repeater-2 .repeater-text input {
+  width: 100%;
+  transform: translateX(0);
+}
+.detail_page_options ul {
+  max-height: 370px;
+}
+.list-image {
+    height: 50px;
+    width: auto;
+}
+#the-list.ui-sortable tr:hover {
+  cursor: move;
+}
+#the-list.ui-sortable tr.alternate {
+  background-color: #f9f9f9;
+}
+#the-list.ui-sortable tr.ui-sortable-helper {
+  background-color: #ffffff;
+  outline: 1px solid #dfdfdf;
+}
+.spf--image-group p {
+  text-align: center;
+}
+.spf-field-subheading {
+  display: flex;
+  align-items: center;
+}
+.spf-field-subheading .spacer {
+  flex-grow: 1;
+}
+.spf-field-subheading .support a {
+  text-decoration: none;
+  color: #fff;
+  font-size: 15px;
+}
+.spf-nav ul li {
+  margin-bottom: 0;
+  border-right: 1px solid #ffffff;
+}
+.spf-theme-light .spf-nav ul li .spf-section-active {
+  box-shadow: inset 0px 2px #63a37b;
+}
+.spf-nav li:last-of-type {
+  border-right: 1px solid #e2e2e1;
+}
+.spf-field-column {
+  .spf-fieldset {
+    position: relative;
+    height: 26px;
+  }
+  .spf--label-icon {
+    float: left;
+    min-width: 30px;
+    border-right: 0;
+    border-radius: 2px 0 0 2px;
+  }
+  .spf--input {
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 0;
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 26px;
+    vertical-align: top;
+    text-align: center;
+    color: #555;
+    border: 1px solid #ddd;
+    background-color: #eee;
+    padding: 0;
+    input {
+      line-height: 26px;
+      margin: 0;
+      padding: 0;
+      width: 65px;
+      max-width: 100%;
+      text-align: center;
+    }
+  }
+}
+.large-desktop i {
+  border: 1px solid;
+}
+
+/* Team menu icon style */
+#adminmenu .menu-icon-sptp_member {
+  img {
+    padding-top: 6px;
+  }
+}
+.spf-field {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.spf-field-button_set.sptp-icon-button-group .spf--button {
+  padding: 7px 5px;
+}
+.spf-field-select.spf-after {
+  select {
+    margin-right: 15px;
+  }
+}
+
+.spf--block-margin {
+  max-width: 200px;
+  .spf--unit {
+    border: none;
+    outline: 1px solid #ddd;
+    outline-offset: -2px;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.07);
+  }
+}
+
+.spf-field-repeater .spf-repeater-wrapper .spf-repeater-item {
+  border: none;
+}
+.spf-field-repeater .spf-repeater-helper {
+  background-color: transparent;
+  border: none;
+}
+#_sptp_add_member .spf-repeater-item {
+  position: relative;
+  width: 50%;
+}
+.inline-repeater .spf-field-spinner {
+  display: inline-block;
+  width: 20%;
+}
+#_sptp_add_member .spf-repeater-helper {
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  left: 87%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100px;
+}
+.spf-field-repeater .spf-repeater-helper-inner {
+  width: 100%;
+}
+.inline-repeater-skill .spf-repeater-content > div:first-of-type,
+.inline-repeater-social .spf-repeater-content > div:nth-of-type(2) {
+  position: absolute;
+}
+.inline-repeater-skill .repeater-text {
+  width: 57%;
+  padding-left: 0;
+  left: 0;
+}
+.inline-repeater-skill .repeater-select {
+  width: 135px;
+  border-top: none !important;
+  left: 60%;
+}
+.inline-repeater-social .spf-repeater-content > div:nth-of-type(2) {
+  top: 0;
+  left: 26%;
+  width: 60%;
+}
+.inline-repeater-social .repeater-select {
+  padding-left: 0;
+}
+.inline-repeater-social .repeater-text input {
+  width: 100%;
+  transform: translateX(0);
+}
+.detail_page_options ul {
+  max-height: 370px;
+}

@@ -1,0 +1,93 @@
+/** 
+* Settings of WP Team
+*/
+div.sptp-option-settings .spf .spf-container {
+  border: 1px solid #cecece;
+}
+div.sptp-option-settings .spf-header-left h1 {
+  font-size: 22px;
+  color: #444444;
+  font-weight: 600;
+  line-height: 35px;
+}
+div.sptp-option-settings .spf-header .spf-header-inner {
+  background: #f2f2f2;
+  border-bottom: 1px solid #cecece;
+}
+div.sptp-option-settings .spf-nav ul li {
+  border-right: 0;
+}
+div.sptp-option-settings .spf-nav.spf-nav-options ul li a {
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid #cecece;
+  background-color: #efefef;
+  color: #464646;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 14px 15px;
+  text-transform: uppercase;
+}
+div.sptp-option-settings .spf-nav.spf-nav-options ul li .spf-section-active {
+  background-color: #fff;
+  box-shadow: inset 3px 0px #63a37b;
+  color: #63a37b;
+  font-weight: 600;
+}
+div.sptp-option-settings
+  .spf-nav.spf-nav-options
+  ul
+  li
+  .spf-section-active:hover {
+  color: #63a37b;
+}
+div.sptp-option-settings .spf-wrapper .spf-nav-background {
+  background-color: #dddddd;
+  border-right: 1px solid #cecece;
+}
+
+div.sptp-option-settings .spf-header-right .spf-buttons input {
+  text-shadow: 0 0 0;
+  border: 0;
+  border-radius: 0;
+  padding: 3px 15px;
+  height: auto;
+  transition: all 0.4s;
+}
+div.sptp-option-settings .spf-buttons input.button-primary {
+  box-shadow: 0 3px 0 #55916c;
+  background-color: #63a37b;
+  color: #ffffff;
+}
+div.sptp-option-settings .spf-buttons input.button-primary:hover {
+  box-shadow: 0 3px 0 #396048;
+  background-color: #4b8160;
+  color: #ffffff;
+}
+div.sptp-option-settings .spf-buttons input.spf-warning-primary {
+  box-shadow: 0 3px 0 #c61004 !important;
+  background-color: #e14d43 !important;
+  text-shadow: none !important;
+  margin-left: 8px;
+}
+div.sptp-option-settings .spf-buttons input.spf-warning-primary:hover,
+div.sptp-option-settings .spf-buttons input.spf-warning-primary:focus {
+  box-shadow: 0 3px 0 #4a4949 !important;
+  background-color: #6b6a6a !important;
+  text-shadow: none !important;
+}
+.spf-reset-section {
+  color: #fff !important;
+  box-shadow: 0 3px 0 #666 !important;
+  background-color: #888 !important;
+}
+.sptp-option-settings .spf-wrapper {
+  display: flex;
+  .spf-nav-options {
+    border-right: 1px solid #cecece;
+  }
+  .spf-content {
+    width: 100%;
+    margin-left: 0;
+  }
+}

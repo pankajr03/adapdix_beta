@@ -1,0 +1,2396 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Team Pro\n"
+"POT-Creation-Date: 2019-08-30 16:13+0600\n"
+"PO-Revision-Date: 2019-08-30 16:15+0600\n"
+"Last-Translator: \n"
+"Language-Team: ShapedPlugin <support@shapedplugin.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.7\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_x;esc_html__;esc_html_e;esc_html_x;esc_attr__;"
+"esc_attr_e;esc_attr_x\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../admin/node_modules/yargs-parser/index.js:301
+#, javascript-format
+msgid "Not enough arguments following: %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs-parser/index.js:449
+#, javascript-format
+msgid "Invalid JSON config file: %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:169
+msgid "Commands:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:177
+#: ../admin/node_modules/yargs/lib/usage.js:407
+msgid "default:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:179
+msgid "aliases:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:241
+msgid "boolean"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:242
+msgid "count"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:243
+#: ../admin/node_modules/yargs/lib/usage.js:244
+msgid "string"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:245
+msgid "array"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:246
+msgid "number"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:250
+msgid "required"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:251
+msgid "choices:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:270
+msgid "Examples:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/usage.js:385
+msgid "generated-value"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:26
+#: ../admin/node_modules/yargs/lib/validation.js:49
+#, javascript-format
+msgid "Not enough non-option arguments: got %s, need at least %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:37
+#, javascript-format
+msgid "Too many non-option arguments: got %s, maximum of %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:185
+msgid "Invalid values:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:188
+#, javascript-format
+msgid "Argument: %s, Given: %s, Choices: %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:218
+#, javascript-format
+msgid "Argument check failed: %s"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:283
+msgid "Implications failed:"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:313
+#, javascript-format
+msgid "Arguments %s and %s are mutually exclusive"
+msgstr ""
+
+#: ../admin/node_modules/yargs/lib/validation.js:332
+#, javascript-format
+msgid "Did you mean %s?"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:93
+#: ../admin/partials/section/settings/class-team-pro-rename.php:43
+msgid "Member"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:94
+#: ../admin/partials/section/settings/class-team-pro-rename.php:49
+msgid "Members"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:95
+#: ../admin/partials/section/settings/class-team-pro-rename.php:55
+msgid "Group"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:96
+#: ../admin/partials/section/generator/class-team-pro-layout.php:91
+#: ../admin/partials/section/settings/class-team-pro-rename.php:61
+msgid "Groups"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:97 ../admin/class-team-pro-admin.php:315
+#: ../admin/partials/section/settings/class-team-pro-rename.php:67
+msgid "Team"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:247
+#: ../admin/partials/class-team-pro-settings.php:16
+msgid "WP Team Pro"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:314
+msgid "All Teams"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:316 ../admin/class-team-pro-admin.php:317
+msgid "Add New Team"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:318
+msgid "Edit Team"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:319
+msgid "New Generator"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:321 ../admin/class-team-pro-admin.php:328
+#, php-format
+msgid "%s Generator"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:322
+msgid "View Generator"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:323
+msgid "Search Generator"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:324
+msgid "No Generator Found"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:325
+msgid "No Generator Found in Trash"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:377 ../admin/class-team-pro-admin.php:378
+#: ../admin/class-team-pro-admin.php:393
+msgid "License"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:406 ../admin/class-team-pro-admin.php:407
+msgid "Help"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:422
+msgid "Welcome to WP Team Pro!"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:425
+msgid ""
+"Thank you for installing WP Team Pro! You're now running the most popular "
+"Team Showcase Premium plugin. This video will help you get started with the "
+"plugin."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:440
+msgid "Need any Assistance?"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:441
+msgid "Our Expert Support Team is always ready to help you out promptly."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:442
+msgid "Contact Support"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:448
+msgid "Looking for Documentation?"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:449
+msgid "We have detailed documentation on every aspect of WP Team Pro."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:450
+msgid "Documentation"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:456
+msgid "Love This Plugin?"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:457
+msgid "If you love WP Team Pro, please leave us a 5 star rating."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:459
+msgid "Rate the Plugin"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:468
+msgid "Take your website beyond the typical with more premium plugins!"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:469
+msgid "Some more premium plugins are ready to make your website awesome."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:477
+msgid "Post Carousel Pro"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:478
+msgid ""
+"Post Carousel Pro is an amazing carousel plugin for WordPress that allows "
+"you to showcase your posts (any post type) in a nice sliding manner. It has "
+"plenty of extremely user-friendly options."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:479 ../admin/class-team-pro-admin.php:491
+#: ../admin/class-team-pro-admin.php:503
+msgid "View Details"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:489
+msgid "WordPress Carousel Pro"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:490
+msgid ""
+"WordPress Carousel Pro is a carousel plugin for your WordPress website. You "
+"can easily create carousel using your regular media uploader. This plugin "
+"has nice combination in WP regular gallery."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:501
+msgid "Testimonial Pro"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:502
+msgid ""
+"Testimonial Pro is the Best Testimonials Showcase Plugin for WordPress built "
+"to display testimonials, reviews or quotes in multiple ways on any page or "
+"widget with the Shortcode Generator."
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:523 ../admin/class-team-pro-admin.php:596
+#: ../admin/partials/section/generator/class-team-pro-general.php:88
+#: ../public/partials/table.php:37
+msgid "Name"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:524
+#: ../admin/partials/section/generator/class-team-pro-filter.php:69
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:535
+msgid "Position"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:525
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:376
+#: ../admin/partials/section/generator/class-team-pro-modal.php:140
+#: ../public/partials/table.php:52
+msgid "Email"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:526 ../public/partials/table.php:32
+msgid "Image"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:582
+#: ../admin/partials/section/generator/class-team-pro-modal.php:138
+msgid "Description"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:583
+msgid "Slug"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:597
+msgid "Shortcode"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:598
+msgid "Layout"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:599
+#: ../admin/partials/section/generator/class-team-pro-general.php:90
+msgid "Date"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:656
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:499
+#, php-format
+msgid ""
+"If you like <strong>WP Team Pro</strong>, please leave us a <a href=\"%s\" "
+"target=\"_blank\">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating. Your "
+"Review is very important to us as it helps us to grow more. "
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:751
+msgid " -duplicated"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:806
+msgid "Team Updated"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:807
+msgid "Team Published"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:809
+#, php-format
+msgid "Member Updated. <a href=\"%s\">View Member</a>"
+msgstr ""
+
+#: ../admin/class-team-pro-admin.php:811
+#, php-format
+msgid "Member Published. <a href=\"%s\">View Member</a>"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-generator.php:19
+msgid "Team Generator Layout "
+msgstr ""
+
+#: ../admin/partials/class-team-pro-generator.php:32
+msgid "Team Generator Settings"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-generator.php:53
+msgid "Team Generator Shortcode"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:24
+msgid "Member Details"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:38
+#, php-format
+msgid "%s DETAILS"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:43
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:350
+#: ../admin/partials/section/generator/class-team-pro-modal.php:137
+#: ../admin/partials/section/generator/class-team-pro-typography.php:115
+msgid "Position/Job Title"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:48
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:359
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:368
+msgid "Short Bio"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:49
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:487
+msgid "Member short bio is fine in 100 characters or less."
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:54
+msgid "ADDITIONAL INFORMATION"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:59
+msgid "Email Address"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:64
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:384
+msgid "Mobile (personal)"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:69
+msgid "Telephone (office)"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:74
+#: ../admin/partials/section/generator/class-team-pro-filter.php:70
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:400
+#: ../admin/partials/section/generator/class-team-pro-modal.php:143
+#: ../public/partials/table.php:47
+msgid "Location"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:79
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:408
+#: ../admin/partials/section/generator/class-team-pro-modal.php:144
+#: ../public/partials/table.php:72
+msgid "Website"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:84
+msgid "User/Author Profile"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:85
+msgid ""
+"If this member is associated with a account, select it here. Might be used "
+"to fetch latest published posts in the single member page"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:98
+msgid "Skill Label"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:107
+msgid "e.g. Python"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:195
+msgid "MEMBER PHOTO GALLERY"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:201
+msgid "Gallery Images"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:202
+msgid "Add Image(s)"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:203
+msgid "Edit Images"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-member.php:204
+msgid "Remove Images"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-settings.php:12
+msgid "Settings"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-widget.php:59
+msgid "Title:"
+msgstr ""
+
+#: ../admin/partials/class-team-pro-widget.php:63
+msgid "Team:"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:35
+msgid "Carousel Controls"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:41
+msgid "Carousel Mode"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:43
+msgid "Standard"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:44
+msgid "Ticker"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:47
+msgid ""
+"Set carousel mode. Carousel controls are disabled in the ticker mode.\n"
+"\t\t\t\t\t\t"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:56
+msgid "AutoPlay"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:57
+msgid "On/Off auto play."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:64
+msgid "Autoplay Speed"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:65
+msgid "Set autoplay speed in millisecond."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:73
+msgid "Carousel Speed"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:74
+msgid "Set carousel speed in millisecond."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:81
+msgid "Stop on Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:82
+msgid "On/Off carousel pause on hover."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:89
+msgid "Loop"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:90
+msgid "On/Off infinite loop mode."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:97
+msgid "Auto Height"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:98
+msgid "On/Off auto height for the carousel."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:104
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:110
+msgid "Navigation"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:111
+msgid "Show/Hide carousel navigation."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:113
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:181
+#: ../admin/partials/section/generator/class-team-pro-filter.php:117
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:43
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:305
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:335
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:343
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:351
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:360
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:369
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:377
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:385
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:393
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:401
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:409
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:417
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:425
+#: ../admin/partials/section/generator/class-team-pro-image.php:43
+msgid "Show"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:114
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:182
+#: ../admin/partials/section/generator/class-team-pro-filter.php:118
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:44
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:306
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:336
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:344
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:352
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:361
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:370
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:378
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:386
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:394
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:402
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:410
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:418
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:426
+#: ../admin/partials/section/generator/class-team-pro-image.php:44
+msgid "Hide"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:121
+msgid "Navigation Position"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:123
+msgid "Top Right"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:124
+msgid "Top Center"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:125
+msgid "Top Left"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:126
+msgid "Bottom Left"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:127
+msgid "Bottom Center"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:128
+msgid "Bottom Right"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:129
+msgid "Vertically Center Outer"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:130
+msgid "Vertically Center Inner"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:134
+msgid "Select a position for the navigation arrows."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:139
+msgid "Navigation Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:140
+msgid "Set color for the carousel navigation."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:142
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:192
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:465
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:683
+#: ../admin/partials/shapedplugin-framework/fields/border/border.php:115
+msgid "Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:143
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:466
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:684
+#: ../admin/partials/shapedplugin-framework/fields/border/border.php:123
+msgid "Hover Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:144
+#: ../admin/partials/section/generator/class-team-pro-filter.php:84
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:503
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:599
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:685
+#: ../admin/partials/section/generator/class-team-pro-image.php:212
+msgid "Background"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:145
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:686
+msgid "Hover Background"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:158
+msgid "Navigation Border"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:159
+msgid "Set border for the carousel navigation."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:172
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:627
+msgid "Pagination"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:178
+msgid "Bullets"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:179
+msgid "Show/hide pagination bullets."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:189
+msgid "Bullets Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:190
+msgid "Set color for the pagination bullets."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:193
+msgid "Active Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-carousel.php:204
+msgid "Member(s) Per Slide"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:35
+msgid "Filter Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:41
+msgid "Filter Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:42
+msgid "Choose a filter type."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:44
+msgid "Button"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:45
+msgid "Drop Down"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:53
+msgid "Filter Dropdown Alignment"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:54
+msgid "Choose a filter dropdown alignment."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:65
+msgid "Filter By"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:66
+msgid "Choose a filter by option."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:68
+msgid "Taxonomy"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:77
+msgid "Button Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:78
+msgid "Set button color."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:80
+msgid "Text color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:81
+msgid "Text active color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:82
+msgid "Border color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:83
+msgid "Border hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:85
+msgid "Active & hover bg"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:101
+msgid "Filter Button Alignment"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:102
+msgid "Choose filter button alignment."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:114
+msgid "\"All\" Button"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:115
+msgid "Show/Hide all button."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:124
+msgid "Rename \"All\" Button Label"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:125
+msgid "Rename all button text label."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:126
+msgid "All"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:132
+msgid "Filter Pagination"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:133
+msgid "On/Off filter load more pagination."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:139
+msgid "Rename \"Load More\" Button Label"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:140
+msgid "Rename load more button text label."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:141
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:666
+msgid "Load More"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:147
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:649
+msgid "Number of Member(s) to Show Per Page"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:148
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:650
+msgid "Set number of member(s) to show in per page."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:155
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:657
+msgid "Number of Member(s) to Show Per Click"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-filter.php:156
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:658
+msgid "Set number of member(s) to show in per click."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:35
+msgid "General Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:42
+#: ../admin/partials/section/generator/class-team-pro-general.php:59
+msgid "Column(s)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:43
+#: ../admin/partials/section/generator/class-team-pro-general.php:60
+msgid "Set number of column(s) in different devices for responsive view."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:76
+msgid "Total Member(s) To Display"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:78
+msgid ""
+"Number of total members to show. Default value is 12. For all leave it empty."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:85
+msgid "Order By"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:87
+msgid "Drag & Drop"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:89
+msgid "ID"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:91
+msgid "Random"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:92
+msgid "Modified"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:95
+msgid "Select an order by option."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:100
+msgid "Order"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:102
+msgid "Ascending"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:103
+msgid "Descending"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:106
+msgid "Select an order option."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:111
+msgid "Preloader"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-general.php:113
+msgid ""
+"Team members will be hidden until page load completed and ajax pagination.\n"
+"\t\t\t\t\t\t"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:34
+msgid "Display Options"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:41
+#: ../admin/partials/section/generator/class-team-pro-typography.php:48
+msgid "Team Section Title"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:42
+msgid "Show/Hide team section title."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:51
+msgid "Section Title Margin Bottom"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:52
+msgid "Set margin bottom for team section title. Default value is 25px."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:70
+msgid "Margin Between Members"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:71
+msgid "Set space or margin between members. Default value is 24px."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:83
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:113
+msgid "Member Content Position"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:87
+msgid "Below Content"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:91
+msgid "Above Content"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:95
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:117
+msgid "Right Content"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:99
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:121
+msgid "Left Content"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:103
+msgid "Overlay Content"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:107
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:125
+msgid "Select a position or layout for member content and image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:137
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:151
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:687
+#: ../admin/partials/section/generator/class-team-pro-image.php:177
+#: ../admin/partials/section/generator/class-team-pro-image.php:184
+msgid "Border"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:138
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:152
+msgid "Set border for the member."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:165
+msgid "Border Radius"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:166
+msgid "Set border radius for the member."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:174
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:597
+msgid "Background Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:175
+msgid "Set background color for the member."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:184
+msgid "Member Content Padding"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:185
+msgid "Set member content padding."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:199
+msgid "Overlay inside Image"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:200
+msgid ""
+"Check to make overlay only on image. Defaultly, overlay show on full area."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:207
+msgid "Overlay Background Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:208
+msgid "Set overlay background color."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:215
+msgid "Overlay Content Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:216
+msgid "Choose overlay content type."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:219
+msgid "Fully Covered"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:220
+msgid "Caption Style"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:228
+msgid "Overlay Content Position"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:229
+msgid "Choose overlay content position."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:232
+msgid "Top"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:233
+msgid "Middle"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:234
+msgid "Bottom"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:242
+msgid "Overlay Content Visibility"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:243
+msgid "Choose overlay content visibility."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:246
+msgid "Always"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:247
+msgid "On Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:255
+msgid "Make the Overlay Clickable"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:256
+msgid "Check to make the overlay clickable."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:263
+msgid "Disable Overlay on Small Screens"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:264
+msgid "Check to disable overlay on small screens (less than 480 pixels)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:271
+msgid "Animation"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:273
+msgid "fadeIn"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:274
+msgid "fadeInUp"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:275
+msgid "fadeInDown"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:276
+msgid "fadeInLeft"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:277
+msgid "fadeInRight"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:278
+msgid "flip"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:279
+msgid "flipInX"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:280
+msgid "flipInY"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:281
+msgid "rotateIn"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:282
+msgid "rotateOut"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:283
+msgid "slideInUp"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:284
+msgid "slideInDown"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:285
+msgid "slideInLeft"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:286
+msgid "slideInRight"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:287
+msgid "ZoomIn"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:288
+msgid "bounceIn"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:297
+msgid "Mosaic Background Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:303
+#: ../admin/partials/section/generator/class-team-pro-modal.php:139
+msgid "Meta Icon"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:304
+msgid "Show/Hide small icon meta fields. e.g. email, mobile, location icon."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:313
+msgid "Member Detail Fields (Sortable)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:314
+msgid "Show/Hide member meta fields. These fields are also sortable."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:334
+#: ../admin/partials/section/generator/class-team-pro-image.php:41
+#: ../admin/partials/section/generator/class-team-pro-modal.php:135
+msgid "Photo/Image"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:342
+#: ../admin/partials/section/generator/class-team-pro-modal.php:136
+#: ../admin/partials/section/generator/class-team-pro-typography.php:82
+msgid "Member Name"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:392
+msgid "Phone (business)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:416
+#: ../admin/partials/section/generator/class-team-pro-modal.php:145
+msgid "Skill Bars"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:424
+#: ../admin/partials/section/generator/class-team-pro-modal.php:146
+msgid "Social Profiles"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:435
+msgid "Overlay Icon"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:436
+msgid "Check to place a hover icon on member image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:444
+msgid "Overlay Icon Style"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:445
+msgid "Choose a icon on hover image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:462
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:583
+msgid "Icon Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:463
+msgid "Set icon color and hover color."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:478
+msgid "Icon Overlay Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:479
+msgid "Set icon over image background color."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:486
+msgid "Member Short Bio Limit"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:495
+msgid "Skill Bars Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:500
+msgid "Progress Bar Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:502
+msgid "Progress Bar"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:514
+msgid "Toltip Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:516
+msgid "Percentage"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:517
+msgid "Tooltip Background"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:529
+msgid "Social Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:546
+msgid "Margin"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:553
+msgid "Social Icon Shape"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:557
+#: ../admin/partials/section/generator/class-team-pro-image.php:141
+#: ../admin/partials/section/generator/class-team-pro-image.php:164
+msgid "Rounded"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:561
+#: ../admin/partials/section/generator/class-team-pro-image.php:145
+#: ../admin/partials/section/generator/class-team-pro-image.php:168
+msgid "Circle"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:565
+#: ../admin/partials/section/generator/class-team-pro-image.php:137
+#: ../admin/partials/section/generator/class-team-pro-image.php:160
+msgid "Square"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:569
+msgid "Icon only"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:577
+msgid "Custom Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:585
+msgid "Icon"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:586
+msgid "Icon Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:600
+msgid "Background Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:611
+msgid "Icon Border"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:628
+msgid "On/Off pagination"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:635
+msgid "Pagination Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:636
+msgid "Choose a pagination type."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:638
+msgid "Ajax Number Pagination"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:639
+msgid "Load More Button (Ajax)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:640
+msgid "Load More on Scroll (Ajax)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:641
+msgid "No Ajax (Normal Pagination)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:665
+msgid "Load more button label"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:672
+msgid "Scroll Load more button label"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:673
+msgid "Scroll to Load More"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:680
+msgid "Pagination Color"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:681
+msgid "Set pagination color."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-generatorstyle.php:688
+msgid "Hover Border"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:35
+msgid "Image Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:42
+msgid "Show/Hide member photo or image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:52
+#: ../admin/partials/section/generator/class-team-pro-image.php:62
+msgid "Image Sizes"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:53
+#: ../admin/partials/section/generator/class-team-pro-image.php:63
+msgid "Set member image size."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:72
+#: ../admin/partials/section/generator/class-team-pro-image.php:102
+msgid "Custom Size"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:77
+#: ../admin/partials/section/generator/class-team-pro-image.php:107
+msgid "Width*"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:85
+#: ../admin/partials/section/generator/class-team-pro-image.php:115
+msgid "Height*"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:93
+#: ../admin/partials/section/generator/class-team-pro-image.php:123
+msgid "Hard Crop"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:132
+#: ../admin/partials/section/generator/class-team-pro-image.php:155
+msgid "Image Shape"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:133
+#: ../admin/partials/section/generator/class-team-pro-image.php:156
+msgid "Choose an image shape for member."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:178
+msgid "Check to show border around member image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:185
+msgid "Set border."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:198
+msgid "Box-Shadow"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:199
+msgid "Check to show box-shadow around member image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:205
+msgid "Box-shadow"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:206
+msgid "Set box-shadow for member image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:213
+msgid "Set background for member image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:220
+msgid "Padding"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:221
+msgid "Set image padding."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:229
+msgid "Zoom"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:230
+msgid "Select a zoom effect for image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:232
+#: ../admin/partials/section/generator/class-team-pro-image.php:245
+msgid "None"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:233
+msgid "Zoom In"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:234
+msgid "Zoom Out"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:242
+msgid "GrayScale"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:243
+msgid "Select a grayscale effect for the image."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:246
+msgid "GrayScale and Normal on Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:247
+msgid "GrayScale on Hover"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-image.php:248
+msgid "Always GrayScale"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:47
+msgid "Layout Presets"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:51
+msgid "Carousel"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:55
+msgid "Grid"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:59
+msgid "Filter"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:63
+msgid "List"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:67
+msgid "Mosaic"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:71
+msgid "Inline"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:75
+msgid "Table"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:79
+msgid "Thumbnails Pager"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:87
+msgid "Filter Members"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:90
+msgid "Newest"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:92
+msgid "Specific"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:93
+msgid "Exclude"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:100
+#: ../admin/partials/section/generator/class-team-pro-layout.php:101
+msgid "Select Group"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:111
+msgid "There are no group"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:116
+msgid "Group Relation Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:119
+msgid "IN"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:120
+msgid "AND"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:121
+msgid "NOT IN"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:125
+msgid ""
+"IN - Show members which associate with one or more terms<br>AND - Show "
+"members which match all terms<br/>NOT IN - Show members which don&#39;t "
+"match the terms"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:131
+#: ../admin/partials/section/generator/class-team-pro-layout.php:132
+msgid "Specific members"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-layout.php:147
+#: ../admin/partials/section/generator/class-team-pro-layout.php:148
+msgid "Exclude members"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:35
+msgid "Member Detail Settings"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:42
+msgid "Link To Detail Page"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:43
+msgid "On/Off for linking member detail page."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:55
+msgid "Detail Page Link Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:56
+msgid "Choose member detail page type."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:58
+msgid "Modal"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:59
+msgid "Drawer"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:60
+msgid "New Page"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:68
+msgid "Modal Type"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:69
+msgid "Choose modal type."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:72
+msgid "Single Member"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:73
+msgid "Multiple Member with Navigation"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:81
+msgid "Modal Layout"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:82
+msgid "Choose a modal layout."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:86
+msgid "Classic Modal"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:90
+msgid "Slide-Ins Left"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:94
+msgid "Slide-Ins Center"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:98
+msgid "Slide-Ins Right"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:107
+msgid "Modal Background"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:108
+msgid "Set modal background."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:115
+msgid "Open Tab in"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:117
+msgid "New Tab"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:118
+msgid "Same Tab"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:125
+msgid "Member Detail Fields"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:131
+msgid "Member Detail Fields Selection"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:132
+msgid "Check the field(s) to show on modal or detail page."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:141
+msgid "Mobile(personal)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:142
+msgid "Phone(office)"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-modal.php:147
+msgid "Author Posts"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-output.php:47
+msgid "Shortcode:"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-output.php:56
+msgid "PHP Code:"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:35
+msgid "Typography"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:41
+msgid "Load Team Section Title Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:42
+msgid "On/Off google font for team section title."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:69
+msgid "Our Team Members"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:75
+msgid "Load Member Name Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:76
+msgid "On/Off google font for member name."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:102
+msgid "John Doe"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:108
+msgid "Load Member Position/Job Title Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:109
+msgid "On/Off google font for member position."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:134
+msgid "Manager"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:140
+msgid "Load Member Description Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:141
+msgid "On/Off google font for the member description."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:147
+msgid "Description/Short Bio"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:167
+msgid ""
+"Hi, This is John Doe from New York city. He loves creating web applications "
+"based on WordPress."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:173
+msgid "Load Member Additional Infomation Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:174
+msgid "On/Off google font for the member additionl infomaion."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:180
+msgid "Member Additional Information"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:199
+msgid "john@shapedplugin.com"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:204
+msgid "Load Member Skills Font"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:205
+msgid "On/Off google font for the member skills."
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:211
+msgid "Member Skills"
+msgstr ""
+
+#: ../admin/partials/section/generator/class-team-pro-typography.php:232
+msgid "WordPress"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:36
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:47
+msgid "Accessibility"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:42
+msgid "Carousel Accessibility"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:48
+#: ../admin/partials/shapedplugin-framework/fields/sorter/sorter.php:21
+msgid "Enabled"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:49
+#: ../admin/partials/shapedplugin-framework/fields/sorter/sorter.php:22
+msgid "Disabled"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:55
+msgid "Previous Slide Message"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:61
+msgid "Next Slide Message"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:67
+msgid "First Slide Message"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:73
+msgid "Last Slide Message"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:79
+msgid "Pagination Bullet Message"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:85
+msgid "Previous slide"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:86
+msgid "Next slide"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:87
+msgid "This is the first slide"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:88
+msgid "This is the last slide"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-accessibility.php:89
+msgid "Go to slide {{index}}"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:36
+msgid "Advanced Settings"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:42
+msgid "Remove Data when Delete"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:43
+msgid ""
+"Check this box if you would like WP Team Pro to completely remove all of its "
+"data when the plugin is deleted."
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:49
+msgid "Google Fonts"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:50
+msgid ""
+"Enqueue/Dequeue google font. If google font is dequeued, the typography tab "
+"google fonts won't work."
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:52
+#: ../admin/partials/section/settings/class-team-pro-advance.php:65
+#: ../admin/partials/section/settings/class-team-pro-advance.php:74
+#: ../admin/partials/section/settings/class-team-pro-advance.php:83
+#: ../admin/partials/section/settings/class-team-pro-advance.php:96
+#: ../admin/partials/section/settings/class-team-pro-advance.php:105
+msgid "Enqueue"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:53
+#: ../admin/partials/section/settings/class-team-pro-advance.php:66
+#: ../admin/partials/section/settings/class-team-pro-advance.php:75
+#: ../admin/partials/section/settings/class-team-pro-advance.php:84
+#: ../admin/partials/section/settings/class-team-pro-advance.php:97
+#: ../admin/partials/section/settings/class-team-pro-advance.php:106
+msgid "Dequeue"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:58
+msgid "Enqueue or Dequeue JS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:63
+msgid "Swiper JS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:72
+msgid "Simplebar JS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:81
+msgid "Isotope JS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:89
+msgid "Enqueue or Dequeue CSS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:94
+msgid "Font Awesome"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-advance.php:103
+msgid "Swiper CSS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-link.php:36
+msgid "Link Settings"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-link.php:42
+msgid "Mailto Active"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-link.php:47
+msgid "No-follow links"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-link.php:52
+msgid "Telephone"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-link.php:57
+msgid "CSS class for links"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:36
+msgid "Rename Menus"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:42
+msgid "Member singular name"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:48
+msgid "Member plural name"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:54
+msgid "Singular group name"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:60
+msgid "Plural group name"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-rename.php:66
+msgid "Plural name"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-settingsstyle.php:36
+msgid "Custom CSS & JS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-settingsstyle.php:42
+msgid "Custom CSS"
+msgstr ""
+
+#: ../admin/partials/section/settings/class-team-pro-settingsstyle.php:52
+msgid "Custom JS"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/fields.class.php:182
+msgid "N/A"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/fields.class.php:200
+msgid "Original uploaded Image"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/fields.class.php:201
+msgid "Set Custom size"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/metabox.class.php:234
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:670
+msgid "No option provided by developer."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/metabox.class.php:252
+msgid "Restore"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/metabox.class.php:253
+msgid "update post for restore "
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/metabox.class.php:253
+msgid "Cancel"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:249
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:49
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:113
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:140
+msgid "Error while saving."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:293
+msgid "Success. Imported backup options."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:313
+msgid "Default options restored."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:336
+msgid "Default options restored for only this section."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:391
+msgid "Settings saved."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:572
+msgid "show all options"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:574
+msgid "Search option(s)"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:577
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:694
+msgid "Save"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:577
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:694
+msgid "Saving..."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:578
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:695
+msgid "Reset Section"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:578
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:695
+msgid "Are you sure to reset this section options?"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:579
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:696
+#: ../admin/partials/shapedplugin-framework/fields/backup/backup.php:40
+msgid "Reset All"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:579
+#: ../admin/partials/shapedplugin-framework/classes/options.class.php:696
+msgid "Are you sure to reset all options?"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/setup.class.php:355
+msgid "Are you sure?"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/setup.class.php:393
+#, php-format
+msgid "Ooops! This field type (%s) can not be used here, yet."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/setup.class.php:436
+msgid "This field class is not available!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/setup.class.php:439
+msgid "This type is not found!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/shortcoder.class.php:232
+msgid "Add one more"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/classes/shortcoder.class.php:268
+msgid "Security check"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/background/background.php:35
+msgid "No background selected"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/backup/backup.php:32
+msgid "Import"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/backup/backup.php:33
+msgid "copy-paste your backup string here"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/backup/backup.php:37
+msgid "Export and Download Backup"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/backup/backup.php:41
+msgid "Please be sure for reset all of options."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/border/border.php:69
+msgid "Width"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/border/border.php:102
+msgid "Style"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/checkbox/checkbox.php:44
+#: ../admin/partials/shapedplugin-framework/fields/radio/radio.php:43
+#: ../admin/partials/shapedplugin-framework/fields/select/select.php:74
+msgid "No data provided for this option type."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/column/column.php:27
+msgid "Desktop"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/column/column.php:28
+msgid "Small Desktop"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/column/column.php:29
+msgid "Tablet"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/column/column.php:30
+#: ../public/partials/table.php:67
+msgid "Mobile"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/column/column.php:31
+msgid "all"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/gallery/gallery.php:20
+msgid "Add Gallery"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/gallery/gallery.php:21
+msgid "Edit Gallery"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/gallery/gallery.php:22
+msgid "Clear"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:23
+msgid "Add New"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:35
+#: ../admin/partials/shapedplugin-framework/fields/repeater/repeater.php:35
+msgid "Error: Nested field id can not be same with another nested field id."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:46
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:86
+#: ../admin/partials/shapedplugin-framework/fields/repeater/repeater.php:61
+#: ../admin/partials/shapedplugin-framework/fields/repeater/repeater.php:98
+msgid "Are you sure to delete this item?"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:121
+#: ../admin/partials/shapedplugin-framework/fields/repeater/repeater.php:113
+msgid "You can not add more than"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/group/group.php:122
+#: ../admin/partials/shapedplugin-framework/fields/repeater/repeater.php:114
+msgid "You can not remove less than"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/icon/icon.php:20
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:164
+msgid "Add Icon"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/icon/icon.php:21
+msgid "Remove Icon"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/media/media.php:23
+#: ../admin/partials/shapedplugin-framework/fields/upload/upload.php:21
+msgid "Upload"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/media/media.php:24
+#: ../admin/partials/shapedplugin-framework/fields/upload/upload.php:22
+msgid "Remove"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/media/media.php:46
+msgid "No media selected"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/textarea/textarea.php:37
+msgid "Add Shortcode"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:92
+msgid "Font Family"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:93
+msgid "Select a font"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:100
+msgid "Backup Font Family"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:120
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:133
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:145
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:181
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:199
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:215
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:232
+msgid "Default"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:131
+msgid "Font Style"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:144
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:145
+msgid "Load Extra Styles"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:157
+msgid "Font Size"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:168
+msgid "Line Height"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:179
+msgid "Subset"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:188
+msgid "Alignment"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:207
+msgid "Font Variant"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:223
+msgid "Transform"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:240
+msgid "Text Decoration"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:260
+msgid "Letter Spacing"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:284
+msgid "Font Color"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:294
+msgid "Margin Top"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:306
+msgid "Margin Bottom"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:322
+msgid "Word Spacing"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/fields/typography/typography.php:335
+msgid "Custom Style"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:33
+msgid "No data provided by developer"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/actions.php:168
+msgid "Search a Icon..."
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:15
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:83
+msgid "Please write a valid email address!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:32
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:102
+msgid "Please write a numeric data!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:49
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:121
+msgid "Error! This field is required!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:66
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:140
+msgid "Please write a valid url!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:159
+msgid "Please write under 100 characters!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:179
+msgid "Please add skill and respective percentages!"
+msgstr ""
+
+#: ../admin/partials/shapedplugin-framework/functions/validate.php:182
+msgid "Please add valid skill percentages!"
+msgstr ""
+
+#: ../public/partials/settings.php:419
+msgid "Load more"
+msgstr ""
+
+#: ../public/partials/settings.php:420
+msgid "Scroll to Load more"
+msgstr ""
+
+#: ../public/partials/table.php:42
+msgid "Designation"
+msgstr ""
+
+#: ../public/partials/table.php:57
+msgid "Social Link"
+msgstr ""
+
+#: ../public/partials/table.php:62
+msgid "Phone"
+msgstr ""
+
+#: ../public/partials/table.php:77
+msgid "Skills"
+msgstr ""

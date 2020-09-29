@@ -1,0 +1,43 @@
+.spf-field-fieldset {
+  &.sptp-border-bg-group,
+  &.sptp-pagination-group {
+    .spf-fieldset-content {
+      border: none;
+      .spf-field {
+        padding-left: 0;
+      }
+    }
+  }
+  .spf-field-button_set {
+    &.social_position {
+      .spf--button {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+  .social_icon_shape {
+      .spf--active {
+        img {
+          outline: 2px solid #63a37b;
+          outline-offset: -2px;
+        }
+        &::before {
+          display: none;
+        }
+      }
+      .spf--image {
+        min-width: 50px;
+        text-align: center;
+      }
+    }
+}
+.style_generator_list {
+  .spf-field-switcher {
+    padding: 15px 20px !important;
+  }
+  .spf-field .spf-title {
+    width: 35% !important;
+    line-height: 2;
+  }
+}

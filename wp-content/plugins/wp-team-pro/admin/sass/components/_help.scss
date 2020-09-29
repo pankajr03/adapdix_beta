@@ -1,0 +1,200 @@
+/**
+* Help page css
+*/
+.wrap.about-wrap.sp-sptp-help {
+    position: relative;
+}
+// .sptp-help-select .spf-help {
+// 	left: 35%;
+// 	top: 50%;
+// 	transform: translateY(-50%);
+// }
+.wrap.about-wrap.sp-sptp-help .about-text {
+    position: relative;
+    margin: 0;
+    .text {
+        width: 85%;
+        display: inline-block;
+    }
+}
+.help-badge {
+	background: transparent url(../img/team-pro-128.png) no-repeat;
+	background-size: contain;
+    display: inline-block;
+    float: right;
+	width: 128px;
+	height: 128px;
+	margin-top: -35px;
+	background-position: center;
+} 
+.sp-team-help .sp-team-font-icon {
+	font-size: 30px;
+	display: block;
+	color: #63a37b;
+	font-family: fontawesome;
+	font-style: normal;
+} 
+.sp-team-help .sp-team-feature {
+	background-color: #fff;
+	padding: 20px;
+	border: 1px solid #ddd;
+	text-align: center;
+}  
+.sp-team-help .feature-section h1 {
+	margin: 0;
+}  
+.sp-team-help .sp-team-feature h3 {
+	font-size: 16px;
+	margin-top: 18px;
+}  
+.sp-team-help .sp-team-feature p {
+	margin-top: 0.6em;
+	margin-bottom: 0;
+}  
+.about-wrap .plugin-section .sp-plugin-section-title h2 {
+	font-size: 2.2em;
+	color: #32373c;
+	font-weight: 400;
+}  
+.about-wrap .plugin-section .sp-plugin-section-title h4 {
+	font-weight: 400;
+	text-align: center;
+	font-size: 18px;
+	color: #555d66;
+	margin-top: 15px;
+	margin-bottom: 40px;
+}  
+.about-wrap .plugin-section .sp-team-plugin {
+	background-color: #fff;
+	border: 1px solid #ddd;
+}  
+.about-wrap .plugin-section .sp-team-plugin .sp-team-plugin-content {
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+}
+.about-wrap .plugin-section .sp-team-plugin .sp-team-plugin-content h3 {
+	margin-top: 20px;
+	margin-bottom: 8px;
+	font-size: 1.2em;
+	font-weight: 500;
+}  
+.about-wrap .plugin-section .sp-team-plugin .sp-team-plugin-content p {
+	margin-top: 0;
+}
+.about-wrap .headline-feature {
+	margin: 0;
+	max-width: 100%;
+}
+.sp-team-help {
+	.feature-section.three-col,
+	.plugin-section .three-col {
+		display: flex;
+	}
+	.feature-section.two-col {
+		margin-top: 50px;
+	}
+}
+
+/* Help Page */
+div.sp-sptp-help .feature-section .sp-sptp-feature {
+    background-color: #fff;
+    padding: 20px 20px;
+    border: 1px solid #ddd;
+}
+div.sp-sptp-help .feature-section .sp-sptp-feature h3 {
+    font-size: 16px;
+    margin-top: 12px;
+}
+div.sp-sptp-help .feature-section i.sp-font {
+    font-size: 30px;
+    display: block;
+    color: #63A37B;
+}
+div.sp-sptp-help.about-wrap h1 {
+    font-size: 2.6em;
+}
+div.sp-sptp-help .headline-feature.feature-video {
+    position: relative;
+    margin: 40px 0;
+    padding-bottom: 56.25%;
+    width: 100%;
+    max-width: 100%;
+    height: 0;
+    text-align: center;
+}
+div.sp-sptp-help .headline-feature.feature-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+div.sp-sptp-help.about-wrap .sp-sptp-text-center{
+    text-align: center;
+}
+
+/*
+More Plugins
+*/
+.about-wrap .plugin-section .three-col .col {
+    background: #ffffff;
+}
+.about-wrap .plugin-section .three-col .col .sp-sptp-plugin {
+    border: 1px solid #ddd;
+}
+.about-wrap .plugin-section .three-col .col .sp-sptp-plugin .sp-sptp-plugin-content {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px
+}
+.about-wrap .plugin-section .three-col .col .sp-sptp-plugin .sp-sptp-plugin-content h3 {
+    margin-top: 20px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.about-wrap .plugin-section .three-col .col .sp-sptp-plugin .sp-sptp-plugin-content p {
+    margin-top: 0;
+}
+.about-wrap .plugin-section .sp-plugin-section-title h2 {
+    font-size: 2.2em;
+    color: #32373c;
+    font-weight: 400;
+}
+.about-wrap .plugin-section .sp-plugin-section-title h4 {
+    font-weight: 400;
+    text-align: center;
+    font-size: 18px;
+    color: #555d66;
+    margin-top: 15px;
+    margin-bottom: 40px;
+}
+.sp-sptp-help.about-wrap [class$="-col"] {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.sp-sptp-help.about-wrap [class$="-col"] .col {
+    flex: 1;
+    align-self: flex-start;
+}
+.sp-sptp-help.about-wrap  .col {
+    margin-top: 40px;
+}
+.about-wrap [class$="-col"] .col+.col {
+    margin-left: 20px;
+}
+
+@media screen and (max-width: 782px){
+    .about-wrap .three-col .col {
+        min-width: 48%!important;
+        max-width: 48%!important;
+        margin-left: 0!important;
+    }
+}
+@media only screen and (max-width: 500px){
+    .about-wrap .three-col .col {
+        min-width: 100%!important;
+        max-width: 100%!important;
+    }
+}

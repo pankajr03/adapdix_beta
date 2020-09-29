@@ -1,0 +1,306 @@
+.sptp-member-social {
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+  list-style: none;
+  &.icon_only {
+    a {
+      background-color: transparent !important;
+    }
+  }
+  &.square {
+    a {
+      border-radius: 0;
+    }
+  }
+  &.circle {
+    a {
+      border-radius: 50%;
+    }
+  }
+  &.rounded {
+    a {
+      border-radius: 5px;
+    }
+  }
+  ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    line-height: 0;
+    li {
+      display: inline-block;
+      margin: 0;
+      list-style: none;
+      position: relative;
+      &:hover {
+        opacity: 0.7;
+      }
+      a {
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        color: #ffffff;
+        background-color: #333333;
+        font-size: 15px;
+        height: 30px;
+        width: 30px;
+        display: block;
+        text-align: center;
+      }
+      .fa {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+  .sptp-twitter {
+    background-color: #55acee;
+  }
+  .sptp-facebook {
+    background-color: #3b5999;
+  }
+  .sptp-instagram {
+    background-color: #e4405f;
+  }
+  .sptp-pinterest {
+    background-color: #bd081c;
+  }
+  .sptp-linkedin {
+    background-color: #0077b5;
+  }
+  .sptp-skype {
+    background-color: #00aff0;
+  }
+  .sptp-dropbox {
+    background-color: #007ee5;
+  }
+  .sptp-wordpress {
+    background-color: #21759b;
+  }
+  .sptp-vimeo {
+    background-color: #1ab7ea;
+  }
+  .sptp-slideshare {
+    background-color: #0077b5;
+  }
+  .sptp-vk {
+    background-color: #4c75a3;
+  }
+  .sptp-tumblr {
+    background-color: #34465d;
+  }
+  .sptp-yahoo {
+    background-color: #410093;
+  }
+  .sptp-gplus {
+    background-color: #dd4b39;
+  }
+  .sptp-youtube {
+    background-color: #cd201f;
+  }
+  .sptp-stumbleupon {
+    background-color: #eb4924;
+  }
+  .sptp-reddit-alien {
+    background-color: #ff5700;
+  }
+  .sptp-quora {
+    background-color: #b92b27;
+  }
+  .sptp-yelp {
+    background-color: #af0606;
+  }
+  .sptp-weibo {
+    background-color: #df2029;
+  }
+  .sptp-producthunt {
+    background-color: #da552f;
+  }
+  .sptp-hackernews {
+    background-color: #ff6600;
+  }
+  .sptp-soundcloud {
+    background-color: #ff3300;
+  }
+  .sptp-blogger {
+    background-color: #f57d00;
+  }
+  .sptp-whatsapp {
+    background-color: #25d366;
+  }
+  .sptp-wechat {
+    background-color: #09b83e;
+  }
+  .sptp-line {
+    background-color: #00c300;
+  }
+  .sptp-medium {
+    background-color: #02b875;
+  }
+  .sptp-vine {
+    background-color: #00b489;
+  }
+  .sptp-slack {
+    background-color: #3aaf85;
+  }
+  .sptp-deribble {
+    background-color: #ea4c89;
+  }
+  .sptp-flicker {
+    background-color: #ff0084;
+  }
+  .sptp-foursquare {
+    background-color: #f94877;
+  }
+  .sptp-behance {
+    background-color: #131418;
+  }
+  .sptp-snapchat {
+    background-color: #fffc00;
+  }
+  .sptp-github {
+    background-color: #c9510c;
+  }
+  .sptp-bitbucket {
+    background-color: #205081;
+  }
+  .sptp-stackoverflow {
+    background-color: #f48024;
+  }
+  .sptp-codepen {
+    background-color: #76daff;
+  }
+  .sptp-codecademy {
+    background-color: #204056;
+  }
+  &.icon_only {
+    .sptp-twitter {
+      color: #55acee;
+    }
+    .sptp-facebook {
+      color: #3b5999;
+    }
+    .sptp-instagram {
+      color: #e4405f;
+    }
+    .sptp-linkedin {
+      color: #0077b5;
+    }
+    .sptp-skype {
+      color: #00aff0;
+    }
+    .sptp-dropbox {
+      color: #007ee5;
+    }
+    .sptp-wordpress {
+      color: #21759b;
+    }
+    .sptp-vimeo {
+      color: #1ab7ea;
+    }
+    .sptp-slideshare {
+      color: #0077b5;
+    }
+    .sptp-vk {
+      color: #4c75a3;
+    }
+    .sptp-tumblr {
+      color: #34465d;
+    }
+    .sptp-yahoo {
+      color: #410093;
+    }
+    .sptp-gplus {
+      color: #dd4b39;
+    }
+    .sptp-pinterest {
+      color: #bd081c;
+    }
+    .sptp-youtube {
+      color: #cd201f;
+    }
+    .sptp-stumbleupon {
+      color: #eb4924;
+    }
+    .sptp-reddit-alien {
+      color: #ff5700;
+    }
+    .sptp-quora {
+      color: #b92b27;
+    }
+    .sptp-yelp {
+      color: #af0606;
+    }
+    .sptp-weibo {
+      color: #df2029;
+    }
+    .sptp-producthunt {
+      color: #da552f;
+    }
+    .sptp-hackernews {
+      color: #ff6600;
+    }
+    .sptp-soundcloud {
+      color: #ff3300;
+    }
+    .sptp-blogger {
+      color: #f57d00;
+    }
+    .sptp-whatsapp {
+      color: #25d366;
+    }
+    .sptp-wechat {
+      color: #09b83e;
+    }
+    .sptp-line {
+      color: #00c300;
+    }
+    .sptp-medium {
+      color: #02b875;
+    }
+    .sptp-vine {
+      color: #00b489;
+    }
+    .sptp-slack {
+      color: #3aaf85;
+    }
+    .sptp-deribble {
+      color: #ea4c89;
+    }
+    .sptp-flicker {
+      color: #ff0084;
+    }
+    .sptp-foursquare {
+      color: #f94877;
+    }
+    .sptp-behance {
+      color: #131418;
+    }
+    .sptp-snapchat {
+      color: #fffc00;
+    }
+    .sptp-github {
+      color: #c9510c;
+    }
+    .sptp-bitbucket {
+      color: #205081;
+    }
+    .sptp-stackoverflow {
+      color: #f48024;
+    }
+    .sptp-codepen {
+      color: #76daff;
+    }
+    .sptp-codecademy {
+      color: #204056;
+    }
+  }
+}

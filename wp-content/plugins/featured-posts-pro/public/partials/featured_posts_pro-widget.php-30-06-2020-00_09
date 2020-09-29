@@ -1,0 +1,52 @@
+<div class="section-hp sm-section-p blog-responsive">
+	<div class="custom-container">
+		<div class="row">
+			<div class="col-md-10 col-lg-10 specil offset-md-1">
+			  <h2 class="l-text-h mb-5 heding-style-two">Featured Content</h2>
+			 
+			</div>
+				<div class="hide-dt">
+					<div class="owl-carousel owl-theme">
+						
+						<?php while ( $r->have_posts() ) : $r->the_post(); ?>
+						
+						<div class="item">
+							<div class="feature-boxs">
+								<span class="box-head-title"><?php the_category()?></span>
+									<h5 class="mb-3"><?php get_the_title() ? the_title() : the_ID(); ?></h5> 
+									<a class="tearn-btn" href="https://www.adapdix.com/r_html/beta/?page_id=43">Read story</a>
+							</div>
+						</div>
+						
+						<?php endwhile; ?>
+			
+						
+						
+						
+					</div>
+				</div>
+			
+			
+			<?php while ( $r->have_posts() ) : $r->the_post(); ?>
+						
+						<div class="col-md-4  mb-3 hide-m">
+							<?php $getCatNameArr = get_the_category();?>
+							<div class="feature-boxs">
+								<span class="box-head-title"><?php echo $getCatNameArr[0]->name?></span>
+								<h5 class="mb-3"><?php get_the_title() ? the_title() : the_ID(); ?></h5> 
+									<div class="featured_content_p_height"><?php the_excerpt();?></div>
+								   <a class="tearn-btn" href="https://www.adapdix.com/r_html/beta/?page_id=43">Read story</a>
+							</div>
+						
+						</div>
+			
+						
+						<?php endwhile; ?>
+			
+		 
+		  </div>
+		</div>
+  </div>
+				  
+
+    
