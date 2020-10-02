@@ -132,8 +132,42 @@ header.classList.remove("sticky");
 </script>
 
 
+
+<?php wp_footer(); ?>
+
 <script>
- 
+$('.slider-for-sloution').slick({
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  fade: true,
+
+  
+  asNavFor: '.slider-nav-sloution'
+});
+$('.slider-nav-sloution').slick({
+  slidesToShow: 5,
+  slidesToScroll: 1,
+  asNavFor: '.slider-for-sloution',
+  arrows: true,
+  centerMode: false,
+  focusOnSelect: true,
+  responsive: [
+        {
+            breakpoint: 980, // tablet breakpoint
+            settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+            }
+        },
+        {
+            breakpoint: 480, // mobile breakpoint
+            settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+            }
+        }
+    ]
+});
 $(document).ready(function () {
 	$( "input[type=text],input[type=email], textarea " ).focus(function() {
 		$('.grecaptcha-badge').addClass('showgr');
@@ -141,8 +175,6 @@ $(document).ready(function () {
 });
 
 </script>
-
-<?php wp_footer(); ?>
 <!-- Start of HubSpot Embed Code -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/7374328.js"></script>
 <!-- End of HubSpot Embed Code -->
