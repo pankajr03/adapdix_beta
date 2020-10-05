@@ -48,6 +48,8 @@ class Updraft_Restorer {
 	
 	private $restore_this_table = array();
 
+	private $restoring_table = '';
+
 	private $line = 0;
 
 	private $statements_run = 0;
@@ -55,6 +57,8 @@ class Updraft_Restorer {
 	private $use_wpdb = null;
 	
 	private $import_table_prefix = null;
+
+	private $table_engine = '';
 
 	private $table_name = '';
 	
@@ -65,6 +69,14 @@ class Updraft_Restorer {
 	private $current_type = '';
 
 	private $previous_table_name = '';
+
+	private $include_unspecified_tables = false;
+
+	private $tables_to_restore = array();
+
+	private $stored_routine_supported = null;
+	
+	private $tables_to_skip = array();
 	
 	// Constants for use with the move_backup_in method
 	// These can't be arbitrarily changed; there is legacy code doing bitwise operations and numerical comparisons, and possibly legacy code still using the values directly.
@@ -79,6 +91,14 @@ class Updraft_Restorer {
 	
 	public $strings = array();
 	
+	private $generated_columns = array();
+
+	private $supported_generated_column_engines = array();
+
+	private $generated_columns_exist_in_the_statement = array();
+
+	private $printed_new_table_prefix = false;
+
 	/**
 	 * Constructor
 	 *
@@ -132,6 +152,10 @@ class Updraft_Restorer {
 				}
 			}
 		}
+
+		if (isset($restore_options['include_unspecified_tables'])) $this->include_unspecified_tables = $restore_options['include_unspecified_tables'];
+		if (isset($restore_options['tables_to_restore'])) $this->tables_to_restore = $restore_options['tables_to_restore'];
+		if (isset($restore_options['tables_to_skip'])) $this->tables_to_skip = $restore_options['tables_to_skip'];
 
 		// Restore in the most helpful order
 		uksort($backup_set, array('UpdraftPlus_Manipulation_Functions', 'sort_restoration_entities'));
@@ -1640,6 +1664,7 @@ class Updraft_Restorer {
 		// Permissions changes (at the top level - i.e. this does not apply if using recursion) are now *additive* - i.e. there's no danger of permissions being removed from what's on-disk
 		switch ($type) {
 			case 'wpcore':
+				$this->adjust_auto_prepend_directive();
 				$this->chmod_if_needed($wp_filesystem_dir, FS_CHMOD_DIR, false, $wp_filesystem);
 				// In case we restored a .htaccess which is incorrect for the local setup
 				$this->flush_rewrite_rules();
@@ -2101,6 +2126,317 @@ class Updraft_Restorer {
 	}
 
 	/**
+	 * Assign a value to log_bin_trust_function_creators system variable and return its previous value
+	 *
+	 * @see https://mariadb.com/kb/en/library/binary-logging-of-stored-routines/
+	 * @see https://dev.mysql.com/doc/refman/8.0/en/stored-programs-logging.html
+	 *
+	 * @param String $value It can only be set to ON or OFF
+	 * @return String|WP_Error the variable value before it got assigned a new value, or WP_Error object on failure
+	 */
+	private function set_log_bin_trust_function_creators($value) {
+		
+		global $wpdb;
+		static $saved_value = null;
+		static $initial_value = null;
+
+		$old_val = $wpdb->suppress_errors();
+		try {
+			if (is_null($initial_value) || is_wp_error($initial_value)) {
+				$creators_val = $wpdb->get_var("SELECT @@GLOBAL.log_bin_trust_function_creators");
+				if (is_null($creators_val)) throw new Exception(sprintf(__('An error occurred while attempting to retrieve the MySQL global log_bin_trust_function_creators variable %s', 'updraftplus'), '('. $wpdb->last_error.' - '.$wpdb->last_query.')'), 0);
+				$initial_value = '1' === $creators_val || 'on' === strtolower($creators_val) ? 'ON' : 'OFF';
+			}
+			if ((is_null($saved_value) || ($saved_value != $value))) {
+				$res = $wpdb->query("SET GLOBAL log_bin_trust_function_creators = ".$value);
+				if (false === $res) {
+					$saved_value = null;
+					throw new Exception(sprintf(__('An error occurred while attempting to set a new value to the MySQL global log_bin_trust_function_creators variable %s', 'updraftplus'), '('. $wpdb->last_error.' - '.$wpdb->last_query.')'), 0);
+				}
+				if (!is_null($saved_value)) {
+					$initial_value = $saved_value;
+				}
+				$saved_value = $value;
+			}
+		} catch (Exception $ex) {
+			$initial_value = new WP_Error('log_bin_trust_function_creators', $ex->getMessage());
+		}
+		$wpdb->suppress_errors($old_val);
+
+		return $initial_value;
+	}
+
+	/**
+	 * Prepare the create table statement before sending it to the query execution
+	 *
+	 * @param String $create_table_statement an SQL create table statement in which some part of the SQL is going to be parsed and/or replaced
+	 * @param String $import_table_prefix    table prefix to use
+	 * @param Array  $supported_engines      the list of supported DB engines
+	 * @param Array  $supported_charsets     the list of supported DB charsets
+	 * @param Array  $supported_collations   the list of supported DB collations
+	 * @return String the processed create table statement that may have been transformed, sanitised or cleaned
+	 */
+	private function prepare_create_table($create_table_statement, $import_table_prefix, $supported_engines, $supported_charsets, $supported_collations) {
+
+		global $updraftplus, $wpdb;
+
+		$updraft_restorer_collate = isset($this->restore_options['updraft_restorer_collate']) ? $this->restore_options['updraft_restorer_collate'] : '';
+
+		// Legacy, less reliable - in case it was not caught before. We added it in here (CREATE) as well as in DROP because of SQL dumps which lack DROP statements.
+		if ('' == $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
+			$this->old_table_prefix = $tmatches[1].'_';
+			$updraftplus->log(__('Old table prefix:', 'updraftplus').' '.$this->old_table_prefix, 'notice-restore', 'old-table-prefix');
+			$updraftplus->log("Old table prefix (detected from creating first table): ".$this->old_table_prefix);
+		}
+
+		// MySQL 4.1 outputs TYPE=, but accepts ENGINE=; 5.1 onwards accept *only* ENGINE=
+		$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace('TYPE=', 'ENGINE=', $create_table_statement);
+
+		$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+
+		// This CREATE TABLE command may be the de-facto mark for the end of processing a previous table (which is so if this is not the first table in the SQL dump)
+		if ($this->restoring_table) {
+
+			// Attempt to reconnect if the DB connection dropped (may not succeed, of course - but that will soon become evident)
+			$updraftplus->check_db_connection($this->wpdb_obj);
+
+			// After restoring the options table, we can set old_siteurl if on legacy (i.e. not already set)
+			if ($this->restoring_table == $import_table_prefix.'options') {
+				if ('' == $this->old_siteurl || '' == $this->old_home || '' == $this->old_content) {
+					global $updraftplus_addons_migrator;
+					if (!empty($updraftplus_addons_migrator->new_blogid)) switch_to_blog($updraftplus_addons_migrator->new_blogid);
+
+					if ('' == $this->old_siteurl) {
+						$this->old_siteurl = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='siteurl'")->option_value);
+						do_action('updraftplus_restore_db_record_old_siteurl', $this->old_siteurl);
+					}
+					if ('' == $this->old_home) {
+						$this->old_home = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='home'")->option_value);
+						do_action('updraftplus_restore_db_record_old_home', $this->old_home);
+					}
+					if ('' == $this->old_content) {
+						$this->old_content = $this->old_siteurl.'/wp-content';
+						do_action('updraftplus_restore_db_record_old_content', $this->old_content);
+					}
+					if (!empty($updraftplus_addons_migrator->new_blogid)) restore_current_blog();
+				}
+			}
+			
+			if ($this->restoring_table != $this->new_table_name) $this->restored_table($this->restoring_table, $import_table_prefix, $this->old_table_prefix, $this->table_engine);
+
+		}
+		$this->table_engine = "(?)";
+		$engine_change_message = '';
+		if (preg_match('/ENGINE=([^\s;]+)/', $create_table_statement, $eng_match)) {
+			$this->table_engine = $eng_match[1];
+			if (isset($supported_engines[strtolower($this->table_engine)])) {
+				if ('myisam' == strtolower($this->table_engine)) {
+					$create_table_statement = preg_replace('/PAGE_CHECKSUM=\d\s?/', '', $create_table_statement, 1);
+				}
+			} else {
+				$engine_change_message = sprintf(__('Requested table engine (%s) is not present - changing to MyISAM.', 'updraftplus'), $this->table_engine)."<br>";
+				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace("ENGINE=$this->table_engine", "ENGINE=MyISAM", $create_table_statement);
+				$this->table_engine = "MyISAM";
+				// Remove (M)aria options
+				if ('maria' == strtolower($this->table_engine) || 'aria' == strtolower($this->table_engine) || 'myisam' == strtolower($this->table_engine)) {
+					$create_table_statement = preg_replace('/PAGE_CHECKSUM=\d\s?/', '', $create_table_statement, 1);
+					$create_table_statement = preg_replace('/TRANSACTIONAL=\d\s?/', '', $create_table_statement, 1);
+				}
+			}
+		}
+		$charset_change_message = '';
+		if (preg_match('/ CHARSET=([^\s;]+)/i', $create_table_statement, $charset_match)) {
+			$charset = $charset_match[1];
+			if (!isset($supported_charsets[strtolower($charset)])) {
+				$charset_change_message = sprintf(__('Requested table character set (%s) is not present - changing to %s.', 'updraftplus'), esc_html($charset), esc_html($this->restore_options['updraft_restorer_charset']));
+				$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace("CHARSET=$charset", "CHARSET=".$this->restore_options['updraft_restorer_charset'], $create_table_statement);
+				// Allow default COLLLATE to database
+				if (preg_match('/ COLLATE=([^\s;]+)/i', $create_table_statement, $collate_match)) {
+					$collate = $collate_match[1];
+					$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace(" COLLATE=$collate", "", $create_table_statement);
+				}
+			}
+		}
+		// If the table prefix has changed and key constraints are found, make sure they are updated
+		$constraint_change_message = '';
+		if ($this->old_table_prefix != $import_table_prefix && (preg_match_all('/ FOREIGN KEY \([a-zA-z0-9_\', ]+\) REFERENCES \'?([a-zA-z0-9_]+)\'? /i', $create_table_statement, $constraint_matches))) {
+			foreach ($constraint_matches[0] as $constraint) {
+				$updated_constraint = str_replace($this->old_table_prefix, $import_table_prefix, $constraint);
+				$create_table_statement = str_replace($constraint, $updated_constraint, $create_table_statement);
+			}
+			$constraint_change_message = __('Found and replaced existing table foreign key constraints as the table prefix has changed.', 'updraftplus');
+		}
+		$collate_change_message = '';
+		$unsupported_collates_in_sql_line = array();
+		if (!empty($updraft_restorer_collate) && preg_match('/ COLLATE=([a-zA-Z0-9._-]+)/i', $create_table_statement, $collate_match)) {
+			$collate = $collate_match[1];
+			if (!isset($supported_collations[strtolower($collate)])) {
+				$unsupported_collates_in_sql_line[] = $collate;
+				if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
+					$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace("COLLATE=$collate", "", $create_table_statement, false);
+				} else {
+					$create_table_statement = UpdraftPlus_Manipulation_Functions::str_lreplace("COLLATE=$collate", "COLLATE=".$updraft_restorer_collate, $create_table_statement, false);
+				}
+			}
+		}
+		if (!empty($updraft_restorer_collate) && preg_match_all('/ COLLATE ([a-zA-Z0-9._-]+) /i', $create_table_statement, $collate_matches)) {
+			$collates = array_unique($collate_matches[1]);
+			foreach ($collates as $collate) {
+				if (!isset($supported_collations[strtolower($collate)])) {
+					$unsupported_collates_in_sql_line[] = $collate;
+					if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
+						$create_table_statement = str_ireplace("COLLATE $collate ", "", $create_table_statement);
+					} else {
+						$create_table_statement = str_ireplace("COLLATE $collate ", "COLLATE ".$updraft_restorer_collate." ", $create_table_statement);
+					}
+				}
+			}
+		}
+		if (!empty($updraft_restorer_collate) && preg_match_all('/ COLLATE ([a-zA-Z0-9._-]+),/i', $create_table_statement, $collate_matches)) {
+			$collates = array_unique($collate_matches[1]);
+			foreach ($collates as $collate) {
+				if (!isset($supported_collations[strtolower($collate)])) {
+					$unsupported_collates_in_sql_line[] = $collate;
+					if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
+						$create_table_statement = str_ireplace("COLLATE $collate,", ",", $create_table_statement);
+					} else {
+						$create_table_statement = str_ireplace("COLLATE $collate,", "COLLATE ".$updraft_restorer_collate.",", $create_table_statement);
+					}
+				}
+			}
+		}
+		if (count($unsupported_collates_in_sql_line) > 0) {
+			$unsupported_unique_collates_in_sql_line = array_unique($unsupported_collates_in_sql_line);
+			$collate_change_message = sprintf(_n('Requested table collation (%1$s) is not present - changing to %2$s.', 'Requested table collations (%1$s) are not present - changing to %2$s.', count($unsupported_unique_collates_in_sql_line), 'updraftplus'), esc_html(implode(', ', $unsupported_unique_collates_in_sql_line)), esc_html($this->restore_options['updraft_restorer_collate']));
+		}
+		$print_line = sprintf(__('Processing table (%s)', 'updraftplus'), $this->table_engine).":  ".$this->table_name;
+		$logline = "Processing table ($this->table_engine): ".$this->table_name;
+		if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) {
+			if ($this->restore_this_table($this->table_name)) {
+				$print_line .= ' - '.__('will restore as:', 'updraftplus').' '.htmlspecialchars($this->new_table_name);
+				$logline .= " - will restore as: ".$this->new_table_name;
+			} else {
+				$logline .= ' - skipping';
+			}
+			$create_table_statement = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $create_table_statement);
+
+			$this->restored_table_names[] = $this->new_table_name;
+		}
+
+		if (!empty($this->generated_columns[$this->table_name]) && isset($this->generated_columns[$this->table_name]['columns'])) {
+
+			// get all the keys definition in the create table statement if any.
+			// preg_match_all('/\s*[^,]+?key\s*[^(]+\(\s*(`.+?(?:\)|`))\s*\),?/i', $create_table_statement, $key_definitions);
+			// https://regex101.com/r/NEXaLy/1/
+			preg_match_all('/(?<![\S"\',])[^"\',]+?KEY\s*[^(]+\(\s*(`.+?(?:\)|`))\s*\)\s*(?:,|\))(?![\S"\',])/i', $create_table_statement, $key_definitions);
+
+			$reversed_generated_columns = array_reverse((array) $this->generated_columns[$this->table_name]['columns']);
+			foreach ((array) $reversed_generated_columns as $generated_column) {
+				if (empty($generated_column)) continue;
+				if (!isset($this->supported_generated_column_engines[strtolower($this->table_engine)])) $this->supported_generated_column_engines[strtolower($this->table_engine)] = UpdraftPlus_Database_Utility::is_generated_column_supported($this->table_engine);
+				if ($generated_column_db_info = $this->supported_generated_column_engines[strtolower($this->table_engine)]) {
+
+					$reversed_data_type_definition = array_reverse((array) $generated_column['column_data_type_definition']);
+					foreach ($reversed_data_type_definition as $key => &$data_type_definition) {
+						if (in_array($key, array('DATA_TYPE_TOKEN', 'GENERATED_ALWAYS_TOKEN', 'COMMENT_TOKEN'))) continue; // we dont want to replace "not null" in the "generated always as" expression, neither in the comments' string as well, so we continue
+						if (empty($data_type_definition) || 0 === strlen(trim($data_type_definition[0]))) continue;
+						if (!$generated_column_db_info['is_not_null_supported']) {
+							// If the database server doesn't support either null or not null constraint on generated virtual/stored/persistent column then the constraints need to be removed
+							$replaced_data_type_definition = preg_replace('/\b(?:not\s+null|null)\b/i', '', $data_type_definition[0]);
+							$create_table_statement = substr_replace($create_table_statement, $replaced_data_type_definition, $data_type_definition[1], strlen($data_type_definition[0]));
+							$data_type_definition[0] = $replaced_data_type_definition;
+						}
+						if (!$generated_column['is_virtual'] && !$generated_column_db_info['is_persistent_supported']) {
+							// If the persistent type is not supported it likely means that the currently running db server is MySQL, Mariadb uses persistent as an alias for stored type so if the backup file is taken from MariaDB then it needs to be changed to stored
+							$replaced_data_type_definition = preg_replace('/\bpersistent\b/i', 'STORED', $data_type_definition[0]);
+							$create_table_statement = substr_replace($create_table_statement, $replaced_data_type_definition, $data_type_definition[1], strlen($data_type_definition[0]));
+							$data_type_definition[0] = $replaced_data_type_definition;
+						}
+					}
+
+					if ($generated_column['is_virtual'] && ($generated_column_db_info['can_insert_ignore_to_generated_column'] || (isset($this->generated_columns_exist_in_the_statement[$this->table_name]) && false === $this->generated_columns_exist_in_the_statement[$this->table_name])) && !$generated_column_db_info['is_virtual_index_supported'] && !empty($key_definitions)) {
+						// MySQL doesn't support index on MyISAM's virtual generated column, in case that the restoration process is importing from MariaDB backup file which contains create index definition on virtual generated column then it needs to be removed too
+						// the column can be defined as a single or composite index, so we have no choice but loop until the end
+						foreach ($key_definitions[1] as $array_index => $column_names) {
+							if (empty($column_names)) continue;
+							if (empty($key_definitions[0][$array_index])) continue;
+							if (is_numeric(stripos($column_names, $generated_column['column_name']))) {
+								$replaced_key_definition = preg_replace('/(\s*,?[^,]+?key\s*[^(]+\(.*?)(`'.$generated_column['column_name'].'`\s*(?:\([0-9]+\)\s*)?,|,\s*`'.$generated_column['column_name'].'`\s*(?:\([0-9]+\)\s*)?|\s*`'.$generated_column['column_name'].'`\s*(?:\([0-9]+\)\s*)?)(.*\))/ism', '$1$3', $key_definitions[0][$array_index]);
+								$create_table_statement = str_ireplace($key_definitions[0][$array_index], $replaced_key_definition, $create_table_statement);
+								$key_definitions[0][$array_index] = $replaced_key_definition;
+								if (preg_match('/\s*,?[^,]+?key\s*[^(]+\(\s*\)\s*,?/i', $key_definitions[0][$array_index])) {
+									$create_table_statement = preg_replace('/\s*,?[^,]+?key\s+[^(]+\(\s*\)\s*/i', '', $create_table_statement);
+									$key_definitions[0][$array_index] = '';
+								}
+							}
+						}
+					}
+
+					if (!$generated_column_db_info['can_insert_ignore_to_generated_column'] && isset($this->generated_columns_exist_in_the_statement[$this->table_name]) && true === $this->generated_columns_exist_in_the_statement[$this->table_name]) {
+						foreach ($reversed_data_type_definition as $key => &$data_type_definition) {
+							if (empty($data_type_definition) || 0 === strlen(trim($data_type_definition[0]))) continue;
+							if ('GENERATED_ALWAYS_TOKEN' === $key) {
+								// if it's not possible to use insert ignore for the generated column even if the sql strict mode has been turned off then first we need to change the generated column to a normal/standard column
+								$create_table_statement = substr_replace($create_table_statement, '', $data_type_definition[1], strlen($data_type_definition[0]));
+								$data_type_definition[0] = '';
+							} elseif (!in_array($key, array('DATA_TYPE_TOKEN', 'COMMENT_TOKEN'))) {
+								// since "comments" and "generated always as" could contain a string of these keywords (virtual/stored/persistent), so we can't use preg_replace and $generated_column['column_definition'] var as the subject to replace the keyword to an empty string, but instead we lookup the keyword through column_data_type_definition that has captured data type definitions
+								$replaced_data_type_definition = preg_replace('/\b(?:virtual|stored|persistent)\b/i', '', $data_type_definition[0]);
+								$create_table_statement = substr_replace($create_table_statement, $replaced_data_type_definition, $data_type_definition[1], strlen($data_type_definition[0]));
+								$data_type_definition[0] = $replaced_data_type_definition;
+							}
+						}
+						// once the create table and also the insert ignore statement for the corresponding table have been executed, we will use alter table statement to change back the columns to STORED type
+						// this is the only way to avoid "value specified for generated column is not allowed" error, and I think it is the best we can do for now rather than checking the insert statement for virtual columns and replacing the value with DEFAULT
+					}
+				} else {
+					// generated column is not supported but we found a virtual/stored/persistent column type, so it needs to be changed to a normal/standard column
+					// we need to keep the generated column along with its single key index and composite key index so that the select statement on the upper layer of the application which selects the the virtual column does not break the application itself due to unknown column error
+					$reversed_data_type_definition = array_reverse((array) $generated_column['column_data_type_definition']);
+					foreach ($reversed_data_type_definition as $key => &$data_type_definition) {
+						if (empty($data_type_definition) || 0 === strlen(trim($data_type_definition[0]))) continue;
+						if ('GENERATED_ALWAYS_TOKEN' === $key) {
+							$create_table_statement = substr_replace($create_table_statement, '', $data_type_definition[1], strlen($data_type_definition[0]));
+							$data_type_definition[0] = '';
+						} elseif (!in_array($key, array('DATA_TYPE_TOKEN', 'COMMENT_TOKEN'))) {
+							$replaced_data_type_definition = preg_replace('/\b(?:virtual|stored|persistent)\b/i', '', $data_type_definition[0]);
+							$create_table_statement = substr_replace($create_table_statement, $replaced_data_type_definition, $data_type_definition[1], strlen($data_type_definition[0]));
+							$data_type_definition[0] = $replaced_data_type_definition;
+						}
+					}
+				}
+			}
+		}
+
+		$updraftplus->log($logline);
+		$updraftplus->log($print_line, 'notice-restore');
+		$this->restoring_table = $this->new_table_name;
+		if ($charset_change_message) $updraftplus->log($charset_change_message, 'notice-restore');
+		if ($constraint_change_message) $updraftplus->log($constraint_change_message, 'notice-restore');
+		if ($collate_change_message) $updraftplus->log($collate_change_message, 'notice-restore');
+		if ($engine_change_message) $updraftplus->log($engine_change_message, 'notice-restore');
+		return $create_table_statement;
+	}
+
+	/**
+	 * Callback function that will be triggered when the script execution ends. Reset log_bin_trust_function_creators variable's value to its original value
+	 */
+	public function on_shutdown() {
+
+		global $updraftplus;
+
+		if (!empty($this->stored_routine_supported) && is_array($this->stored_routine_supported) && $this->stored_routine_supported['is_binary_logging_enabled']) {
+			// if this condition is met, it means that db server binary logging is enabled and the value of the log_bin_trust_function_system_variable has previously been set to ON (1), and now the value must be changed back to what it originally was
+			if (isset($this->continuation_data['old_log_bin_trust_function_creators'])) {
+				$old_log_bin_trust_function_creators = $this->continuation_data['old_log_bin_trust_function_creators'];
+			} else {
+				$old_log_bin_trust_function_creators = $updraftplus->jobdata_get('old_log_bin_trust_function_creators');
+			}
+			if (is_string($old_log_bin_trust_function_creators) && '' !== $old_log_bin_trust_function_creators) $this->set_log_bin_trust_function_creators($old_log_bin_trust_function_creators);
+		}
+	}
+
+	/**
 	 * Restore the database backup
 	 *
 	 * @param  string $working_dir           specify working directory
@@ -2182,16 +2518,17 @@ class Updraft_Restorer {
 			}
 		}
 
-		UpdraftPlus_Database_Utility::set_sql_mode(array(), $this->use_wpdb() ? null : $this->mysql_dbh);
+		UpdraftPlus_Database_Utility::set_sql_mode(array('NO_AUTO_VALUE_ON_ZERO'), array(), $this->use_wpdb() ? null : $this->mysql_dbh);
+
+		// register restoration shutdown event so that we can set some mysql's global variable back to its original value
+		register_shutdown_function(array($this, 'on_shutdown'));
 
 		// Find the supported engines - in case the dump had something else (case seen: saved from MariaDB with engine Aria; imported into plain MySQL without)
-		$supported_engines = $wpdb->get_results("SHOW ENGINES", OBJECT_K);
-		$supported_charsets = $wpdb->get_results("SHOW CHARACTER SET", OBJECT_K);
-		$db_supported_collations_res = $wpdb->get_results('SHOW COLLATION', OBJECT_K);
-		$supported_collations = (null !== $db_supported_collations_res) ? $db_supported_collations_res : array();
-		$updraft_restorer_collate = isset($this->restore_options['updraft_restorer_collate']) ? $this->restore_options['updraft_restorer_collate'] : '';
+		$supported_engines = array_change_key_case((array) $wpdb->get_results("SHOW ENGINES", OBJECT_K));
+		$supported_charsets = array_change_key_case((array) $wpdb->get_results("SHOW CHARACTER SET", OBJECT_K));
+		$supported_collations = array_change_key_case((array) $wpdb->get_results('SHOW COLLATION', OBJECT_K));
 
-		$engine = '';
+		$this->table_engine = '';
 		
 		$this->errors = 0;
 		$this->statements_run = 0;
@@ -2220,6 +2557,7 @@ class Updraft_Restorer {
 
 		$this->last_error = '';
 		$random_table_name = 'updraft_tmp_'.rand(0, 9999999).md5(microtime(true));
+		$last_created_generated_columns_table = '';
 
 		// The only purpose in funnelling queries directly here is to be able to get the error number
 		if ($this->use_wpdb()) {
@@ -2316,7 +2654,7 @@ class Updraft_Restorer {
 			}
 		}
 
-		$restoring_table = '';
+		$this->restoring_table = '';
 
 		$this->max_allowed_packet = $updraftplus->max_packet_size();
 
@@ -2325,7 +2663,13 @@ class Updraft_Restorer {
 
 		$delimiter = ';';
 		$delimiter_regex = ';';
-		
+		$virtual_columns_exist = false;
+
+		$old_log_bin_trust_function_creators = null;
+
+		if (is_null($this->stored_routine_supported)) $this->stored_routine_supported = UpdraftPlus_Database_Utility::is_stored_routine_supported();
+		if (is_wp_error($this->stored_routine_supported)) $updraftplus->log('is_stored_routine_supported(): '.$this->stored_routine_supported->get_error_message());
+
 		// N.B. There is no such function as bzeof() - we have to detect that another way
 		while (($is_plain && !feof($dbhandle)) || (!$is_plain && (($is_bz2) || (!$is_bz2 && !gzeof($dbhandle))))) {
 			// Up to 1Mb
@@ -2419,10 +2763,29 @@ class Updraft_Restorer {
 			}
 
 			// Detect INSERT and various other commands early, so that we can split or combine them if necessary
-			if (preg_match('/^\s*(insert into \`?([^\`]*)\`?\s+(values|\())/i', $sql_line.$buffer, $matches)) {
+			if (preg_match('/^\s*(insert\s\s*into(?:\s*`(.+?)`|[^\(]+)(?:\s*\(.+?\))?\s*(?:values|\())/i', $sql_line.$buffer, $matches)) {
+				// https://regex101.com/r/zrQquQ/2
 				$this->table_name = $matches[2];
 				$sql_type = 3;
 				$insert_prefix = $matches[1];
+
+				// if the current table is a generated columns table, that means at this stage the table creation is being postponed and the block of code below will get executed first to filter the create statement
+				if (!empty($this->generated_columns[$this->table_name])) {
+					// parse the generated columns insert statement so that later we can instantly retrieve the information needed when creating the table
+					$this->generated_columns_exist_in_the_statement[$this->table_name] = UpdraftPlus_Database_Utility::generated_columns_exist_in_the_statement($sql_line.$buffer, $this->generated_columns[$this->table_name]['column_names']);
+					if ($this->table_name != $last_created_generated_columns_table) {
+						$create_statement = $this->prepare_create_table($this->generated_columns[$this->table_name]['create_statement'], $import_table_prefix, $supported_engines, $supported_charsets, $supported_collations);
+						// after getting the filtered create statement, continue with the table creation
+						$do_exec = $this->sql_exec($create_statement, 2, $import_table_prefix);
+						$last_created_generated_columns_table = $this->table_name;
+						if (is_wp_error($do_exec)) return $do_exec;
+					}
+					// on MySQL 5.7.x, we could get an error "the value specified for generated column is not allowed", disabling strict mode doesn't work, adding insert ignore doesn't work either
+					// disabling strict mode works fine on MariaDB, it may be good if we can strengthen the insert statement by adding ignore keyword into it
+					$sql_line = preg_replace('/^(\s*insert\s\s*into)(.+)$/is', 'insert ignore into$2', $sql_line);
+					$insert_prefix = preg_replace('/^(\s*insert\s\s*into)(.+)$/is', 'insert ignore into$2', $matches[0]);
+				}
+
 			} elseif (preg_match('/^\s*delimiter (\S+)\s*$/i', $sql_line.$buffer, $matches)) {
 				// This also needs processing early so that the correct delimiter is used a few lines down
 				$sql_type = 10;
@@ -2431,6 +2794,26 @@ class Updraft_Restorer {
 				$delimiter_regex = str_replace(array('$', '#', '/'), array('\$', '\#', '\/'), $delimiter);
 			} elseif (preg_match('/^\s*create trigger /i', $sql_line.$buffer)) {
 				$sql_type = 9;
+				$buffer = $buffer."\n";
+			} elseif (preg_match("/^\s*CREATE\s\s*(?:DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|'.{1,17}'@'[^\s]+'\s*|[^\s]+?\s))?(?:AGGREGATE\s\s*)?(?:PROCEDURE|FUNCTION)((?:\s\s*[^\(`]+|\s*`(?:[^`]|``)+`))\s*\(/is", $sql_line.$buffer)) {
+				$sql_type = 12;
+				$buffer = $buffer."\n"; // need to do this so that the functions/procedures which have double dash and/or shell comment style (i.e -- comment, # comment) doesn't block the rest of the code in the routines body and also because we want to keep the routines as it is or in multiline (in a form that people prefer) so they who will edit it later don't get surprised by the look of it in a single line/one line
+			} elseif (preg_match('/^\s*create table \`?([^\`\(]*)\`?\s*\(/i', $sql_line.$buffer, $matches)) {
+				$sql_type = 2;
+				$this->table_name = $matches[1];
+				// check whether the column definition is a generated column
+				$generated_column_info = UpdraftPlus_Database_Utility::get_generated_column_info($buffer, strlen($sql_line));
+				if ($generated_column_info) {
+					if (!isset($this->generated_columns[$this->table_name])) $this->generated_columns[$this->table_name] = array();
+					if (!$virtual_columns_exist) $virtual_columns_exist = $generated_column_info['is_virtual'];
+					$this->generated_columns[$this->table_name]['columns'][] = $generated_column_info;
+					$this->generated_columns[$this->table_name]['column_names'][] = $generated_column_info['column_name'];
+				}
+				if (!empty($this->generated_columns[$this->table_name]) && substr($sql_line.$buffer, -strlen($delimiter), strlen($delimiter)) == $delimiter) {
+					$this->generated_columns[$this->table_name]['create_statement'] = $sql_line.$buffer;
+					$this->generated_columns[$this->table_name]['virtual_columns_exist'] = $virtual_columns_exist;
+					$virtual_columns_exist = false;
+				}
 			}
 
 			// Deal with case where adding this line will take us over the MySQL max_allowed_packet limit - must split, if we can (if it looks like consecutive rows)
@@ -2464,7 +2847,7 @@ class Updraft_Restorer {
 			//
 			// $wpdb->query("CREATE TRIGGER `civicrm_acl_after_insert` AFTER INSERT ON `civicrm_acl` FOR EACH ROW BEGIN IF (@civicrm_disable_logging IS NULL OR @civicrm_disable_logging = 0 ) THEN INSERT INTO log_civicrm_acl (`id`, `name`, `deny`, `entity_table`, `entity_id`, `operation`, `object_table`, `object_id`, `acl_table`, `acl_id`, `is_active`, log_conn_id, log_user_id, log_action) VALUES ( NEW.`id`, NEW.`name`, NEW.`deny`, NEW.`entity_table`, NEW.`entity_id`, NEW.`operation`, NEW.`object_table`, NEW.`object_id`, NEW.`acl_table`, NEW.`acl_id`, NEW.`is_active`, COALESCE(@uniqueID, LEFT(CONCAT('c_', unix_timestamp()/3600, CONNECTION_ID()), 17)), @civicrm_user_id, 'insert'); END IF; END"));
 
-			if ((3 == $sql_type && !preg_match('/\)\s*'.$delimiter_regex.'$/', substr($sql_line, -5, 5))) || (3 != $sql_type && 9 != $sql_type && 10 != $sql_type && substr($sql_line, -strlen($delimiter), strlen($delimiter)) != $delimiter) || (9 == $sql_type && !preg_match('/END\s*('.$delimiter_regex.')?\s*$/', $sql_line))) continue;
+			if ((3 == $sql_type && !preg_match('/\)\s*'.$delimiter_regex.'$/', substr($sql_line, -5, 5))) || (!in_array($sql_type, array(3, 9, 10, 12)) && substr($sql_line, -strlen($delimiter), strlen($delimiter)) != $delimiter) || (9 == $sql_type && !preg_match('/(?:END)?\s*'.$delimiter_regex.'\s*$/', $sql_line))) continue;
 
 			$this->line++;
 
@@ -2476,7 +2859,7 @@ class Updraft_Restorer {
 				$sql_line = '';
 				$sql_type = -1;
 				// If this is the very first SQL line of the options table, we need to bail; it's essential
-				if (0 == $this->insert_statements_run && $restoring_table && $restoring_table == $import_table_prefix.'options') {
+				if (0 == $this->insert_statements_run && $this->restoring_table && $this->restoring_table == $import_table_prefix.'options') {
 					$updraftplus->log("Leaving maintenance mode");
 					$this->maintenance_mode(false);
 					return new WP_Error('initial_db_error', sprintf(__('An error occurred on the first %s command - aborting run', 'updraftplus'), 'INSERT (options)'));
@@ -2488,10 +2871,10 @@ class Updraft_Restorer {
 			if (preg_match('/^\s*drop table (if exists )?\`?([^\`]*)\`?\s*'.$delimiter_regex.'/i', $sql_line, $matches)) {
 				$sql_type = 1;
 
-				if (!isset($printed_new_table_prefix)) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UndefinedVariable
+				if (!$this->printed_new_table_prefix) {
 					$import_table_prefix = $this->pre_sql_actions($import_table_prefix);
 					if (false === $import_table_prefix || is_wp_error($import_table_prefix)) return $import_table_prefix;
-					$printed_new_table_prefix = true;
+					$this->printed_new_table_prefix = true;
 				}
 
 				$this->table_name = $matches[2];
@@ -2527,170 +2910,26 @@ class Updraft_Restorer {
 				$sql_type = 2;
 				$this->insert_statements_run = 0;
 				$this->table_name = $matches[1];
-				if ($this->table_should_be_skipped($this->table_name)) {
+
+				// regardless of whether or not the table should be skipped, the table creation should also be postponed if the table contains one or more generated columns
+				if ($this->table_should_be_skipped($this->table_name) || !empty($this->generated_columns[$this->table_name])) {
 					// Reset
 					$sql_line = '';
 					$sql_type = -1;
 					continue;
 				}
 
-				// Legacy, less reliable - in case it was not caught before. We added it in here (CREATE) as well as in DROP because of SQL dumps which lack DROP statements.
-				if ('' == $this->old_table_prefix && preg_match('/^([a-z0-9]+)_.*$/i', $this->table_name, $tmatches)) {
-					$this->old_table_prefix = $tmatches[1].'_';
-					$updraftplus->log(__('Old table prefix:', 'updraftplus').' '.$this->old_table_prefix, 'notice-restore', 'old-table-prefix');
-					$updraftplus->log("Old table prefix (detected from creating first table): ".$this->old_table_prefix);
-				}
-
-				// MySQL 4.1 outputs TYPE=, but accepts ENGINE=; 5.1 onwards accept *only* ENGINE=
-				$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace('TYPE=', 'ENGINE=', $sql_line);
-
-				if (empty($printed_new_table_prefix)) {
+				if (!$this->printed_new_table_prefix) {
 					$import_table_prefix = $this->pre_sql_actions($import_table_prefix);
 					if (false === $import_table_prefix || is_wp_error($import_table_prefix)) return $import_table_prefix;
-					$printed_new_table_prefix = true;
+					$this->printed_new_table_prefix = true;
 				}
 
-				$this->new_table_name = $this->old_table_prefix ? UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $this->table_name) : $this->table_name;
+				$sql_line = $this->prepare_create_table($sql_line, $import_table_prefix, $supported_engines, $supported_charsets, $supported_collations);
 
-				// This CREATE TABLE command may be the de-facto mark for the end of processing a previous table (which is so if this is not the first table in the SQL dump)
-				if ($restoring_table) {
-
-					// Attempt to reconnect if the DB connection dropped (may not succeed, of course - but that will soon become evident)
-					$updraftplus->check_db_connection($this->wpdb_obj);
-
-					// After restoring the options table, we can set old_siteurl if on legacy (i.e. not already set)
-					if ($restoring_table == $import_table_prefix.'options') {
-						if ('' == $this->old_siteurl || '' == $this->old_home || '' == $this->old_content) {
-							global $updraftplus_addons_migrator;
-							if (!empty($updraftplus_addons_migrator->new_blogid)) switch_to_blog($updraftplus_addons_migrator->new_blogid);
-
-							if ('' == $this->old_siteurl) {
-								$this->old_siteurl = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='siteurl'")->option_value);
-								do_action('updraftplus_restore_db_record_old_siteurl', $this->old_siteurl);
-							}
-							if ('' == $this->old_home) {
-								$this->old_home = untrailingslashit($wpdb->get_row("SELECT option_value FROM $wpdb->options WHERE option_name='home'")->option_value);
-								do_action('updraftplus_restore_db_record_old_home', $this->old_home);
-							}
-							if ('' == $this->old_content) {
-								$this->old_content = $this->old_siteurl.'/wp-content';
-								do_action('updraftplus_restore_db_record_old_content', $this->old_content);
-							}
-							if (!empty($updraftplus_addons_migrator->new_blogid)) restore_current_blog();
-						}
-					}
-					
-					if ($restoring_table != $this->new_table_name) $this->restored_table($restoring_table, $import_table_prefix, $this->old_table_prefix, $engine);
-
-				}
-				$engine = "(?)";
-				$engine_change_message = '';
-				if (preg_match('/ENGINE=([^\s;]+)/', $sql_line, $eng_match)) {
-					$engine = $eng_match[1];
-					if (isset($supported_engines[$engine])) {
-						if ('myisam' == strtolower($engine)) {
-							$sql_line = preg_replace('/PAGE_CHECKSUM=\d\s?/', '', $sql_line, 1);
-						}
-					} else {
-						$engine_change_message = sprintf(__('Requested table engine (%s) is not present - changing to MyISAM.', 'updraftplus'), $engine)."<br>";
-						$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace("ENGINE=$engine", "ENGINE=MyISAM", $sql_line);
-						$engine = "MyISAM";
-						// Remove (M)aria options
-						if ('maria' == strtolower($engine) || 'aria' == strtolower($engine)) {
-							$sql_line = preg_replace('/PAGE_CHECKSUM=\d\s?/', '', $sql_line, 1);
-							$sql_line = preg_replace('/TRANSACTIONAL=\d\s?/', '', $sql_line, 1);
-						}
-					}
-				}
-				$charset_change_message = '';
-				if (preg_match('/ CHARSET=([^\s;]+)/i', $sql_line, $charset_match)) {
-					$charset = $charset_match[1];
-					if (!isset($supported_charsets[$charset])) {
-						$charset_change_message = sprintf(__('Requested table character set (%s) is not present - changing to %s.', 'updraftplus'), esc_html($charset), esc_html($this->restore_options['updraft_restorer_charset']));
-						$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace("CHARSET=$charset", "CHARSET=".$this->restore_options['updraft_restorer_charset'], $sql_line);
-						// Allow default COLLLATE to database
-						if (preg_match('/ COLLATE=([^\s;]+)/i', $sql_line, $collate_match)) {
-							$collate = $collate_match[1];
-							$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace(" COLLATE=$collate", "", $sql_line);
-						}
-					}
-				}
-				// If the table prefix has changed and key constraints are found, make sure they are updated
-				$constraint_change_message = '';
-				if ($this->old_table_prefix != $import_table_prefix && (preg_match_all('/ FOREIGN KEY \([a-zA-z0-9_\', ]+\) REFERENCES \'?([a-zA-z0-9_]+)\'? /i', $sql_line, $constraint_matches))) {
-					foreach ($constraint_matches[0] as $constraint) {
-						$updated_constraint = str_replace($this->old_table_prefix, $import_table_prefix, $constraint);
-						$sql_line = str_replace($constraint, $updated_constraint, $sql_line);
-					}
-					$constraint_change_message = __('Found and replaced existing table foreign key constraints as the table prefix has changed.', 'updraftplus');
-				}
-				$collate_change_message = '';
-				$unsupported_collates_in_sql_line = array();
-				if (!empty($updraft_restorer_collate) && preg_match('/ COLLATE=([a-zA-Z0-9._-]+)/i', $sql_line, $collate_match)) {
-					$collate = $collate_match[1];
-					if (!isset($supported_collations[$collate])) {
-						$unsupported_collates_in_sql_line[] = $collate;
-						if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
-							$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace("COLLATE=$collate", "", $sql_line, false);
-						} else {
-							$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace("COLLATE=$collate", "COLLATE=".$updraft_restorer_collate, $sql_line, false);
-						}
-					}
-				}
-				if (!empty($updraft_restorer_collate) && preg_match_all('/ COLLATE ([a-zA-Z0-9._-]+) /i', $sql_line, $collate_matches)) {
-					$collates = array_unique($collate_matches[1]);
-					foreach ($collates as $collate) {
-						if (!isset($supported_collations[$collate])) {
-							$unsupported_collates_in_sql_line[] = $collate;
-							if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
-								$sql_line = str_ireplace("COLLATE $collate ", "", $sql_line);
-							} else {
-								$sql_line = str_ireplace("COLLATE $collate ", "COLLATE ".$updraft_restorer_collate." ", $sql_line);
-							}
-						}
-					}
-				}
-				if (!empty($updraft_restorer_collate) && preg_match_all('/ COLLATE ([a-zA-Z0-9._-]+),/i', $sql_line, $collate_matches)) {
-					$collates = array_unique($collate_matches[1]);
-					foreach ($collates as $collate) {
-						if (!isset($supported_collations[$collate])) {
-							$unsupported_collates_in_sql_line[] = $collate;
-							if ('choose_a_default_for_each_table' == $updraft_restorer_collate) {
-								$sql_line = str_ireplace("COLLATE $collate,", ",", $sql_line);
-							} else {
-								$sql_line = str_ireplace("COLLATE $collate,", "COLLATE ".$updraft_restorer_collate.",", $sql_line);
-							}
-						}
-					}
-				}
-				if (count($unsupported_collates_in_sql_line) > 0) {
-					$unsupported_unique_collates_in_sql_line = array_unique($unsupported_collates_in_sql_line);
-					$collate_change_message = sprintf(_n('Requested table collation (%1$s) is not present - changing to %2$s.', 'Requested table collations (%1$s) are not present - changing to %2$s.', count($unsupported_unique_collates_in_sql_line), 'updraftplus'), esc_html(implode(', ', $unsupported_unique_collates_in_sql_line)), esc_html($this->restore_options['updraft_restorer_collate']));
-				}
-				$print_line = sprintf(__('Processing table (%s)', 'updraftplus'), $engine).":  ".$this->table_name;
-				$logline = "Processing table ($engine): ".$this->table_name;
-				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) {
-					if ($this->restore_this_table($this->table_name)) {
-						$print_line .= ' - '.__('will restore as:', 'updraftplus').' '.htmlspecialchars($this->new_table_name);
-						$logline .= " - will restore as: ".$this->new_table_name;
-					} else {
-						$logline .= ' - skipping';
-					}
-					$sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
-
-					$this->restored_table_names[] = $this->new_table_name;
-				}
-				$updraftplus->log($logline);
-				$updraftplus->log($print_line, 'notice-restore');
-				$restoring_table = $this->new_table_name;
-				if ($charset_change_message) $updraftplus->log($charset_change_message, 'notice-restore');
-				if ($constraint_change_message) $updraftplus->log($constraint_change_message, 'notice-restore');
-				if ($collate_change_message) $updraftplus->log($collate_change_message, 'notice-restore');
-				if ($engine_change_message) $updraftplus->log($engine_change_message, 'notice-restore');
-
-			} elseif (preg_match('/^\s*(insert into \`?([^\`]*)\`?\s+(values|\())/i', $sql_line, $matches)) {
+			} elseif (preg_match('/^\s*insert(?:\s\s*ignore)?\s\s*into(?:\s*`(.+?)`|[^\(]+)(?:\s*\(.+?\))?\s*(?:values|\()/i', $sql_line, $matches)) {
 				$sql_type = 3;
-				$this->table_name = $matches[2];
+				$this->table_name = $matches[1];
 				if ($this->table_should_be_skipped($this->table_name)) {
 					// Reset
 					$sql_line = '';
@@ -2721,26 +2960,144 @@ class Updraft_Restorer {
 					$charset = $connection_charset;
 				}
 				$this->set_names = $charset;
-				if (!isset($supported_charsets[$charset])) {
+				if (!isset($supported_charsets[strtolower($charset)])) {
 					$sql_line = UpdraftPlus_Manipulation_Functions::str_lreplace($smatches[1]." ".$charset, "SET NAMES ".$this->restore_options['updraft_restorer_charset'], $sql_line);
 					$updraftplus->log('SET NAMES: '.sprintf(__('Requested character set (%s) is not present - changing to %s.', 'updraftplus'), esc_html($charset), esc_html($this->restore_options['updraft_restorer_charset'])), 'notice-restore');
 				}
 			} elseif (preg_match('/^\s*create trigger /i', $sql_line)) {
 				$sql_type = 9;
 				// If the statement is not yet complete, then continue (to get the next line)
-				if (!preg_match('/END\s*('.$delimiter_regex.')?\s*$/', $sql_line)) continue;
+				if (!preg_match('/(?:END)?\s*'.$delimiter_regex.'\s*$/', $sql_line)) continue;
+				// If it's a comment then continue;
+				if (preg_match('/(?:--|#).+?'.$delimiter_regex.'\s*$/i', $buffer)) continue;
 				$updraftplus->log_restore_update(array('type' => 'state', 'stage' => 'db', 'data' => array('stage' => 'trigger', 'table' => '')));
 				if ('' != $this->old_table_prefix && $import_table_prefix != $this->old_table_prefix) $sql_line = UpdraftPlus_Manipulation_Functions::str_replace_once($this->old_table_prefix, $import_table_prefix, $sql_line);
-				if (';' !== $delimiter) $sql_line = preg_replace('/END\s*'.$delimiter_regex.'\s*$/', 'END', $sql_line);
+				if (';' !== $delimiter) {
+					$sql_line = preg_replace('/END\s*'.$delimiter_regex.'\s*$/', 'END', $sql_line);
+					// handle trigger statement which doesn't include begin and end in the trigger body, and remove the delimiter
+					$sql_line = preg_replace('/\s*'.$delimiter_regex.'\s*$/', '', $sql_line);
+				}
 				if ($this->triggers_forbidden) $updraftplus->log("Database user lacks permission to create triggers; statement will not be executed ($sql_line)");
 			} elseif (preg_match('/^\s*drop trigger /i', $sql_line)) {
 				// Avoid sending unrecognised delimiters to the SQL server (this only affects backups created outside UD; we use ";;" which is cunningly compatible)
 				if (';' !== $delimiter) $sql_line = preg_replace('/'.$delimiter_regex.'\s*$/', '', $sql_line);
+			} elseif (preg_match("/^\s*CREATE\s\s*(?:OR\s\s*REPLACE\s\s*)?(?:DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|'.{1,17}'@'[^\s]+'\s*|[^\s]+?\s))?(?:AGGREGATE\s\s*)?(?:PROCEDURE|FUNCTION)((?:\s\s*[^\(`]+|\s*`(?:[^`]|``)+`))\s*\(/is", $sql_line, $routine_matches)) {
+				// ^\s*create\s\s*(?:or\s\s*replace\s\s*)?.*?(?:(?:aggregate\s\s*)?function|procedure)\s\s*`(.+)`(?:\s\s*if\s\s*not\s\s*exists\s*|\s*)?\(
+				// ^[^'\"]*create[^'\"]*(?:function(?:\s\s*if\s\s*not\s\s*exists)?|procedure)\s*`([^\r\n]+)`
+				$sql_type = 12;
+				// it's possible that a routine doesn't have BEGIN and END statements in its routine body, unfortunately sometimes it does have the statement separator (;) at the end of the routine statement but sometimes it doesn't
+				// if it has the statement separator (;) then we add the statement separator into the regex and the preceding delimiter, if it doesn't have statement separator then check only the delimiter
+				if (!preg_match('/END\s*(?:\*\/)?'.$delimiter_regex.'\s*$/is', rtrim($sql_line)) && !preg_match('/\;\s*'.$delimiter_regex.'\s*$/is', rtrim($sql_line)) && !preg_match('/\s*(?:\*\/)?'.$delimiter_regex.'\s*$/is', rtrim($sql_line))) continue;
+				// if it's already at the end of the statement check whether it's a comment or not (e.g. SET @VARIABLE = 'the value'; -- the comment END;; or SET @VARIABLE = 'the value'; # the comment END;;;)
+				if (preg_match('/(?:--|#).+?END\s*'.$delimiter_regex.'\s*$/i', rtrim($sql_line)) && preg_match('/(?:--|#).+?'.$delimiter_regex.'\s*$/i', rtrim($sql_line))) continue;
+				if (is_array($this->stored_routine_supported) && !empty($this->stored_routine_supported) && !is_wp_error($old_log_bin_trust_function_creators)) {
+					$updraftplus->log_restore_update(array('type' => 'state', 'stage' => 'db', 'data' => array('stage' => 'stored_routine', 'routine_name' => preg_replace('/^`?(.+?)`?$/i', "$1", trim(str_replace('``', '`', $routine_matches[1]))))));
+					if ($this->stored_routine_supported['is_binary_logging_enabled'] && !$this->stored_routine_supported['is_function_creators_trusted'] && !isset($this->continuation_data['old_log_bin_trust_function_creators']) && is_null($old_log_bin_trust_function_creators)) {
+						// it's a new restoration
+						// no matter what the database server is and the priviliges the current DB user has, if the binary logging is enabled, log_bin_trust_function_creators is set to off and DB current, we could end up getting the below error when restoring routines
+						// ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
+						// we need to set the log_bin_trust_function_creators "ON" so that the db server will treat all functions as deterministic safe functions.
+						// https://mariadb.com/kb/en/library/binary-logging-of-stored-routines/
+						// https://dev.mysql.com/doc/refman/8.0/en/stored-programs-logging.html
+						// if the DB current user is a non super admin, binary logging is enabled and log_bin_trust_function_creators is set to OFF/0 it will produce this error "(You do not have the SUPER privilege and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)"
+						// the log_bin_tust_function_creators variable is a global variable that should only be changed with caution because other plugins may also use it for some purpose, this can lead to an inaccurate value of log_bin_trust_function_creators especially if the restoration failed and the resumption could not be triggered
+						$old_log_bin_trust_function_creators = $this->set_log_bin_trust_function_creators('ON');
+						if (is_wp_error($old_log_bin_trust_function_creators)) {
+							$updraftplus->log('set_log_bin_trust_function_creators(ON): '.$old_log_bin_trust_function_creators);
+						} else {
+							$updraftplus->log('log_bin_trust_function_creators value has been set to: ON');
+							// we also need to store the original value of the log_bin_trust_function_creator variable to UDP jobdata so that if something goes wrong in the restoration, we're stil able in a earlier time to set this global variable back to what it was (register_shutdown_function seems to be the good one)
+							$updraftplus->jobdata_set('old_log_bin_trust_function_creators', $old_log_bin_trust_function_creators);
+							$updraftplus->log('The original value of log_bin_trust_function_creators variable has been successfully added to UDP jobdata');
+						}
+					} elseif ($this->stored_routine_supported['is_binary_logging_enabled'] && !$this->stored_routine_supported['is_function_creators_trusted'] && is_null($old_log_bin_trust_function_creators) && isset($this->continuation_data['old_log_bin_trust_function_creators'])) {
+						// it's a resumption of the previous run, it can be recognised from the existence of old_log_bin_trust_function_creators index in $continuation_data variable
+						$old_log_bin_trust_function_creators = $this->continuation_data['old_log_bin_trust_function_creators'];
+						$updraftplus->log('Running a resumption from the previous restoration');
+						$this->set_log_bin_trust_function_creators('ON');
+						$updraftplus->log('log_bin_trust_function_creators value has been set to: ON');
+					}
+
+					// the routine's definer in the backup file could be different with the user and host on the targeted restore site, so we need to replace the user and host information for the definer option with the current user account or remove the DEFINER clause and let the system use the default value (which is current user)
+					// replace the user and host with db_user and db_host
+					// $sql_line = preg_replace("/^([^'\"]*create[^'\"]*definer\s*=\s*)(?:`.{1,17}`@`[^\s]+`|'.{1,17}'@'[^\s]+')(.+?(?:function(?:\s\s*if\s\s*not\s\s*exists)?|procedure)\s*`)/is", "$1`".DB_USER."`@`".DB_HOST."`$2", $sql_line);
+					// remove the DEFINER clause
+					$sql_line = preg_replace("/^\s*(CREATE(?:\s\s*OR\s\s*REPLACE)?)\s\s*DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|'.{1,17}'@'[^\s]+'\s*|[^\s]+?\s)((?:AGGREGATE\s\s*)?(?:PROCEDURE|FUNCTION))/is", "$1 $2", $sql_line);
+
+					if (preg_match('/^\s*CREATE(?:\s\s*OR\s\s*REPLACE)?\s\s*(?:DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|\'.{1,17}\'@\'[^\s]+\'\s*|[^\s]+?\s))?PROCEDURE(?:\s*`(?:[^`]|``)+`\s*|\s[^\(]+)(?\'params\'(?:[^()]+|\((?1)*\)))(?:(.*?)COMMENT\s\s*\'[^\']+\'|COMMENT\s\s*\'[^\']+\'(.*?)|(.*?))(?:(.*?)BEGIN|([^\'"]+))/is', $sql_line, $sql_security_matches, PREG_OFFSET_CAPTURE) || preg_match('/^\s*CREATE(?:\s\s*OR\s\s*REPLACE)?\s\s*(?:DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|\'.{1,17}\'@\'[^\s]+\'\s*|[^\s]+?\s))?(?:AGGREGATE\s\s*)?FUNCTION(?:\s*`(?:[^`]|``)+`\s*|\s[^\(]+)(?\'params\'(?:[^()]+|\((?1)*\)))\s*RETURNS\s[\w]+(?:\(.*?\))?\s*(?:CHARSET\s\s*[^\s]+\s\s*)?(?:COLLATE\s\s*[^\s]+\s\s*)?(?:(.*?)COMMENT\s\s*\'[^\']+\'|COMMENT\s\s*\'[^\']+\'(.*?)|(.*?))(?:(.*?)BEGIN|(.*?)RETURN)/is', $sql_line, $sql_security_matches, PREG_OFFSET_CAPTURE)) {
+						// replace SQL SECURITY DEFINER and add SQL SECURITY INVOKER
+						$is_last_index_replaced = false;
+						$sql_security_matches = array_reverse($sql_security_matches);
+						foreach ($sql_security_matches as $key => $match) {
+							if ((int) $match[1] <= 0 || 'params' === $key) continue;
+							$length = strlen($match[0]);
+							$match[0] = preg_replace('/SQL\s\s*SECURITY\s\s*(?:DEFINER|INVOKER)/is', ' ', $match[0]);
+							if (!$is_last_index_replaced) {
+								// $match[0] .= ' SQL SECURITY INVOKER ';
+								$match[0] = ' SQL SECURITY INVOKER ' . $match[0];
+								$is_last_index_replaced = true;
+							}
+							$sql_line = substr_replace($sql_line, $match[0], $match[1], max(0, $length));
+						}
+					}
+
+					// there could be a text/varchar variable declaration in the routine body in which the charset is also being specified in it, this could lead to an error when restoring the routine because of unsupported charset. for example, the declaration for a varchar/text variable in the routine body or the function parameter with the uf8mb4 charset defined but the running DB doesn't support utf8mb4
+					// to handle this we first check the routine creation statement and collect all the variable declarations which in relation with text/char variables that contain charset specification and then replace or remove the charset if necessary
+					/* e.g:
+					create procedure `test`(_user_id varchar(50) CHARSET utf8, _user_passwd varchar(255) CHARSET utf8, success_text text CHARSET utf8mb4, failure_text text CHARSET utf8)
+					begin
+						declare insert_status int default 0;
+						declare _user_id varchar(2049) CHARSET utf8;
+						declare _password varchar(255) CHARSET utf8mb4;
+						declare _parent_nid bigint;
+						declare _uid bigint;
+						declare _node varchar(255) CHARSET utf8mb4;
+					end ;;
+					*/
+					if (preg_match_all('/(\s(?:long|medium|tiny)?text\s*(?:\([0-9]+\))?|\s(?:var)?char\s*(?:\([0-9]+\))?).*?charset\s([^;,\)\s]+).*?(?:,|;|\))/is', $sql_line, $charset_matches)) {
+						foreach ((array) $charset_matches[2] as $key => $charset) {
+							$replaced_charset_declaration = $charset_matches[0][$key];
+							if (!empty($charset) && !isset($supported_charsets[strtolower(trim($charset))])) {
+								$replaced_charset_declaration = !empty($this->restore_options['updraft_restorer_charset']) ? str_ireplace($charset, $this->restore_options['updraft_restorer_charset'], $replaced_charset_declaration) : str_ireplace(array('charset', $charset), array('', ''), $replaced_charset_declaration);
+								$sql_line = str_ireplace($charset_matches[0][$key], $replaced_charset_declaration, $sql_line);
+							}
+						}
+					}
+					if (!$this->stored_routine_supported['is_create_or_replace_supported']) {
+						// "create or replace" syntax is used by MariaDB only, in case we are restoring from the MariaDB backup file to MySQL database server, we need to remove the "or replace" syntax if any
+						$sql_line = preg_replace("/^([^'\"]*)create\s\s*or\s\s*replace([^'\"]*(?:function(?:\s\s*if\s\s*not\s\s*exists)?|procedure)\s*`)/is", "$1create$2", $sql_line);
+					}
+					if (!$this->stored_routine_supported['is_if_not_exists_function_supported']) {
+						// MariaDB supports IF NOT EXISTS syntax after the FUNCTION keyword (e.g create function if not exists function_name), we need to remove it to ensure the syntax compatility with MySQL
+						$sql_line = preg_replace("/^([^'\"]*create[^'\"]*function)\s\s*if\s\s*not\s\s*exists(\s*`)/is", "$1$2", $sql_line);
+					}
+					if (!$this->stored_routine_supported['is_aggregate_function_supported'] && preg_match("/^[^'\"]*create[^'\"]*(?:\baggregate\s\s*function\b)\s*`([^\r\n]+)`/is", $sql_line, $aggregate_matches)) {
+						// there's no way that we can make mariadb aggregate function compatible with MySQL, the function itself must contain "FETCH GROUP NEXT ROW" in the routine body which mysql doesn't know what that is
+						$aggregate_log = "Function {$aggregate_matches[1]} has been neglected due to the unsupported function type (aggregate)";
+						$updraftplus->log($aggregate_log);
+						$updraftplus->log($aggregate_log, 'notice-restore');
+						$sql_line = ''; // we ignore the routine and move to the next line
+						$sql_type = -1;
+						continue;
+					}
+				} else {
+					$updraftplus->log("Stored function/procedure {$routine_matches[1]} has been neglected due to the unsupported database routine creation");
+					// move to the next line if stored routine is not supported
+					$sql_line = '';
+					$sql_type = -1;
+					continue;
+				}
+			} elseif (preg_match('/^.*?drop\s\s*(?:function|procedure)\s\s*(?:if\s\s*exists\s\s*)?/i', $sql_line)) {
+				$sql_type = 13;
+				// if (';' !== $delimiter) $sql_line = preg_replace('/'.$delimiter_regex.'\s*$/', '', $sql_line);
 			} elseif (preg_match('/^\s*delimiter (\S+)\s*$/i', $sql_line, $matches)) {
 				// Nothing to do here - deliberate no-op (is processed earlier)
 				$sql_type = 10;
 			} elseif (preg_match('/^CREATE(\s+ALGORITHM=\S+)?(\s+DEFINER=\S+)?(\s+SQL SECURITY (\S+))?\s+VIEW/i', $sql_line, $matches)) {
 				$sql_type = 11;
+				// remove DEFINER clause from the create view statement and add or replace SQL SECURITY DEFINER with INVOKER
+				// https://regex101.com/r/2tOEhe/4/
+				$sql_line = preg_replace('/^(\s*CREATE\s\s*(?\'or_replace\'OR\s\s*REPLACE\s\s*)?(?\'algorithm\'ALGORITHM\s*=\s*[^\s]+\s\s*)?)(?\'definer\'DEFINER\s*=\s*(?:`.{1,17}`@`[^\s]+`\s*|\'.{1,17}\'@\'[^\s]+\'\s*|[^\s]+?\s\s*))?(?\'sql_security\'SQL\s\s*SECURITY\s\s*[^\s]+?\s\s*)?(VIEW(?:\s\s*IF\s\s*NOT\s\s*EXISTS)?(?:\s*`(?:[^`]|``)+`\s*|\s\s*[^\s]+\s\s*)AS)/is', "$1 SQL SECURITY INVOKER $6", $sql_line);
 				if ($this->old_table_prefix) {
 					foreach (array_keys($this->restore_this_table) as $table_name) {
 						// Code for a view can contain pretty much anything. As such, we want to be minimise the risks of unwanted matches.
@@ -2763,10 +3120,61 @@ class Updraft_Restorer {
 				$updraftplus->log("Skipped execution of SQL statement (unwanted or internally handled type=$sql_type): $sql_line");
 			}
 
+			// currently, the way UDP backups the generated column is different with the way mysqldump does it.
+			// mysqldump doesn't include all of the columns/fields value into the insert statement but instead it specifies only non generated-columns to be included in the insert statement (i.e insert into `table`(`non-generated-column1`,`non-generated-column2`) values('value','value2'))
+			// UDP includes all the columns (i.e insert into `table` values ('non-generated-column-value1', 'non-generated-column-value2', 'virtual-column-value', 'stored-column-value'))
+			// the code below will only get executed if the running DB server is MySQL and the insert statement has all the columns included. If we change the way UDP backup the generated columns to be the same as mysqldump then the code below is no longer necessary and can be removed
+			if (3 == $sql_type && !empty($this->generated_columns[$this->table_name])) {
+				// MySQL doesn't allow the "generated columns" value takes its place in the insert statement, and because of that the only solution is to change the generated columns to standard columns which have been done previously
+				// now we need to change it back to generated columns but unfortunately changing it to virtual type wont work, it can only be changed to stored type
+				if (!isset($this->supported_generated_column_engines[strtolower($this->table_engine)])) $this->supported_generated_column_engines[strtolower($this->table_engine)] = UpdraftPlus_Database_Utility::is_generated_column_supported($this->table_engine);
+				if (($generated_column_db_info = $this->supported_generated_column_engines[strtolower($this->table_engine)]) && !$generated_column_db_info['can_insert_ignore_to_generated_column'] && isset($this->generated_columns_exist_in_the_statement[$this->table_name]) && true === $this->generated_columns_exist_in_the_statement[$this->table_name]) {
+					foreach ((array) $this->generated_columns[$this->table_name]['columns'] as $generated_column) {
+						$new_data_type_definition = "`{$generated_column['column_name']}`";
+						foreach ((array) $generated_column['column_data_type_definition'] as $key => $data_type_definition) {
+							if (empty($data_type_definition) || 0 === strlen(trim($data_type_definition[0]))) continue;
+							if (in_array($key, array('DATA_TYPE_TOKEN', 'GENERATED_ALWAYS_TOKEN', 'COMMENT_TOKEN'))) {
+								$new_data_type_definition .= " ".$data_type_definition[0];
+								continue; // we only want the data type options after the "generated always as()", so we continue
+							}
+							// If the database server doesn't support either null or not null constraint on generated virtual/stored/persistent column then the constraints need to be removed
+							$new_data_type_definition .= $generated_column_db_info['is_not_null_supported'] ? $data_type_definition[0] : preg_replace('/\b(?:not\s+null|null)\b/i', '', $data_type_definition[0]);
+							if (!$generated_column['is_virtual']) {
+								// If the persistent type is not supported it likely means that the currently running db server is MySQL, Mariadb uses persistent as an alias for stored type so if the backup file is taken from MariaDB then it needs to be changed to stored
+								$new_data_type_definition = $generated_column_db_info['is_persistent_supported'] ? $new_data_type_definition : preg_replace('/\bpersistent\b/i', 'STORED', $new_data_type_definition);
+							}
+						}
+						$new_data_type_definition = preg_replace('/\bvirtual\b/i', 'STORED', $new_data_type_definition);
+						// altering table could take minutes or hours to complete depending on the size of the rows of the table
+						$do_exec = $this->sql_exec(sprintf("alter table `%s` change `%s` %s", $this->new_table_name, $generated_column['column_name'], $new_data_type_definition), -1);
+						if (is_wp_error($do_exec)) return $do_exec;
+					}
+				}
+			}
+
 			// Reset
 			$sql_line = '';
 			$sql_type = -1;
 
+		}
+
+		if (is_array($this->stored_routine_supported) && $this->stored_routine_supported['is_binary_logging_enabled']) {
+			// if this condition is met, it means that db server binary logging is enabled and the value of the log_bin_trust_function_system_variable has previously been set to ON (1), and now the value must be changed back to what it originally was
+			if (isset($this->continuation_data['old_log_bin_trust_function_creators'])) { // it's a resumption
+				$old_log_bin_trust_function_creators = $this->continuation_data['old_log_bin_trust_function_creators'];
+			} else {
+				$old_log_bin_trust_function_creators = $updraftplus->jobdata_get('old_log_bin_trust_function_creators');
+			}
+			if (is_string($old_log_bin_trust_function_creators) && '' !== $old_log_bin_trust_function_creators) {
+				$this->set_log_bin_trust_function_creators($old_log_bin_trust_function_creators);
+				// no need to check the return value of the set_log_bin_trust_function_creators here as if it is an wp error it has been handled already and this block of code wont be executed
+				$updraftplus->log("log_bin_trust_function_creators variable has been resetted: ".$old_log_bin_trust_function_creators);
+				// unset the old_log_bin_trust_function_creators index from the continuation_data so that the on_shutdown function won't check it again
+				unset($this->continuation_data['old_log_bin_trust_function_creators']);
+				// also delete the old_log_bin_trust_function_creators jobdata to prevent the on_shutdown function accessing and deleting it twice
+				$updraftplus->jobdata_delete('old_log_bin_trust_function_creators');
+				$updraftplus->log("log_bin_trust_function_creators variable has successfully been removed from UDP jobdata");
+			}
 		}
 
 		// Rescan storage, but only if there was remote storage and a database; otherwise just re-scan locally
@@ -2785,7 +3193,7 @@ class Updraft_Restorer {
 		}
 		$this->maintenance_mode(false);
 
-		if ($restoring_table) $this->restored_table($restoring_table, $import_table_prefix, $this->old_table_prefix, $engine);
+		if ($this->restoring_table) $this->restored_table($this->restoring_table, $import_table_prefix, $this->old_table_prefix, $this->table_engine);
 
 		// drop the dummy restored tables
 		if ($this->is_dummy_db_restore) $this->drop_tables($this->restored_table_names);
@@ -2824,8 +3232,19 @@ class Updraft_Restorer {
 		$skip_table = false;
 		$last_table = isset($this->continuation_data['last_processed_db_table']) ? $this->continuation_data['last_processed_db_table'] : '';
 
-		if (!empty($last_table) && !empty($table_name) && $table_name != $last_table) {
-			if (empty($this->previous_table_name) || $table_name != $this->previous_table_name) $updraftplus->log(sprintf(__('Skipping table: %s already restored on a prior run; next table to restore: %s', 'updraftplus'), $table_name, $last_table), 'notice-restore');
+		$table_should_be_skipped = false;
+		
+		if (!empty($this->tables_to_skip) && in_array($table_name, $this->tables_to_skip)) {
+			$table_should_be_skipped = true;
+		} elseif (!empty($this->tables_to_restore) && !in_array($table_name, $this->tables_to_restore) && !$this->include_unspecified_tables) {
+			$table_should_be_skipped = true;
+		}
+
+		if ($table_should_be_skipped) {
+			if (empty($this->previous_table_name) || $table_name != $this->previous_table_name) $updraftplus->log(sprintf(__('Skipping table %s: user has chosen not to restore this table', 'updraftplus'), $table_name), 'notice-restore');
+			$skip_table = true;
+		} elseif (!empty($last_table) && !empty($table_name) && $table_name != $last_table) {
+			if (empty($this->previous_table_name) || $table_name != $this->previous_table_name) $updraftplus->log(sprintf(__('Skipping table %s: already restored on a prior run; next table to restore: %s', 'updraftplus'), $table_name, $last_table), 'notice-restore');
 			$skip_table = true;
 		} elseif (!empty($last_table) && !empty($table_name) && $table_name == $last_table) {
 			unset($this->continuation_data['last_processed_db_table']);
@@ -3046,6 +3465,12 @@ class Updraft_Restorer {
 				$updraftplus->log('Restoring TRIGGERs...');
 			}
 
+			static $first_stored_routine = true;
+			if (12 == $sql_type && $first_stored_routine) {
+				$first_stored_routine = false;
+				$updraftplus->log('Restoring STORED ROUTINES...');
+			}
+
 			if ($this->use_wpdb()) {
 				$req = $wpdb->query($sql_line);
 				// WPDB, for several query types, returns the number of rows changed; in distinction from an error, indicated by (bool)false
@@ -3120,6 +3545,10 @@ class Updraft_Restorer {
 					$extra_msg = ' '.__('This problem is caused by trying to restore a database on a very old MySQL version that is incompatible with the source database.', 'updraftplus').' '.sprintf(__('This database needs to be deployed on MySQL version %s or later.', 'updraftplus'), '5.5');
 				}
 				return new WP_Error('initial_db_error', sprintf(__('An error occurred on the first %s command - aborting run', 'updraftplus'), 'SET NAMES').'. '.sprintf(__('To use this backup, your database server needs to support the %s character set.', 'updraftplus'), $this->set_names).$extra_msg);
+			} elseif (12 == $sql_type) {
+				// sql_type 12 is stored routine creation
+				// in case we dealt with an sql syntax error from the stored routine body, the restore operation should not be stopped
+				$req = true;
 			}
 			
 			if ($this->errors >= (defined('UPDRAFTPLUS_SQLEXEC_MAXIMUM_ERRORS') ? UPDRAFTPLUS_SQLEXEC_MAXIMUM_ERRORS : 50)) {
@@ -3321,6 +3750,21 @@ class Updraft_Restorer {
 					$wpdb->query("DELETE FROM $new_table_name WHERE option_name = 'jetpack_options'");
 				}
 
+				// if we are importing a single site into a multisite (which means we have the multisite add-on) we need to clear our saved options and crons to prevent unwanted backups
+				if (isset($this->restore_options['updraftplus_migrate_blogname'])) {
+					$wpdb->query("DELETE FROM {$import_table_prefix}{$mprefix}options WHERE option_name LIKE 'updraft_%'");
+					$crons = maybe_unserialize($wpdb->get_var("SELECT option_value FROM {$import_table_prefix}{$mprefix}options WHERE option_name = 'cron'"));
+					foreach ($crons as $timestamp => $cron) {
+						if (!is_array($cron)) continue;
+						foreach (array_keys($cron) as $key) {
+							if (false !== strpos($key, 'updraft_')) unset($crons[$timestamp][$key]);
+							if (empty($crons[$timestamp])) unset($crons[$timestamp]);
+						}
+					}
+					$crons = serialize($crons);
+					$wpdb->query($wpdb->prepare("UPDATE {$import_table_prefix}{$mprefix}options SET option_value='%s' WHERE option_name='cron'", $crons));
+				}
+
 			}
 
 		} elseif ($import_table_prefix != $old_table_prefix && preg_match('/^([\d+]_)?usermeta$/', substr($table, strlen($import_table_prefix)), $matches)) {
@@ -3491,6 +3935,96 @@ class Updraft_Restorer {
 	 */
 	private function drop_tables($tables) {
 		foreach ($tables as $table) $this->sql_exec('DROP TABLE IF EXISTS '.UpdraftPlus_Manipulation_Functions::backquote($table), 1, '', false);
+	}
+
+	/**
+	 * Adjust and replace the invalid root path of the auto_prepend_file values with the current server's root path
+	 */
+	private function adjust_auto_prepend_directive() {
+
+		global $wp_filesystem, $updraftplus;
+
+		$external_plugins = array(
+			'wordfence' => array(
+				'filename' => 'wordfence-waf.php', // this file is located in the root directory so there's no additional path in it, other plugins may place the corresponding file in its plugin directory, in that case the additional path should be added (e.g. 'wp-content/plugins/plugin-name/file-name.php')
+				'callback' => 'adjust_wordfencewaf_root_path',
+			)
+		);
+
+		foreach ($updraftplus->server_configuration_file_list() as $server_config_file) {
+			if (empty($server_config_file)) continue;
+			if (file_exists($this->abspath.$server_config_file)) {
+				$updraftplus->log("$server_config_file configuration file has been detected during the restoration. Trying to open the file now for various-fixing tasks");
+				$server_config_file_content = file_get_contents($this->abspath.$server_config_file);
+				if (false !== $server_config_file_content) {
+					foreach ($external_plugins as $name => $data) {
+						$file_pattern = str_replace(array('/', '.', "'", '"'), array('\/', '\.', "\'", '\"'), $data['filename']);
+						if (file_exists($this->abspath.$data['filename'])) {
+							if (!$wp_filesystem->put_contents($this->abspath.$server_config_file, preg_replace('/((?:php_value\s\s*)?auto_prepend_file(?:\s*=)?\s*(?:\'|")).+?'.$file_pattern.'(\'|")/is', "$1{$this->abspath}{$data['filename']}$2", $server_config_file_content))) {
+								$updraftplus->log("Couldn't write a fix into the $server_config_file file");
+							}
+							if (isset($data['callback']) && method_exists($this, $data['callback'])) call_user_func(array($this, $data['callback']));
+						} else {
+							// if somehow, some way, the plugin's auto prepended file is missing then the auto_prepend_file directive in the config file needs to be removed or it will cause a fatal error
+							if (!$wp_filesystem->put_contents($this->abspath.$server_config_file, preg_replace('/((?:php_value\s\s*)?auto_prepend_file(?:\s*=)?\s*(?:\'|")).+?'.$file_pattern.'(\'|")/is', "", $server_config_file_content))) {
+								$updraftplus->log("The {$data['filename']} file doesn't exist, couldn't write a fix into the $server_config_file file");
+							}
+						}
+					}
+				} else {
+					$updraftplus->log("Failed to read the $server_config_file file");
+				}
+			}
+		}
+	}
+
+	/**
+	 * Adjust and replace the root paths in the wordfence-waf.php file with the current server's root path
+	 */
+	private function adjust_wordfencewaf_root_path() {
+		global $wp_filesystem, $updraftplus;
+		if (file_exists($this->abspath.'wordfence-waf.php')) {
+			$updraftplus->log("Wordfence auto-prepended file has been detected during the restoration. Trying to open the file now for various-fixing tasks");
+			$wordfence_waf = file_get_contents($this->abspath.'wordfence-waf.php');
+			if (false !== $wordfence_waf) {
+				// https://regex101.com/r/VeCwzH/1/
+				if (preg_match_all('/(?:wp-content[\/\\\]+plugins[\/\\\]+wordfence[\/\\\]+waf[\/\\\]+bootstrap\.php|wp-content[\/\\\]+wflogs[\/\\\]*)((?:\'|"))/is', $wordfence_waf, $matches, PREG_OFFSET_CAPTURE | PREG_SET_ORDER)) {
+					$matches = array_reverse($matches);
+					foreach ($matches as $match) {
+						$enclosure_cnt = 0;
+						$start = (int) $match[0][1];
+						$enclosure = $match[1][0];
+						$offset = -1;
+						for ($i=$start; $i>=0; $i--) {
+							if ($enclosure_cnt > 0) {
+								if ('\\' === $wordfence_waf[$i]) {
+									$enclosure_cnt--;
+								} else {
+									$offset = $i+2;
+									break;
+								}
+							} else {
+								if ($enclosure === $wordfence_waf[$i]) {
+									$enclosure_cnt++;
+								}
+							}
+						}
+						if ($offset >= 0) {
+							if (false !== stripos($match[0][0], 'wflogs')) {
+								$wordfence_waf = substr_replace($wordfence_waf, WP_CONTENT_DIR.'/wflogs/', $offset, ((int) $match[1][1]) - $offset);
+							} else {
+								$wordfence_waf = substr_replace($wordfence_waf, WP_PLUGIN_DIR.'/wordfence/waf/bootstrap.php', $offset, ((int) $match[1][1]) - $offset);
+							}
+						}
+					}
+					if (!$wp_filesystem->put_contents($this->abspath.'wordfence-waf.php', $wordfence_waf)) {
+						$updraftplus->log("Couldn't write fixes into the wordfence-waf.php file");
+					}
+				}
+			} else {
+				$updraftplus->log("Failed to read the wordfence-waf.php file");
+			}
+		}
 	}
 }
 

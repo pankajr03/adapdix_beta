@@ -178,8 +178,20 @@ class EPKB_KB_Demo_Data {
 									),      // Pricing / Promos
 							);
 
+		// if current KB has at least one image then show demo page with images
+		$image_found = false;
+		if ( empty($kb_config['theme_name']) ) {
+			$categories_icons = EPKB_Utilities::get_kb_option( $kb_config['id'], EPKB_Icons::CATEGORIES_ICONS, array(), true );
+			foreach( $categories_icons as $categories_icon ) {
+				if ( $categories_icon['type'] == 'image' ) {
+					$image_found = true;
+					break;
+				}
+			}
+		}
+
 		// show image icons only on themes with icons
-		if ( EPKB_Icons::is_theme_with_image_icons( $kb_config ) ) { // || EPKB_KB_Wizard::get_demo_icons_type($kb_config['id']) == 'image' ) {
+		if ( EPKB_Icons::is_theme_with_image_icons( $kb_config ) || $image_found ) { // || EPKB_KB_Wizard::get_demo_icons_type($kb_config['id']) == 'image' ) {
 
 			$category_icons = array(
 				11 => array(

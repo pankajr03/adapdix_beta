@@ -380,7 +380,7 @@ class WP_Team_Admin {
 						<i class="sp-font fa fa-file-text" aria-hidden="true"></i>
 						<h3><?php esc_html_e( 'Looking for Documentation?', 'wp-team' ); ?></h3>
 						<p><?php esc_html_e( 'We have detailed documentation on every aspect of WP Team.', 'wp-team' ); ?></p>
-						<a href="https://shapedplugin.com/docs/docs/wp-team/" target="_blank" class="button button-primary"><?php esc_html_e( 'Documentation', 'wp-team' ); ?></a>
+						<a href="https://shapedplugin.com/docs/docs/wp-team/introduction/" target="_blank" class="button button-primary"><?php esc_html_e( 'Documentation', 'wp-team' ); ?></a>
 					</div>
 				</div>
 				<div class="col">

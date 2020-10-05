@@ -8,16 +8,16 @@
  */
 class EPKB_Layout_Basic extends EPKB_Layout {
 
-	/**
+	private $displayed_article_ids = array();
+
+    /**
 	 * Generate content of the KB main page
 	 */
 	public function generate_kb_main_page() {
 
-		$class2 = $this->get_css_class( '::width' );
+		$class2 = $this->get_css_class( '::width' );		    ?>
 
-		$main_container_class = 'epkb-css-full-reset epkb-basic-template';			    ?>
-
-		<div id="epkb-main-page-container" class="<?php echo $main_container_class; ?>">
+		<div id="epkb-main-page-container" class="epkb-css-full-reset epkb-basic-template">
 			<div <?php echo $class2; ?>>  <?php
 
 				//  KB Search form
@@ -108,6 +108,7 @@ class EPKB_Layout_Basic extends EPKB_Layout {
 		<div <?php echo $class1; //Classes that are controlled by config settings ?> >   <?php
 
 			/** DISPLAY BOXED CATEGORIES */
+			$this->displayed_article_ids = array();
 			foreach ( $this->category_seq_data as $box_category_id => $box_sub_categories ) {
 
 				$category_name = isset($this->articles_seq_data[$box_category_id][0]) ?	$this->articles_seq_data[$box_category_id][0] : '';
@@ -267,7 +268,7 @@ class EPKB_Layout_Basic extends EPKB_Layout {
 			/** DISPLAY SUB-SUB-CATEGORIES */
 			foreach ( $box_sub_sub_category_list as $box_sub_sub_category_id => $box_sub_sub_sub_category_list ) {
 				$category_name = isset($this->articles_seq_data[$box_sub_sub_category_id][0]) ?
-					$this->articles_seq_data[$box_sub_sub_category_id][0] : __( 'Category.', 'echo-knowledge-base' );
+				$this->articles_seq_data[$box_sub_sub_category_id][0] : __( 'Category.', 'echo-knowledge-base' );
 
 				$class1 = $this->get_css_class( '::expand_articles_icon' );
 				$style1 = $this->get_inline_style( 'color:: section_category_icon_color' );
@@ -349,6 +350,8 @@ class EPKB_Layout_Basic extends EPKB_Layout {
 			$nof_articles_displayed = $this->kb_config['nof_articles_displayed'];
 			foreach ( $articles_list as $article_id => $article_title ) {
 				$article_num++;
+				$this->displayed_article_ids[$article_id] = isset($this->displayed_article_ids[$article_id]) ? $this->displayed_article_ids[$article_id] + 1 : 1;
+				$seq_no = $this->displayed_article_ids[$article_id];
 				$hide_class = $article_num > $nof_articles_displayed ? 'epkb-hide-elem' : '';
 				if ( $this->is_builder_on ) {
 					$article_data = $this->is_builder_on ? 'data-kb-article-id=' . $article_id . ' data-kb-type=' . $data_kb_type : '';
@@ -356,7 +359,8 @@ class EPKB_Layout_Basic extends EPKB_Layout {
 
 				/** DISPLAY ARTICLE LINK */         ?>
 				<li class="epkb-article-level-<?php echo $level . ' ' . $hide_class; ?>" <?php echo $article_data; ?> <?php echo $this->get_inline_style( 'padding-bottom:: article_list_spacing,padding-top::article_list_spacing' ); ?> >   <?php
-					$this->single_article_link( $article_title, $article_id ); ?>
+                    $article_link_data = 'class="epkb-mp-article" ' . 'data-kb-article-id=' . $article_id;
+                    $this->single_article_link( $article_title, $article_id, $article_link_data, '', $seq_no ); ?>
 				</li> <?php
 			}
 

@@ -20,21 +20,27 @@ class EPKB_Articles_Admin {
 		// article gets updated its categories
 		add_action( 'set_object_terms', array( $this, 'update_articles_sequence_article_categories_changed' ), 10, 6 );
 
-		// Classic Editor: post saved (cache cleared) so update article sequence
-		add_action( 'save_post', array( $this, 'update_articles_sequence_article_post_saved' ), 10, 2 );
+		//  post saved (cache cleared) so update article sequence
+		add_action( 'post_updated', array( $this, 'post_updated' ), 10, 3 );
 
 		// Post from Pending Review to Publish need to refresh post categories
 		add_action( 'pending_to_publish', array( $this, 'update_articles_sequence_article_pending_to_publish' ) );
 	}
 
 	/**
-	 * Article is saved. Check if article title has changed.
+	 * Update the article sequence if article is being published from draft.
 	 * @param $post_id
 	 * @param $post
+	 * @param $post_before
 	 */
-	public function update_articles_sequence_article_post_saved( $post_id, $post ) {
+	public function post_updated( $post_id, $post, $post_before ) {
 
-		if ( empty($post->post_type) || ! EPKB_KB_Handler::is_kb_post_type( $post->post_type ) || empty($post->post_status) || $post->post_status == 'auto-draft' ) {
+		if ( empty($post->post_type) || empty($post_before->post_status) || empty($post_before->post_title) || ! EPKB_KB_Handler::is_kb_post_type( $post->post_type )
+		     || empty($post->post_status) || $post->post_status == 'auto-draft' || $post->post_status == 'draft' ) {
+			return;
+		}
+
+		if ( ( $post_before->post_status != 'draft' || $post->post_status != 'publish' ) && ( $post_before->post_title == $post->post_title ) ) {
 			return;
 		}
 
@@ -43,31 +49,7 @@ class EPKB_Articles_Admin {
 			return;
 		}
 
-		$post_title = empty($post->post_title) ? '' : $post->post_title;
-
-		$article_seq_data = EPKB_Utilities::get_kb_option( $kb_id, self::KB_ARTICLES_SEQ_META, null, true );
-		if ( empty($article_seq_data) ) {
-			return;
-		}
-
-		$article_title_changed = false;
-		foreach( $article_seq_data as $category_id => $articles_array ) {
-
-			$ix = 0;
-			foreach( $articles_array as $article_id => $article_title ) {
-				if ( $ix ++ < 2 ) {
-					continue;
-				}
-				if ( $article_id == $post_id && $article_title != $post_title ) {
-					$article_seq_data[$category_id][$article_id] = $post_title;
-					$article_title_changed = true;
-				}
-			}
-		}
-
-		if ( $article_title_changed ) {
-			EPKB_Utilities::save_kb_option( $kb_id, self::KB_ARTICLES_SEQ_META, $article_seq_data, true );
-		}
+		$this->update_articles_sequence( $kb_id );
 	}
 
 	/**

@@ -656,7 +656,7 @@ class EPKB_KB_Config_Controller {
 		// retrieve user input
 		$new_config_post = EPKB_Utilities::post('advanced_form', array());
 		parse_str($new_config_post, $new_config_post);
-		if ( empty($new_config_post) || count($new_config_post) < 50 ) {
+		if ( empty($new_config_post) || count($new_config_post) < 10 ) {
 			$this->ajax_show_error_die( __( 'Invalid post parameters (12). Please refresh your page', 'echo-knowledge-base' ) );
 		}
 		

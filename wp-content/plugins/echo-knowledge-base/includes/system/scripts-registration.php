@@ -8,7 +8,9 @@
 function epkb_load_public_resources() {
 
     global $eckb_kb_id;
-
+	
+	epkb_register_public_resources();
+	
     // if this is not KB Main Page or Article Page then do not load public resources or is a Category Archive page
     if ( empty($eckb_kb_id) ) {
         return;
@@ -17,17 +19,18 @@ function epkb_load_public_resources() {
 	epkb_load_public_resources_now();
 }
 add_action( 'wp_enqueue_scripts', 'epkb_load_public_resources' );
+add_action( 'epkb_enqueue_scripts', 'epkb_load_public_resources_now' ); // use this action in any place to add scripts $kb_id as a parameter
 
 /**
  * FRONT-END pages using our plugin features
  */
-function epkb_load_public_resources_now() {
+function epkb_register_public_resources() {
 
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
-	wp_enqueue_style( 'epkb-public-styles', Echo_Knowledge_Base::$plugin_url . 'css/public-styles' . $suffix . '.css', array(), Echo_Knowledge_Base::$version );
-	wp_enqueue_script( 'epkb-public-scripts', Echo_Knowledge_Base::$plugin_url . 'js/public-scripts' . $suffix . '.js', array('jquery'), Echo_Knowledge_Base::$version );
-	wp_enqueue_script( 'epkb-materialize', Echo_Knowledge_Base::$plugin_url . 'js/vendor/materialize' . $suffix . '.js', array('jquery'), Echo_Knowledge_Base::$version );
+	wp_register_style( 'epkb-public-styles', Echo_Knowledge_Base::$plugin_url . 'css/public-styles' . $suffix . '.css', array(), Echo_Knowledge_Base::$version );
+	wp_register_script( 'epkb-public-scripts', Echo_Knowledge_Base::$plugin_url . 'js/public-scripts' . $suffix . '.js', array('jquery'), Echo_Knowledge_Base::$version );
+	wp_register_script( 'epkb-materialize', Echo_Knowledge_Base::$plugin_url . 'js/vendor/materialize' . $suffix . '.js', array('jquery'), Echo_Knowledge_Base::$version );
 	wp_localize_script( 'epkb-public-scripts', 'epkb_vars', array(
 		'msg_try_again'         => esc_html__( 'Please try again later.', 'echo-knowledge-base' ),
 		'error_occurred'        => esc_html__( 'Error occurred (16)', 'echo-knowledge-base' ),
@@ -39,6 +42,11 @@ function epkb_load_public_resources_now() {
 		'reduce_name_size'      => esc_html__( 'Warning: Please reduce your name size. Tab will only show first 25 characters', 'echo-knowledge-base' ),
 		'load_template'         => esc_html__('Loading Template...', 'echo-knowledge-base' )
 	));
+}
+function epkb_load_public_resources_now() {
+	wp_enqueue_style( 'epkb-public-styles' );
+	wp_enqueue_script( 'epkb-public-scripts' );
+	wp_enqueue_script( 'epkb-materialize' );  // scrollSpy for TOC
 }
 
 /**
@@ -113,7 +121,7 @@ function epkb_load_admin_kb_config_script() {
 	$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
 	wp_enqueue_script( 'epkb-admin-kb-config-script', Echo_Knowledge_Base::$plugin_url . 'js/admin-kb-config-script' . $suffix . '.js',
-		array('jquery',	'jquery-ui-core', 'jquery-ui-dialog', 'jquery-effects-core', 'jquery-effects-bounce'), Echo_Knowledge_Base::$version );
+		array('jquery',	'jquery-ui-core', 'jquery-ui-dialog', 'jquery-effects-core', 'jquery-effects-bounce', 'wp-color-picker'), Echo_Knowledge_Base::$version );
 	wp_localize_script( 'epkb-admin-kb-config-script', 'epkb_vars', array(
 		'msg_try_again'         => esc_html__( 'Please try again later.', 'echo-knowledge-base' ),
 		'error_occurred'        => esc_html__( 'Error occurred (14)', 'echo-knowledge-base' ),
@@ -284,17 +292,45 @@ function epkb_load_admin_article_page_styles() {
  */
 function epkb_register_kb_sidebar() {
 
-	// add KB sidebar area
-	register_sidebar( array(
-		'name'          => __('Echo KB Articles Sidebar', 'echo-knowledge-base'),
-		'id'            => 'eckb_articles_sidebar',
-		'before_widget' => '<div id="eckb-%1$s" class="eckb-article-widget-sidebar-body__widget">',
-		'after_widget'  => '</div> <!-- end Widget -->',
-		'before_title'  => '<h4>',
-		'after_title'   => '</h4>'
-	) );
+	$kb_ids = epkb_get_instance()->kb_config_obj->get_kb_ids();
+	foreach( $kb_ids as $kb_id ) {
+
+		$widget_seq_num = count($kb_ids) > 1 ? ' #' . $kb_id : '';
+		$widget_id = $kb_id == 1 ? 'eckb_articles_sidebar' : 'eckb_articles_sidebar_' . $kb_id;
+
+		// add KB sidebar area
+		register_sidebar(array(
+			'name' => __('Echo KB' . $widget_seq_num . ' Articles Sidebar' , 'echo-knowledge-base'),
+			'id' => $widget_id,
+			'before_widget' => '<div id="eckb-%1$s" class="eckb-article-widget-sidebar-body__widget">',
+			'after_widget' => '</div> <!-- end Widget -->',
+			'before_title' => '<h4>',
+			'after_title' => '</h4>'
+		));
+	}
 }
 
 if ( isset(Echo_Knowledge_Base::$version) && version_compare(Echo_Knowledge_Base::$version, '6.4.0', '>=') ) {
 	add_action( 'widgets_init', 'epkb_register_kb_sidebar' );
 }
+
+/**
+ * Add KB filters for other plugins to use
+ */
+add_filter( 'kb_core/kb_config/get_kb_configs', function() {
+	return epkb_get_instance()->kb_config_obj->get_kb_configs();
+} );
+
+/**
+ * Add KB filters for other plugins to use
+ */
+add_filter( 'kb_core/kb_config/get_kb_config', function( $kb_id ) {
+	return epkb_get_instance()->kb_config_obj->get_kb_config_or_default( $kb_id );
+} );
+
+/**
+ * Add KB filters for other plugins to use
+ */
+add_filter( 'kb_core/kb_icons/get_category_icon', function( $term_id, $categories_icons ) {
+	return EPKB_KB_Config_Category::get_category_icon( $term_id, $categories_icons );
+}, 10, 2 );

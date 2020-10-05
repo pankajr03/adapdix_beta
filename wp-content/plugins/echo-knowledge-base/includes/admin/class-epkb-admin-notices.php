@@ -6,11 +6,14 @@
  */
 class EPKB_Admin_Notices {
 
-	public function __construct() {
-		if ( isset($_REQUEST['epkb_dismiss_id']) ) {
-			self::dismiss_long_notice( $_REQUEST['epkb_dismiss_id'] );
+	static $ongoing_notice_removal = array();
+
+	public function __construct( $dismiss_notice=false ) {
+		if ( $dismiss_notice ) {
+			add_action( 'wp_ajax_epkb_dismiss_ongoing_notice', array( $this, 'ajax_dismiss_ongoing_notice') );
+			return;
 		}
-		
+
 		add_action( 'admin_notices', array( $this, 'show_admin_notices' ) );
 	}
 
@@ -19,33 +22,87 @@ class EPKB_Admin_Notices {
 	 */
 	public function show_admin_notices() {
 
+		$is_kb_request = EPKB_KB_Handler::is_kb_request();
+
+		// ONE TIME notice is deleted right after it is displayed
 		$notices = get_option( 'epkb_one_time_notices', array() );
-		if ( ! empty($notices) ) {
+		if ( ! empty($notices) && $is_kb_request ) {
 			delete_option( 'epkb_one_time_notices' );
 		}
 
-		$notices += get_option( 'epkb_long_notices', array() );
+		// display ONE TIME and LONG notices
+		$notices += get_option( 'epkb_ongoing_notices', array() );
+		$update_notices = false;
+		foreach ( $notices as $key => $notice ) {
 
-		foreach ( $notices as $notice ) {
-			if ( $notice ) {	?>
-				<div class="epkb-notice notice notice-<?php echo $notice['type']; ?> notice-<?php echo $notice['id']; ?>" style="display:none;">
-					<p>						<?php
+			if ( ! isset($notice['type']) ) {
+				unset($notices[$key]);
+				$update_notices = true;
+				continue;
+			}
+
+			if ( isset($notice['id']) && in_array($notice['id'], self::$ongoing_notice_removal) ) {
+				unset($notices[$key]);
+				$update_notices = true;
+				continue;
+			}
+
+			// show notices on KB pages only
+
+			if ( ! $is_kb_request ) {
+				continue;
+			}
+
+			// only editors and admins should see the notice messages
+			// $user = EPKB_Utilities::get_current_user();
+			if ( function_exists('wp_get_current_user') && ! current_user_can('editor') && ! current_user_can('administrator') ) {
+				continue;
+			}
+
+			// check if user already dismissed this notice
+			if ( ! empty($notice['id']) && get_user_meta( get_current_user_id(), $notice['id'], true ) ) {
+				continue;
+			}
+
+			if ( $notice['type'] == 'large-notice' ) { ?>
+				<div
+					class="epkb-notice epkb-notice-large-box notice  notice-<?php echo $notice['type']; ?> notice-<?php echo $notice['id']; ?>">
+					<div class="epkb-notice-icon"><?php echo $notice['icon']; ?></div>
+					<div class="epkb-notice-text">
+						<h3><?php echo $notice['title']; ?></h3>
+						<p><?php echo $notice['text']; ?></p> <?php
+						if ( ! empty( $notice['id'] ) ) { ?>
+							<!-- TODO <a href="#" class="epkb-notice-remind epkb-notice-btn btn-green"><?php _e( 'Remind Me Later', 'echo-knowledge-base' ); ?></a> -->
+							<a href="#" class="epkb-notice-dismiss epkb-notice-btn btn-grey" data-notice-id="<?php echo $notice['id']; ?>">
+								 <?php _e( 'Dismiss', 'echo-knowledge-base' ); ?></a>                        <?php
+						} ?>
+					</div>
+					</div><?php
+			} else { ?>
+				<div
+					class="epkb-notice notice notice-<?php echo $notice['type']; ?> notice-<?php echo $notice['id']; ?>"
+					style="display:block;">
+					<p>                        <?php
 						echo $notice['text'];
-						if ( ! empty ( $notice['id'] ) ) {  ?>
+						if ( ! empty( $notice['id'] ) ) { ?>
 							&nbsp;
-							<a href="<?php echo add_query_arg( array( 'epkb_dismiss_id' => $notice['id'] ), (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" ); ?>"
-						        class="epkb-notice-dismiss"><?php _e( 'Dismiss', 'echo-knowledge-base' ); ?></a>						<?php
+							<a href="#" class="epkb-notice-dismiss" data-notice-id="<?php echo $notice['id']; ?>"><?php _e( 'Dismiss', 'echo-knowledge-base' ); ?></a>                        <?php
 						} ?>
 					</p>
-				</div><?php
+				</div>      <?php
 			}
 		}
-		
+
+		// some notices are not valid any more or there have invalid data so remove them
+		if ( $update_notices ) {
+			update_option( 'epkb_ongoing_notices', $notices );
+		}
+
 		if ( empty($_GET['epkb_admin_notice']) ) {
 			return;
 		}
 
-		$param = EPKB_Utilities::get( 'epkb_notice_param' );
+		//$param = EPKB_Utilities::get( 'epkb_notice_param' );
 		$class = 'error';
 		switch ( $_GET['epkb_admin_notice'] ) {
 
@@ -68,58 +125,67 @@ class EPKB_Admin_Notices {
 	}
 
 	/**
-	 * Dismiss admin notices when Dismiss links are clicked - PER USER
+	 * ONE TIME notice appears only once.
+	 * NOTE: this notice should not always happen. It should happen only once when the if user does some action.
 	 *
-	 * @return void
+	 * @param string $type - 'warning', 'error', 'info'
+	 * @param string $text
 	 */
-	function dismiss_admin_notices() {
-		if ( ! empty( $_GET['epkb_admin_notice'] ) ) {
-			update_user_meta( get_current_user_id(), '_epkb_' . EPKB_Utilities::sanitize_english_text( $_GET['epkb_admin_notice'], 'EPKB admin notice' ) . '_dismissed', 1 );
-			wp_redirect( remove_query_arg( array( 'epkb_action', 'epkb_admin_notice' ) ) );
-			exit;
-		}
-	}
-	
-	public static function add_one_time_notice( $text, $type, $id = '' ) {
+	public static function add_one_time_notice( $type='warning', $text='' ) {
 		$notices = get_option( 'epkb_one_time_notices', array() );
 		$notices[] = array(
 			'type' => $type,
-			'text' => $text,
-			'id' => $id 
+			'id' => '',
+			'icon'	=> '',
+			'title' => '',
+			'text' => $text
 		);
 		update_option( 'epkb_one_time_notices', $notices );
 	}
-	
-	public static function add_ongoing_notice( $text, $type, $id = '' ) {
-		$notices = get_option( 'epkb_long_notices', array() );
-		
-		if ( ! $id ) {
-			$notices[] = array(
-				'type' => $type,
-				'text' => $text,
-				'id' => ''
-			);
-		} else {
-			$notices[$id] = array(
-				'type' => $type,
-				'text' => $text,
-				'id' => $id
-			);
-		}
-		update_option( 'epkb_long_notices', $notices );
-	}
-	
-	public static function dismiss_long_notice( $id = '' ) {
-		if ( empty($id) ) {
-			// delete all 
-			delete_option( 'epkb_long_notices' );
 
-		} else {
-			$notices = get_option( 'epkb_long_notices', array() );
-			if ( isset($notices[$id]) ) {
-				unset ( $notices[$id] );
-			}
-			update_option( 'epkb_long_notices', $notices );
+	/**
+	 * LONG TIME notice appears until user dismiss it. We also need to take care of case when the ongoing notice is not valid any more.
+	 *
+	 * @param string $type - 'warning', 'error', 'info'
+	 * @param string $id - unique notice id string e.g. epkb_elementor_settings
+	 * @param string $text
+	 * @param string $title
+	 * @param string $icon
+	 */
+	public static function add_ongoing_notice( $type='warning', $id='', $text='', $title='', $icon='' ) {
+
+		// update current ongoing notices if needed
+		$notices = get_option( 'epkb_ongoing_notices', array() );
+		if ( ! isset($notices[$id]) ) {
+
+			$notices[$id] = array(
+				'type'  => $type,
+				'id'    => $id,
+				'icon'  => $icon,
+				'title' => $title,
+				'text'  => $text
+			);
+			update_option( 'epkb_ongoing_notices', $notices );
+		}
+
+		// if we are adding notice we don't want to remove it
+		if ( isset(self::$ongoing_notice_removal[$id]) ) {
+			unset(self::$ongoing_notice_removal[$id]);
 		}
 	}
+
+	public static function remove_ongoing_notice( $id ) {
+		self::$ongoing_notice_removal[$id] = $id;
+	}
+
+	public static function remove_dismissed_ongoing_notice( $id ) {
+		delete_user_meta( get_current_user_id(), $id );
+	}
+
+	public static function ajax_dismiss_ongoing_notice() {
+		if ( isset($_POST['epkb_dismiss_id']) ) {
+			update_user_meta( get_current_user_id(), $_POST['epkb_dismiss_id'], 1 );
+		}
+	}
+
 }

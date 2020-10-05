@@ -130,7 +130,6 @@ class EPKB_Articles_CPT_Setup {
 				'show_in_nav_menus'     => $show_post_in_ui,
 				'show_tagcloud'         => true,
 				'query_var'             => $tag_name,
-				'update_count_callback' => '_update_post_term_count',
 				'show_in_rest'          => true,
 				'rewrite'               => array(
 												/* translators: do NOT change this translation again. It will break links !!! */
@@ -340,8 +339,7 @@ class EPKB_Articles_CPT_Setup {
 	 * @return bool
 	 */
 	public static function is_category_in_url( $kb_config ) {
-		return ! empty($kb_config['categories_in_url_enabled']) && $kb_config['categories_in_url_enabled'] == 'on' &&
-		       $kb_config['kb_main_page_layout'] == EPKB_KB_Config_Layout_Categories::LAYOUT_NAME;
+		return ! empty($kb_config['categories_in_url_enabled']) && $kb_config['categories_in_url_enabled'] == 'on';
 	}
 }
 

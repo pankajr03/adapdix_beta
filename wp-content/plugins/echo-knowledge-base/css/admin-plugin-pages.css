@@ -2601,15 +2601,57 @@ stretch - fills the whole height of the cell (this is the default)
       background-color: #5eb8f5;
       cursor: pointer; }
   #ekb-admin-page-wrap .success-btn {
-    background-color: #5cb85c;
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-image: -webkit-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-image: -ms-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-color: #2EA3F2;
     color: #fff;
-    vertical-align: middle;
+    padding: 6px 20px;
     border: none;
-    -webkit-box-shadow: 0 2px 0 #449d44;
-    box-shadow: 0 2px 0 #449d44; }
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
     #ekb-admin-page-wrap .success-btn:hover {
-      background-color: #80c780;
-      cursor: pointer; }
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    #ekb-admin-page-wrap .success-btn:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  #ekb-admin-page-wrap .info-btn {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-image: -webkit-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-image: -ms-linear-gradient(-169deg, #2EA3F2, #106ecd);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
+    #ekb-admin-page-wrap .info-btn:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    #ekb-admin-page-wrap .info-btn:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
   #ekb-admin-page-wrap .default-btn {
     background-color: #f7f7f7;
     color: #555;
@@ -2621,15 +2663,33 @@ stretch - fills the whole height of the cell (this is the default)
       background-color: white;
       cursor: pointer; }
   #ekb-admin-page-wrap .error-btn {
-    background-color: #d9534f;
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #d9825f, #d95651);
+    background-image: -webkit-linear-gradient(-169deg, #d9825f, #d95651);
+    background-image: -ms-linear-gradient(-169deg, #d9825f, #d95651);
+    background-color: #2EA3F2;
     color: #fff;
-    vertical-align: middle;
-    border: none; }
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
     #ekb-admin-page-wrap .error-btn:hover {
-      background-color: #e27c79;
-      cursor: pointer; }
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    #ekb-admin-page-wrap .error-btn:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
   #ekb-admin-page-wrap .archive-btn:hover {
-    background-color: #d9534f; }
+    background-color: #d95651; }
   #ekb-admin-page-wrap .notification {
     display: block;
     font-size: 16px;
@@ -2721,52 +2781,6 @@ stretch - fills the whole height of the cell (this is the default)
       font-weight: bold;
       cursor: pointer;
       margin: 4px; }
-  #ekb-admin-page-wrap .callout {
-    padding: 20px;
-    margin: 20px 0;
-    border: 1px solid #eee;
-    border-left-width: 5px;
-    border-radius: 3px;
-    background-color: #fff;
-    width: 100%;
-    float: left; }
-    #ekb-admin-page-wrap .callout h4 {
-      margin-top: 0;
-      margin-bottom: 5px; }
-    #ekb-admin-page-wrap .callout ul {
-      margin-left: 30px; }
-      #ekb-admin-page-wrap .callout ul li {
-        list-style-type: disc; }
-    #ekb-admin-page-wrap .callout .status_group {
-      border-bottom: solid 1px #ddd; }
-    #ekb-admin-page-wrap .callout .status_group:last-child {
-      border: none; }
-    #ekb-admin-page-wrap .callout .note_type_1 {
-      font-style: italic; }
-  #ekb-admin-page-wrap .callout_success {
-    border-left-color: #5cb85c; }
-    #ekb-admin-page-wrap .callout_success h4 {
-      color: #5cb85c; }
-  #ekb-admin-page-wrap .callout_attention {
-    border-left-color: #d0d849; }
-    #ekb-admin-page-wrap .callout_attention h4 {
-      color: #d0d849; }
-  #ekb-admin-page-wrap .callout_error {
-    border-left-color: #d9534f; }
-    #ekb-admin-page-wrap .callout_error h4 {
-      color: #d9534f; }
-  #ekb-admin-page-wrap .callout_warning {
-    border-left-color: #F0BC71; }
-    #ekb-admin-page-wrap .callout_warning h4 {
-      color: #F0BC71; }
-  #ekb-admin-page-wrap .callout_info {
-    border-left-color: #2EA3F2; }
-    #ekb-admin-page-wrap .callout_info h4 {
-      color: #2EA3F2; }
-  #ekb-admin-page-wrap .callout_default {
-    border-left-color: #666666; }
-    #ekb-admin-page-wrap .callout_default h4 {
-      color: #666666; }
   #ekb-admin-page-wrap .preview_product {
     width: 350px;
     text-align: center;
@@ -2908,23 +2922,23 @@ stretch - fills the whole height of the cell (this is the default)
   #ekb-admin-page-wrap .eckb-tooltip-container {
     position: relative; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-success .eckb-tooltip-button {
-      background-color: #5cb85c;
-      border-color: #449d44; }
+      background-color: #2f8631;
+      border-color: #226023; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-success .eckb-tooltip-contents {
-      background-color: #eef7ee;
-      border-color: #5cb85c;
-      color: #214b21; }
+      background-color: #a6e0a8;
+      border-color: #2f8631;
+      color: #030903; }
       #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-success .eckb-tooltip-contents hr {
         box-sizing: content-box;
         height: 0;
         overflow: visible;
         border: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-top-color: #5cb85c; }
+        border-top-color: #2f8631; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-success .eckb-tooltip-bottom:after {
-      border-bottom-color: #5cb85c; }
+      border-bottom-color: #2f8631; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-success .eckb-tooltip-top:after {
-      border-top-color: #5cb85c; }
+      border-top-color: #2f8631; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-primary .eckb-tooltip-button {
       background-color: #2EA3F2;
       border-color: #0e8bdf; }
@@ -2962,23 +2976,23 @@ stretch - fills the whole height of the cell (this is the default)
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-warning .eckb-tooltip-top:after {
       border-top-color: #F0BC71; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-error .eckb-tooltip-button {
-      background-color: #d9534f;
-      border-color: #c9302c; }
+      background-color: #d95651;
+      border-color: #cb322c; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-error .eckb-tooltip-contents {
-      background-color: #fefbfb;
-      border-color: #d9534f;
-      color: #691917; }
+      background-color: #fefdfd;
+      border-color: #d95651;
+      color: #6a1a17; }
       #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-error .eckb-tooltip-contents hr {
         box-sizing: content-box;
         height: 0;
         overflow: visible;
         border: 0;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
-        border-top-color: #d9534f; }
+        border-top-color: #d95651; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-error .eckb-tooltip-bottom:after {
-      border-bottom-color: #d9534f; }
+      border-bottom-color: #d95651; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-error .eckb-tooltip-top:after {
-      border-top-color: #d9534f; }
+      border-top-color: #d95651; }
     #ekb-admin-page-wrap .eckb-tooltip-container.eckb-tip-attention .eckb-tooltip-button {
       background-color: #d0d849;
       border-color: #bbc42a; }
@@ -3222,6 +3236,96 @@ stretch - fills the whole height of the cell (this is the default)
       margin-left: 8.33333333%; }
     #ekb-admin-page-wrap .col-offset-0 {
       margin-left: 0; } }
+
+.epkb-notification-box-basic {
+  padding: 10px;
+  position: relative;
+  z-index: 0;
+  display: flex;
+  border-left-width: 4px;
+  border-left-style: solid; }
+  .epkb-notification-box-basic .epkb-notification-box-basic__icon {
+    font-size: 40px; }
+    .epkb-notification-box-basic .epkb-notification-box-basic__icon .epkb-notification-box-basic__icon__inner {
+      padding: 0;
+      border-radius: 0; }
+  .epkb-notification-box-basic .epkb-notification-box-basic__body {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px; }
+    .epkb-notification-box-basic .epkb-notification-box-basic__body .epkb-notification-box-basic__body__title {
+      margin: 0 0 8px 0;
+      font-size: 20px; }
+    .epkb-notification-box-basic .epkb-notification-box-basic__body .epkb-notification-box-basic__body__desc {
+      margin-bottom: 0; }
+  .epkb-notification-box-basic.epkb-notification-box-basic--success {
+    border-left-color: #2f8631;
+    background-color: #9bdc9c; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--success .epkb-notification-box-basic__icon__inner {
+      color: #2f8631;
+      background-color: #9bdc9c; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--success .epkb-notification-box-basic__body .epkb-notification-box-basic__body__title {
+      color: #2f8631; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--success .epkb-notification-box-basic__body .epkb-notification-box-basic__body__desc {
+      color: #2f8631; }
+  .epkb-notification-box-basic.epkb-notification-box-basic--error {
+    border-left-color: #d95651;
+    background-color: #fcf0f0; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--error .epkb-notification-box-basic__icon__inner {
+      color: #d95651;
+      background-color: #fcf0f0; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--error .epkb-notification-box-basic__body .epkb-notification-box-basic__body__title {
+      color: #d95651; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--error .epkb-notification-box-basic__body .epkb-notification-box-basic__body__desc {
+      color: #d95651; }
+  .epkb-notification-box-basic.epkb-notification-box-basic--warning {
+    border-left-color: #F0BC71;
+    background-color: white; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--warning .epkb-notification-box-basic__icon__inner {
+      color: #F0BC71;
+      background-color: white; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--warning .epkb-notification-box-basic__body .epkb-notification-box-basic__body__title {
+      color: #F0BC71; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--warning .epkb-notification-box-basic__body .epkb-notification-box-basic__body__desc {
+      color: #F0BC71; }
+  .epkb-notification-box-basic.epkb-notification-box-basic--info {
+    border-left-color: #2EA3F2;
+    background-color: #e4f3fd; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--info .epkb-notification-box-basic__icon__inner {
+      color: #2EA3F2;
+      background-color: #e4f3fd; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--info .epkb-notification-box-basic__body .epkb-notification-box-basic__body__title {
+      color: #2EA3F2; }
+    .epkb-notification-box-basic.epkb-notification-box-basic--info .epkb-notification-box-basic__body .epkb-notification-box-basic__body__desc {
+      color: #2EA3F2; }
+
+.epkb-notice-large-box {
+  display: flex;
+  padding: 20px;
+  align-items: center; }
+  .epkb-notice-large-box .epkb-notice-icon {
+    padding-right: 20px; }
+    .epkb-notice-large-box .epkb-notice-icon * {
+      font-size: 50px; }
+  .epkb-notice-large-box h3 {
+    margin-top: 0; }
+  .epkb-notice-large-box .epkb-notice-btn {
+    padding: 5px 20px;
+    height: inherit;
+    margin: 10px 0 0 0;
+    white-space: inherit;
+    text-align: center;
+    background-color: #2EA3F2;
+    color: #fff;
+    display: inline-block;
+    text-decoration: none;
+    border-radius: 3px; }
+    .epkb-notice-large-box .epkb-notice-btn.btn-green {
+      background-color: #46b450; }
+    .epkb-notice-large-box .epkb-notice-btn.btn-grey {
+      background-color: #ccc;
+      color: #000; }
 
 #epkb-admin-mega-menu {
   display: none;
@@ -3664,14 +3768,14 @@ stretch - fills the whole height of the cell (this is the default)
             #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ekb-license-check .ekb-license-version li:nth-child(4) {
               width: 100px; }
       #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ep_font_icon_checkmark {
-        color: #5cb85c;
-        border: solid 1px #5cb85c;
+        color: #2f8631;
+        border: solid 1px #2f8631;
         border-radius: 55px;
         padding: 3px;
         margin-left: 1px; }
       #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ep_font_icon_error_circle {
         font-size: 24px;
-        color: #d9534f; }
+        color: #d95651; }
       #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ep_font_icon_question {
         font-size: 24px;
         color: #F0BC71; }
@@ -3679,9 +3783,9 @@ stretch - fills the whole height of the cell (this is the default)
         padding: 3px 28px;
         border-radius: 4px; }
       #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ekb-error {
-        color: #d9534f; }
+        color: #d95651; }
       #ekb-admin-page-wrap .add_on_container #ekcb-licenses .ekb-add-on .ekb-success {
-        color: #5cb85c; }
+        color: #2f8631; }
   #ekb-admin-page-wrap .add_on_container .add_on_product {
     width: 350px;
     text-align: center;
@@ -3758,7 +3862,7 @@ stretch - fills the whole height of the cell (this is the default)
       height: 227px;
       width: initial; }
   #ekb-admin-page-wrap .add_on_container #epkb-add-on-bundle .primary-btn {
-    background-color: #5cb85c; }
+    background-color: #2f8631; }
   #ekb-admin-page-wrap .add_on_container .epkb-input-group .epkb-checkbox-input {
     float: left; }
     #ekb-admin-page-wrap .add_on_container .epkb-input-group .epkb-checkbox-input input {
@@ -3767,6 +3871,15 @@ stretch - fills the whole height of the cell (this is the default)
       border: 1px solid;
       margin-top: -1px;
       margin-right: 8px; }
+  #ekb-admin-page-wrap .add_on_container #epkb_delete_tab_page {
+    width: 100%; }
+    #ekb-admin-page-wrap .add_on_container #epkb_delete_tab_page .epkb-delete-data-section label {
+      padding-bottom: 20px;
+      display: block; }
+    #ekb-admin-page-wrap .add_on_container #epkb_delete_tab_page .epkb-delete-data-section .primary-btn {
+      background-color: initial; }
+    #ekb-admin-page-wrap .add_on_container #epkb_delete_tab_page .epkb-delete-data-section .epkb-other-info-item {
+      padding: 20px 0; }
 
 /**
  * -- CSS Rules: --
@@ -3901,14 +4014,19 @@ stretch - fills the whole height of the cell (this is the default)
       padding: 0; }
       .epkb-features-container .epkb-features__nav-container ul li {
         display: inline-block;
-        padding: 19px 50px;
+        padding: 10px 30px;
         margin: 0;
         font-size: 21px;
+        line-height: 30px;
         color: #fff;
-        background-color: #4e4e4e; }
-      .epkb-features-container .epkb-features__nav-container ul .epkb-fnc--active-tab {
+        background-color: #4e4e4e;
+        cursor: pointer;
+        border-top: 2px solid #4e4e4e; }
+      .epkb-features-container .epkb-features__nav-container ul .epkb-fnc--active-tab, .epkb-features-container .epkb-features__nav-container ul .active {
         background-color: #fff !important;
-        color: #3bd6c6 !important; }
+        color: #3bd6c6 !important;
+        display: inline-block !important;
+        border-top: 2px solid #3bd6c6; }
   .epkb-features-container .epkb-features__panel-container {
     float: left;
     width: 100%;
@@ -4046,7 +4164,7 @@ stretch - fills the whole height of the cell (this is the default)
         border-radius: 5px;
         padding: 10px 10px;
         font-size: 17px;
-        color: #5cb85c;
+        color: #2f8631;
         width: 100%; }
         .epkb-config-container #epkb-config-overview-content .epkb-overview-box-container .epkb-overview-box-body input[type=text]:focus, .epkb-config-container #epkb-config-overview-content .epkb-overview-box-container .epkb-overview-box-body select:focus, .epkb-config-container #epkb-config-overview-content .epkb-overview-box-container .epkb-overview-box-body textarea:focus {
           color: #495057;
@@ -4071,7 +4189,7 @@ stretch - fills the whole height of the cell (this is the default)
           width: 34px;
           height: 28px;
           font-size: 30px;
-          color: #5cb85c; }
+          color: #2f8631; }
       .epkb-config-container #epkb-config-overview-content .epkb-overview-box-container .epkb-overview-box-body .epkb-overview-box-form-list {
         list-style-type: none;
         margin: 0;
@@ -4132,12 +4250,12 @@ stretch - fills the whole height of the cell (this is the default)
     .epkb-config-container #epkb-config-overview-content .epkb-overview-box-purple .epkb-overview-box-button:hover {
       background-color: #7f6dd4; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-red .epkb-overview-box-icon {
-    color: #d9534f; }
+    color: #d95651; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-red .epkb-overview-box-button {
-    background-color: #d9534f;
+    background-color: #d95651;
     color: #ffffff; }
     .epkb-config-container #epkb-config-overview-content .epkb-overview-box-red .epkb-overview-box-button:hover {
-      background-color: #e27c79; }
+      background-color: #e27f7b; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-orange .epkb-overview-box-icon {
     color: #F0BC71; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-orange .epkb-overview-box-button {
@@ -4153,12 +4271,12 @@ stretch - fills the whole height of the cell (this is the default)
     .epkb-config-container #epkb-config-overview-content .epkb-overview-box-grey .epkb-overview-box-button:hover {
       background-color: gray; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-green .epkb-overview-box-icon {
-    color: #5cb85c; }
+    color: #2f8631; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-green .epkb-overview-box-button {
-    background-color: #5cb85c;
+    background-color: #2f8631;
     color: #ffffff; }
     .epkb-config-container #epkb-config-overview-content .epkb-overview-box-green .epkb-overview-box-button:hover {
-      background-color: #80c780; }
+      background-color: #3cac3f; }
   .epkb-config-container #epkb-config-overview-content .epkb-overview-box-spacer {
     width: 30px;
     height: 30px;
@@ -4171,11 +4289,11 @@ stretch - fills the whole height of the cell (this is the default)
   .epkb-config-container #epkb-config-overview-content #epkb-overview-section-welcome .overview-title {
     color: #5d45c9; }
   .epkb-config-container #epkb-config-overview-content #epkb-overview-section-errors .overview-title {
-    color: #d9534f; }
+    color: #d95651; }
   .epkb-config-container #epkb-config-overview-content #epkb-overview-section-warnings .overview-title {
     color: #F0BC71; }
   .epkb-config-container #epkb-config-overview-content #epkb-overview-section-config .overview-title {
-    color: #5cb85c; }
+    color: #2f8631; }
   .epkb-config-container #epkb-config-overview-content #epkb-overview-section-resources .overview-title {
     color: #5d45c9; }
 .epkb-config-container .overview-info-section {
@@ -4203,12 +4321,12 @@ stretch - fills the whole height of the cell (this is the default)
   .epkb-config-container .overview-info-section .overview-success .overview-icon {
     border-radius: 56px;
     font-size: 34px;
-    border: solid 1px #5cb85c;
-    color: #5cb85c;
+    border: solid 1px #2f8631;
+    color: #2f8631;
     padding: 4px; }
   .epkb-config-container .overview-info-section .overview-success .overview-brief,
   .epkb-config-container .overview-info-section .overview-success .overview-toggle {
-    color: #5cb85c; }
+    color: #2f8631; }
   .epkb-config-container .overview-info-section .overview-info .overview-icon {
     width: 39px;
     top: -4px !important;
@@ -4407,6 +4525,9 @@ stretch - fills the whole height of the cell (this is the default)
       padding: 10px; }
       .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-info-section a {
         text-decoration: none; }
+      .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-info-section a.shortcode_error {
+        color: #d95651;
+        font-weight: bold; }
       .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-info-section .epkb-info-settings-button {
         border: none;
         float: left;
@@ -4469,7 +4590,7 @@ stretch - fills the whole height of the cell (this is the default)
     .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-kb-name-section {
       min-width: 200px;
       width: 100%; }
-      @media (min-width: 1400px) {
+      @media (min-width: 850px) {
         .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-kb-name-section {
           width: 240px; } }
       .epkb-config-container .epkb-config-wrapper #epkb-config-main-info .epkb-kb-name-section #epkb-list-of-kbs {
@@ -5135,6 +5256,11 @@ stretch - fills the whole height of the cell (this is the default)
       padding-top: 10px;
       background-color: #fff;
       border: solid 1px #ddd; }
+  .epkb-config-container #epkb-config-advanced-config-content #show-old-config {
+    float: right;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px; }
 .epkb-config-container .eckb-wizard-accordion .eckb-wizard-accordion__body-content {
   background-color: #fbfbfb;
   margin-bottom: 5px; }
@@ -5372,22 +5498,6 @@ stretch - fills the whole height of the cell (this is the default)
         color: #7a7a7a; }
         #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__info .epkb-wizard-header__info__current-kb .epkb-wizard-header__info__current-kb__name {
           margin-right: 30px; }
-      #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__info .epkb-wizard-header__info__desc-toggle {
-        display: inline-block;
-        position: relative; }
-        #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__info .epkb-wizard-header__info__desc-toggle .epkb-wizard-desc-toggle__text {
-          padding-right: 24px; }
-        #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__info .epkb-wizard-header__info__desc-toggle .epkb-wizard-desc-toggle__icon {
-          position: absolute;
-          top: 11px;
-          right: 11px;
-          font-size: 18px; }
-      #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__desc-container {
-        display: none; }
-        #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__desc-container .epkb-wizard-header__desc__step {
-          display: none; }
-        #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__desc-container .epkb-wizard-desc-active {
-          display: block; }
       #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__exit-wizard {
         position: absolute;
         top: 28px;
@@ -5872,6 +5982,8 @@ stretch - fills the whole height of the cell (this is the default)
         display: none; }
       #epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-footer .epkb-wizard-button-container--final-step #epkb-wizard-button-apply {
         display: block; }
+    #epkb-config-wizard-content .epkb-config-wizard-inner #eckb-article-page-container-v2 {
+      width: 100% !important; }
   #epkb-config-wizard-content.eckb-wizard-text-page .epkb-config-wizard-inner .epkb-wizard-content .eckb-wizard-step-1.epkb-wc-step-panel--active {
     width: 100%;
     display: grid;
@@ -7250,6 +7362,95 @@ stretch - fills the whole height of the cell (this is the default)
           padding: 0;
           width: 100%;
           display: inline-block; }
+    #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2,
+    #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 {
+      padding-left: 10px;
+      padding-right: 10px; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 label,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 label {
+        font-size: 13px;
+        text-align: left;
+        width: 100%; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 input, #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 select,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 input,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 select {
+        width: 100%;
+        display: block;
+        padding: 5px 0px 5px 8px;
+        font-size: 14px;
+        height: auto;
+        line-height: 1; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 .number-input,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 .number-input {
+        padding: 0 5px; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 .input_container,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 .input_container {
+        width: 100%; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container .number-input {
+        display: flex;
+        flex-direction: row-reverse;
+        padding-top: 5px;
+        padding-left: 0;
+        text-align: left;
+        align-items: center;
+        padding-right: 0;
+        justify-content: space-between; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 .number-inputs-container label,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container label {
+        padding: 0;
+        width: 100%;
+        display: inline-block;
+        max-width: 50%; }
+      #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .epkb-wizard-ordering-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .epkb-wizard-search-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .eckb-wizard-global-page .eckb-wizard-multiple-number-group-2 .number-inputs-container input,
+      #epkb-config-wizard-content .epkb-wizard-global-selection-container .eckb-wizard-multiple-number-group-2 .number-inputs-container input {
+        float: right;
+        max-width: 50%; }
     #epkb-config-wizard-content .epkb-wizard-color-selection-container .eckb-wizard-radio-btn-horizontal,
     #epkb-config-wizard-content .epkb-wizard-text-selection-container .eckb-wizard-radio-btn-horizontal,
     #epkb-config-wizard-content .epkb-wizard-features-selection-container .eckb-wizard-radio-btn-horizontal,
@@ -8055,9 +8256,9 @@ stretch - fills the whole height of the cell (this is the default)
       #epkb-config-wizard-content .epkb-wizard-global-selection-container .epkb-wizard-info-item a {
         display: inline-block;
         line-height: 1.2; }
-  #epkb-config-wizard-content .epkb-wizard-color-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-text-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-features-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-search-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content #epkb-wsb-step-2-panel .epkb-wizard-theme-panel-container #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1) {
+  #epkb-config-wizard-content .epkb-wizard-color-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-text-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-features-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-search-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content #epkb-wsb-step-2-panel .epkb-wizard-theme-panel-container #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-search-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-text-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-features-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1), #epkb-config-wizard-content .epkb-wizard-global-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container > li:nth-child(2n-1) {
     display: none; }
-  #epkb-config-wizard-content .epkb-wizard-color-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-text-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-features-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-search-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content #epkb-wsb-step-2-panel .epkb-wizard-theme-panel-container #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1) {
+  #epkb-config-wizard-content .epkb-wizard-color-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-text-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-features-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-search-article-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content #epkb-wsb-step-2-panel .epkb-wizard-theme-panel-container #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-search-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-text-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-features-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1), #epkb-config-wizard-content .epkb-wizard-global-main-page-preview #elay-sidebar-container-v2 .elay-sidebar__cat-container ul li:nth-child(4n-1) {
     display: none; }
   #epkb-config-wizard-content .epkb-wizard-col2 {
     grid-area: col_2; }
@@ -8212,9 +8413,9 @@ stretch - fills the whole height of the cell (this is the default)
     border-radius: 5px;
     padding: 10px 10px;
     line-height: 1.4em;
-    border: solid 1px #333333;
-    background-color: #666666;
-    border-color: #4d4d4d;
+    border: solid 1px #0b6daf;
+    background-color: #2EA3F2;
+    border-color: #0e8bdf;
     color: #fff; }
     #epkb-config-wizard-content .eckb-wizard-default-note h3 {
       margin: 0 0 10px 0;
@@ -8224,6 +8425,9 @@ stretch - fills the whole height of the cell (this is the default)
     #epkb-config-wizard-content .eckb-wizard-default-note a {
       color: #fff;
       font-weight: bold; }
+    #epkb-config-wizard-content .eckb-wizard-default-note .epkbfa-info-circle {
+      font-size: 24px;
+      margin-right: 10px; }
   #epkb-config-wizard-content .eckb-wizard-article-width-input-alert-desktop, #epkb-config-wizard-content .eckb-wizard-article-width-input-alert-tablet {
     display: none !important;
     line-height: 1.4em; }
@@ -8270,6 +8474,9 @@ stretch - fills the whole height of the cell (this is the default)
   .epkb-wizard-warning-note a {
     color: #fff;
     font-weight: bold; }
+  .epkb-wizard-warning-note .epkbfa-info-circle {
+    font-size: 24px;
+    margin-right: 10px; }
 
 .epkb-wizard-error-note {
   border-radius: 5px;
@@ -8287,6 +8494,9 @@ stretch - fills the whole height of the cell (this is the default)
   .epkb-wizard-error-note a {
     color: #fff;
     font-weight: bold; }
+  .epkb-wizard-error-note .epkbfa-info-circle {
+    font-size: 24px;
+    margin-right: 10px; }
 
 .epkb-wizard-back-to-wizard {
   margin: 10px 20px 10px 0; }
@@ -8313,7 +8523,7 @@ stretch - fills the whole height of the cell (this is the default)
   .eckb-wizard-help--active .eckb-wizard-help__image {
     display: block;
     background-color: rgba(255, 255, 255, 0.97);
-    z-index: 30;
+    z-index: 301;
     opacity: 1; }
   .eckb-wizard-help img {
     max-width: 100%; }
@@ -8393,14 +8603,14 @@ stretch - fills the whole height of the cell (this is the default)
       opacity: .8; }
   .eckb-popup #eckb-popup-ok-button {
     right: 126px;
-    background-color: #5cb85c;
-    -webkit-box-shadow: 0 2px 0 #449d44;
-    box-shadow: 0 2px 0 #449d44; }
+    background-color: #2f8631;
+    -webkit-box-shadow: 0 2px 0 #226023;
+    box-shadow: 0 2px 0 #226023; }
   .eckb-popup #eckb-popup-cancel-button {
     right: 29px;
-    background-color: #d9534f;
-    -webkit-box-shadow: 0 2px 0 #c9302c;
-    box-shadow: 0 2px 0 #c9302c; }
+    background-color: #d95651;
+    -webkit-box-shadow: 0 2px 0 #cb322c;
+    box-shadow: 0 2px 0 #cb322c; }
 
 #ekb-admin-page-wrap.epkb-analytics-container #epkb-config-main-info .epkb-active-nav {
   color: #00a0d2;
@@ -8652,6 +8862,8 @@ stretch - fills the whole height of the cell (this is the default)
     font-size: 14px;
     font-style: italic;
     margin-bottom: 10px; }
+.epkb-term-options-wrap .epkb-categories-icons--visible {
+  display: block !important; }
 
 .epkb-icon-pack {
   max-height: 300px;
@@ -8685,20 +8897,1027 @@ stretch - fills the whole height of the cell (this is the default)
 
 .epkb-term-options-message {
   padding: 20px 0;
-  padding-top: 2px; }
+  padding-top: 2px;
+  border-radius: 5px;
+  padding: 10px 10px;
+  line-height: 1.4em;
+  border: solid 1px #0b6daf;
+  background-color: #2EA3F2;
+  border-color: #0e8bdf;
+  color: #fff;
+  margin: 20px 0;
+  display: flex;
+  align-items: center;
+  background-color: #82c9f96b;
+  color: #000; }
+  .epkb-term-options-message h3 {
+    margin: 0 0 10px 0;
+    text-transform: uppercase;
+    font-size: 18px;
+    color: #fff; }
+  .epkb-term-options-message a {
+    color: #fff;
+    font-weight: bold; }
+  .epkb-term-options-message .epkbfa-info-circle {
+    font-size: 24px;
+    margin-right: 10px; }
+  .epkb-term-options-message a {
+    color: #000; }
   .epkb-term-options-message p {
     font-size: 16px; }
 
 .epkb-icons-are-enabled strong {
-  color: #10972d; }
+  color: #10972d;
+  background-color: #fff;
+  padding: 2px 10px;
+  border-radius: 5px;
+  margin-right: 6px; }
 
 .epkb-icons-are-disabled strong {
-  color: #EE0000; }
+  color: #EE0000;
+  background-color: #fff;
+  padding: 2px 10px;
+  border-radius: 5px;
+  margin-right: 6px; }
 
 #addtag .epkb-term-options-wrap > div > label {
   font-size: 14px;
   margin-bottom: 10px;
   font-weight: 500; }
+
+/**
+ * -- CSS Rules: --
+
+   All Classes must have a KB Prefix
+   If you cannot assign an element a KB prefix try to have a container div that has the KB prefix.
+
+   CSS Structure will be based on the BEM Methodology
+   Ref: http://getbem.com/introduction/
+   		https://www.toptal.com/css/introduction-to-bem-methodology
+
+   -- BEM  Reference guide --
+	Block names:
+		HTML:  <div class="block">...</div>
+		CSS :  .block { color: #042; }
+	Child Element names:
+		Note: Usually contain parent name separated by two __
+		HTML:  <span class="block__elem"></span>
+		CSS :  .block__elem { color: #042; }
+
+	Modifier names:
+		Note:  end follows with two --
+		HTML:  <div class="block block--size-big
+		CSS :  .block__elem--mod { }
+
+	A dash between names is a word separator. Example
+		block-list, main-container
+
+   	-- BreakPoints: --
+		Tablet: xxx
+		Mobile: xxx
+ */
+.epkb-manage-kb-container {
+  background-color: #fff;
+  margin: 20px 20px 20px 0;
+  border: solid 1px #ddd;
+  box-sizing: border-box;
+  padding: 15px;
+  min-height: 500px; }
+  .epkb-manage-kb-container .epkb-manage-header {
+    width: 100%; }
+    .epkb-manage-kb-container .epkb-manage-header h1 {
+      font-size: 27px;
+      font-weight: 700;
+      color: #525252;
+      margin-bottom: 20px;
+      line-height: 1.2; }
+  .epkb-manage-kb-container .epkb-manage-tabs-container {
+    display: flex;
+    width: 100%;
+    min-height: 400px; }
+    .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content {
+      display: none; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content.active {
+        display: block; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__header {
+        border-bottom: 1px solid #333333;
+        display: flex; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab-button {
+        cursor: pointer;
+        padding: 15px 60px;
+        transition: 0.1s;
+        margin-bottom: -1px;
+        background: #333333;
+        color: #fff;
+        font-size: 16px;
+        border-left: solid 1px #6e6c6c; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab-button:hover {
+          color: #2EA3F2; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab-button.active {
+          background-color: #faf7f7;
+          box-shadow: inset 0 15px 0px -10px #2EA3F2;
+          color: #2EA3F2; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab-button:first-child {
+          border: none; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab {
+        display: none;
+        padding: 40px;
+        min-height: 400px;
+        background-color: #faf7f7; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab.active {
+          display: block; }
+        @media only screen and (max-width: 1400px) {
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab {
+            padding: 10px; } }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab .epkb-manage-content__tab__status {
+          display: inline-block;
+          padding: 10px;
+          border: solid 1px #ddd;
+          min-width: 220px;
+          margin-bottom: 20px; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab .epkb-manage-content__tab__status .ep_font_icon_error_circle {
+            color: #d9534f;
+            vertical-align: -4px;
+            font-size: 22px;
+            margin-left: 0;
+            padding: 0;
+            margin-right: 1px; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab .epkb-manage-content__tab__status .ep_font_icon_checkmark {
+            color: #5cb85c;
+            border: solid 1px #5cb85c;
+            border-radius: 55px;
+            padding: 3px;
+            margin-left: 1px; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab .epkb-manage-content__tab__status span {
+            display: inline-block;
+            margin: 3px 0 0 10px;
+            font-size: 14px; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-content .epkb-manage-content__tab .epkb-manage-content__tab__actions {
+          display: flex; }
+    .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons {
+      max-width: 300px;
+      background-color: #333333; }
+      @media only screen and (max-width: 1400px) {
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons {
+          max-width: 200px; } }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__header {
+        padding: 14px 20px;
+        height: 44px;
+        background-color: #ffffff; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button {
+        display: flex;
+        font-size: 18px;
+        transition: 0.1s;
+        padding: 15px 25px;
+        background-color: #333333;
+        color: #fff;
+        border-top: solid 3px #363636;
+        border-bottom: solid 1px #2C2C2C; }
+        @media only screen and (max-width: 1400px) {
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button {
+            font-size: 14px; } }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button a {
+          text-decoration: none;
+          display: block;
+          outline: none;
+          box-shadow: none; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button .epkb-manage-tabs__button__title {
+          width: 100%;
+          color: #fff; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button .epkb-manage-tabs__button__title:hover {
+            color: #0073aa; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button .epkb-manage-tabs__button__page-link {
+          min-width: 50px;
+          text-align: center; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button .epkb-manage-tabs__button__id {
+          min-width: 50px;
+          text-align: center;
+          font-size: 12px;
+          font-style: italic; }
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button.active {
+          box-shadow: inset 16px 0 0px -10px #2EA3F2;
+          padding-left: 16px;
+          color: #2EA3F2;
+          background-color: #faf7f7;
+          z-index: 999;
+          position: relative; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button.active .epkb-manage-tabs__button__title {
+            color: #2EA3F2; }
+          .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__button.active .epkb-manage-tabs__button__page-link {
+            color: #2EA3F2; }
+      .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__buttons .epkb-manage-tabs__header + .epkb-manage-tabs__button {
+        border-top: none; }
+    .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__content {
+      width: calc( 100% - 300px );
+      box-sizing: border-box;
+      background-color: #333333; }
+      @media only screen and (max-width: 1400px) {
+        .epkb-manage-kb-container .epkb-manage-tabs-container .epkb-manage-tabs__content {
+          width: calc( 100% - 200px ); } }
+  .epkb-manage-kb-container .epkb-manage-kb-status {
+    border: solid 1px #ddd;
+    padding: 10px 20px;
+    display: flex; }
+    .epkb-manage-kb-container .epkb-manage-kb-status i {
+      padding: 0 10px 0 0; }
+    .epkb-manage-kb-container .epkb-manage-kb-status .ep_font_icon_checkmark {
+      font-size: 19px;
+      color: #2f8631; }
+    .epkb-manage-kb-container .epkb-manage-kb-status .ep_font_icon_error_circle {
+      font-size: 19px;
+      color: #d95651; }
+  .epkb-manage-kb-container .epkb-manage-kb-id {
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold; }
+  .epkb-manage-kb-container .emkb-manage-content__tab__actions {
+    margin: 10px; }
+  .epkb-manage-kb-container .epkb-dialog-box-form {
+    display: none;
+    background-color: #fff;
+    width: 700px;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    margin-left: -350px;
+    box-shadow: -2px 11px 20px 2px #000000;
+    border: solid 1px #efefef;
+    z-index: 999; }
+    .epkb-manage-kb-container .epkb-dialog-box-form input[type="text"] {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+      background-color: #fff;
+      color: #32373c;
+      outline: none;
+      transition: 0.05s border-color ease-in-out; }
+    .epkb-manage-kb-container .epkb-dialog-box-form input[type="radio"] {
+      width: 20px;
+      height: 20px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form input[type="radio"]:before {
+        width: 10px !important;
+        height: 10px !important; }
+      .epkb-manage-kb-container .epkb-dialog-box-form input[type="radio"]:before:checked {
+        width: 10px !important;
+        height: 10px !important; }
+      .epkb-manage-kb-container .epkb-dialog-box-form input[type="radio"]:checked + label {
+        font-weight: bold; }
+    .epkb-manage-kb-container .epkb-dialog-box-form input[type="checkbox"] {
+      width: 20px;
+      height: 20px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form input[type="checkbox"]:before {
+        width: 10px;
+        height: 10px;
+        margin: -1px 0px 0px -1px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form input[type="checkbox"]:checked + label {
+        font-weight: bold; }
+    .epkb-manage-kb-container .epkb-dialog-box-form select {
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.07);
+      background-color: #fff;
+      color: #32373c;
+      outline: none;
+      transition: 0.05s border-color ease-in-out;
+      height: 41px;
+      font-size: 16px; }
+    .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__header {
+      padding: 20px 20px 20px 20px;
+      border-bottom: solid 1px #ddd;
+      background-color: #fcfcfc; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__header h4 {
+        font-size: 22px;
+        margin: 0; }
+    .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__body {
+      padding: 20px; }
+    .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form {
+      padding: 20px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input {
+        margin-bottom: 10px;
+        display: grid;
+        grid-template-rows: auto;
+        align-items: center;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-areas: "textLabel textLabel textInput textInput" "radiolabel radio radio rado" "checklabel checkbox checkbox checkbox"; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input .epkb-text-label {
+          grid-area: textLabel; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input .epkb-radio-label {
+          grid-area: radiolabel; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input .epkb-checkbox-label {
+          grid-area: checklabel; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input input[type="text"] {
+          grid-area: textInput; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input input[type="radio"] {
+          grid-area: radio; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__form .epkb-dbf__form__input input[type="checkbox"] {
+          grid-area: checkbox; }
+    .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer {
+      background-color: #f7f7f7;
+      padding: 10px;
+      display: grid;
+      grid-template-rows: auto;
+      align-items: center;
+      grid-template-columns: auto 50%;
+      border-top: solid 1px #ddd; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept {
+        text-transform: uppercase;
+        margin: 10px; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept:hover {
+          cursor: pointer; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept .epkb-dbf__footer__accept__btn {
+          display: block;
+          padding: 20px;
+          text-align: center;
+          font-size: 17px;
+          font-weight: bold; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--success {
+        background-color: #5ddd46;
+        color: #fff; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--success:hover {
+          background-color: #8fdd7d; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--error {
+        background-color: #d95651;
+        color: #fff; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--error:hover {
+          background-color: #e27f7b; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--warning {
+        background-color: #F0BC71;
+        color: #fff; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--warning:hover {
+          background-color: #f5d29f; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--default {
+        background-color: #ddd;
+        color: #000; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--default:hover {
+          background-color: #e7e7e7; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--primary {
+        background-color: #2EA3F2;
+        color: #000; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__accept--primary:hover {
+          background-color: #2EA3F2; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__cancel {
+        background-color: #ddd;
+        color: #636262;
+        text-transform: uppercase;
+        margin: 10px; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__cancel:hover {
+          cursor: pointer;
+          background-color: #e7e7e7; }
+        .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__footer .epkb-dbf__footer__cancel .epkb-dbf__footer__cancel__btn {
+          display: block;
+          padding: 20px;
+          text-align: center;
+          font-size: 17px;
+          font-weight: bold; }
+    .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__close {
+      position: absolute;
+      top: 9px;
+      right: 10px;
+      padding: 8px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__close:before {
+        font-size: 25px; }
+      .epkb-manage-kb-container .epkb-dialog-box-form .epkb-dbf__close:hover {
+        cursor: pointer;
+        opacity: .7;
+        box-shadow: inset 0 0 0 1px #ccd0d4, inset 0 0 0 2px #fff;
+        border-radius: 4px; }
+  .epkb-manage-kb-container .epkb-dialog-box-form--active {
+    display: block; }
+  .epkb-manage-kb-container .epkb-dialog-box-form--active + .epkb-dialog-box-form-black-background {
+    display: block; }
+  .epkb-manage-kb-container .epkb-dialog-box-form-black-background {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000c;
+    z-index: 9; }
+  .epkb-manage-kb-container .epkb-dialog-box-loading {
+    background-color: #fff;
+    width: 30%;
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    margin-left: -300px;
+    box-shadow: 0 3px 13px 0 #a4a4a4;
+    border: solid 1px #fff;
+    z-index: 999; }
+    .epkb-manage-kb-container .epkb-dialog-box-loading .asea-admin-dbl__header {
+      padding: 20px 20px 20px 20px;
+      text-align: center; }
+      .epkb-manage-kb-container .epkb-dialog-box-loading .asea-admin-dbl__header .asea-admin-dbl-icon {
+        border: dashed 6px #2EA3F2;
+        color: #2EA3F2;
+        padding: 30px;
+        border-radius: 100px;
+        margin-bottom: 30px;
+        animation: spin 2s linear infinite; }
+        .epkb-manage-kb-container .epkb-dialog-box-loading .asea-admin-dbl__header .asea-admin-dbl-icon:before {
+          font-size: 30px; }
+      .epkb-manage-kb-container .epkb-dialog-box-loading .asea-admin-dbl__header h4 {
+        color: #2EA3F2;
+        font-size: 32px;
+        font-weight: bold;
+        margin: 0; }
+    .epkb-manage-kb-container .epkb-dialog-box-loading .asea-admin-dbl__body {
+      padding: 20px;
+      text-align: center; }
+  .epkb-manage-kb-container .epkb-manage-kb__shortcode-example {
+    font-size: 17px;
+    color: #2f8631; }
+  .epkb-manage-kb-container .epkb-manage-content__tab--export .epkb-export-status {
+    display: none; }
+  .epkb-manage-kb-container .epkb-manage-content__tab--import .epkb-import-status {
+    display: none; }
+  .epkb-manage-kb-container .epkb-manage-content__tab--import label {
+    display: block;
+    margin-bottom: 15px; }
+  .epkb-manage-kb-container .epkb-manage-content__tab--import .epkb-admin-row {
+    align-items: flex-start; }
+
+.epkb-export-kbs {
+  display: inline-block;
+  max-width: 400px; }
+
+.epkb-import-kbs {
+  display: inline-block;
+  max-width: 400px; }
+  .epkb-import-kbs input[type=file] {
+    margin-bottom: 15px; }
+
+.epkb-admin-row {
+  display: flex; }
+
+.epkb-admin-2col {
+  display: grid;
+  grid-template-rows: auto;
+  align-items: stretch;
+  grid-template-columns: 50% 50%;
+  width: 100%;
+  max-width: 100%;
+  grid-template-areas: "col_1 col_2"; }
+
+.epkb-admin-4col {
+  display: grid;
+  grid-template-rows: auto;
+  align-items: stretch;
+  grid-template-columns: 25% 25% 25% 25%;
+  width: 100%;
+  max-width: 100%;
+  grid-template-areas: "col_1 col_2 col_3 col_4"; }
+
+.epkb-admin-info-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  margin: 10px 10px 25px 10px;
+  box-shadow: 0px 8px 38px 0px rgba(16, 16, 16, 0.07);
+  border-radius: 5px; }
+  .epkb-admin-info-box .epkb-admin-info-box__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+    .epkb-admin-info-box .epkb-admin-info-box__header .epkb-admin-info-box__header__icon {
+      color: #002852;
+      background-color: #f8f8f8;
+      font-size: 21px;
+      padding: 12px;
+      margin-right: 10px;
+      border-radius: 40px; }
+    .epkb-admin-info-box .epkb-admin-info-box__header .epkb-admin-info-box__header__title {
+      font-weight: bold;
+      font-size: 18px; }
+  .epkb-admin-info-box .epkb-admin-info-box__body {
+    margin-left: 52px; }
+    @media only screen and (max-width: 1400px) {
+      .epkb-admin-info-box .epkb-admin-info-box__body {
+        margin-left: 0; } }
+    .epkb-admin-info-box .epkb-admin-info-box__body h1, .epkb-admin-info-box .epkb-admin-info-box__body h2, .epkb-admin-info-box .epkb-admin-info-box__body h3, .epkb-admin-info-box .epkb-admin-info-box__body h4, .epkb-admin-info-box .epkb-admin-info-box__body h5, .epkb-admin-info-box .epkb-admin-info-box__body h6 {
+      color: #2EA3F2; }
+    .epkb-admin-info-box .epkb-admin-info-box__body p {
+      margin: 0 0 10px 0; }
+    .epkb-admin-info-box .epkb-admin-info-box__body ul {
+      list-style: disc;
+      padding-left: 20px;
+      font-style: italic; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn {
+      font-size: 12px;
+      margin-top: 10px;
+      display: inline-block; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--blue {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-image: -webkit-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-image: -ms-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--blue:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--blue:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--yellow {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-image: -webkit-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-image: -ms-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: #000; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--yellow:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--yellow:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--orange {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #ffc659, #efb659);
+      background-image: -webkit-linear-gradient(-169deg, #ffc659, #efb659);
+      background-image: -ms-linear-gradient(-169deg, #ffc659, #efb659);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--orange:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--orange:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--red {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #d95651, #b84a30);
+      background-image: -webkit-linear-gradient(-169deg, #d95651, #b84a30);
+      background-image: -ms-linear-gradient(-169deg, #d95651, #b84a30);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--red:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--red:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--green {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #2f8631, #278629);
+      background-image: -webkit-linear-gradient(-169deg, #2f8631, #278629);
+      background-image: -ms-linear-gradient(-169deg, #2f8631, #278629);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--green:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box .epkb-admin-info-box__body .epkb-aibb-btn--green:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+
+.epkb-admin-info-box-img {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 300px;
+  padding: 20px;
+  background-color: #fff;
+  margin: 10px 10px 25px 10px;
+  box-shadow: 0px 8px 38px 0px rgba(16, 16, 16, 0.07);
+  border-radius: 5px; }
+  .epkb-admin-info-box-img .epkb-admin-info-box-img__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__header .epkb-admin-info-box-img__header__icon {
+      color: #002852;
+      background-color: #f8f8f8;
+      font-size: 21px;
+      padding: 12px;
+      margin-right: 10px;
+      border-radius: 40px; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__header .epkb-admin-info-box-img__header__title {
+      font-weight: bold;
+      font-size: 18px; }
+  .epkb-admin-info-box-img .epkb-admin-info-box-img__body {
+    margin-left: 52px; }
+    @media only screen and (max-width: 1400px) {
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body {
+        margin-left: 0; } }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body h1, .epkb-admin-info-box-img .epkb-admin-info-box-img__body h2, .epkb-admin-info-box-img .epkb-admin-info-box-img__body h3, .epkb-admin-info-box-img .epkb-admin-info-box-img__body h4, .epkb-admin-info-box-img .epkb-admin-info-box-img__body h5, .epkb-admin-info-box-img .epkb-admin-info-box-img__body h6 {
+      color: #2EA3F2; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body p {
+      margin: 0 0 10px 0; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body ul {
+      list-style: disc;
+      padding-left: 20px;
+      font-style: italic; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-admin-info-box-img__body__img {
+      width: 100%; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn {
+      font-size: 12px;
+      margin-top: 10px;
+      display: inline-block; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--blue {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-image: -webkit-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-image: -ms-linear-gradient(-169deg, #2EA3F2, #106ECD);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--blue:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--blue:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--yellow {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-image: -webkit-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-image: -ms-linear-gradient(-169deg, #ffff05, #e3e305);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none;
+      color: #000; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--yellow:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--yellow:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--orange {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #ffc659, #efb659);
+      background-image: -webkit-linear-gradient(-169deg, #ffc659, #efb659);
+      background-image: -ms-linear-gradient(-169deg, #ffc659, #efb659);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--orange:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--orange:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--red {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #d95651, #b84a30);
+      background-image: -webkit-linear-gradient(-169deg, #d95651, #b84a30);
+      background-image: -ms-linear-gradient(-169deg, #d95651, #b84a30);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--red:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--red:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+    .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--green {
+      border-radius: 3px;
+      background-image: -moz-linear-gradient(-169deg, #2f8631, #278629);
+      background-image: -webkit-linear-gradient(-169deg, #2f8631, #278629);
+      background-image: -ms-linear-gradient(-169deg, #2f8631, #278629);
+      background-color: #2EA3F2;
+      color: #fff;
+      padding: 6px 20px;
+      border: none;
+      box-shadow: none;
+      text-transform: uppercase;
+      text-shadow: none;
+      letter-spacing: 0.05em;
+      text-decoration: none; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--green:hover {
+        cursor: pointer;
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b; }
+      .epkb-admin-info-box-img .epkb-admin-info-box-img__body .epkb-aibb-btn--green:focus {
+        background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+        background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+        background-color: #02cc7b;
+        border: none; }
+
+.epkb-admin-ad-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 340px;
+  padding: 20px;
+  background-color: #fff;
+  margin: 10px 10px 25px 10px;
+  box-shadow: 0 8px 38px 0 rgba(16, 16, 16, 0.07);
+  border-radius: 5px; }
+  .epkb-admin-ad-container .epkb-aa__header-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-bottom: 10px; }
+    .epkb-admin-ad-container .epkb-aa__header-container .epkb-header__icon {
+      color: #002852;
+      background-color: #f8f8f8;
+      font-size: 21px;
+      padding: 12px;
+      margin-right: 10px;
+      border-radius: 40px; }
+    .epkb-admin-ad-container .epkb-aa__header-container .epkb-header__title {
+      font-weight: bold;
+      font-size: 18px; }
+  .epkb-admin-ad-container .epkb-aa__body-container h1, .epkb-admin-ad-container .epkb-aa__body-container h2, .epkb-admin-ad-container .epkb-aa__body-container h3, .epkb-admin-ad-container .epkb-aa__body-container h4, .epkb-admin-ad-container .epkb-aa__body-container h5, .epkb-admin-ad-container .epkb-aa__body-container h6 {
+    color: #2EA3F2; }
+  .epkb-admin-ad-container .epkb-aa__body-container p {
+    margin: 0 0 10px 0; }
+  .epkb-admin-ad-container .epkb-aa__body-container ul {
+    list-style: disc;
+    padding-left: 20px;
+    font-style: italic; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__img {
+    width: 100%; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__desc {
+    padding: 10px 0; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__check-mark-list-container {
+    list-style-type: none;
+    padding: 0;
+    margin: 0; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__check-mark-list-container .epkb-check-mark-list__item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: baseline; }
+      .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__check-mark-list-container .epkb-check-mark-list__item .epkb-check-mark-list__item__icon {
+        color: #3cac3f; }
+      .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__check-mark-list-container .epkb-check-mark-list__item .epkb-check-mark-list__item__text {
+        padding-left: 6px; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+    margin: 10px 0; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--blue {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #2EA3F2, #106ECD);
+    background-image: -webkit-linear-gradient(-169deg, #2EA3F2, #106ECD);
+    background-image: -ms-linear-gradient(-169deg, #2EA3F2, #106ECD);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--blue:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--blue:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--yellow {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #ffff05, #e3e305);
+    background-image: -webkit-linear-gradient(-169deg, #ffff05, #e3e305);
+    background-image: -ms-linear-gradient(-169deg, #ffff05, #e3e305);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    color: #000; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--yellow:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--yellow:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--orange {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #ffc659, #efb659);
+    background-image: -webkit-linear-gradient(-169deg, #ffc659, #efb659);
+    background-image: -ms-linear-gradient(-169deg, #ffc659, #efb659);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--orange:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--orange:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--red {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #d95651, #b84a30);
+    background-image: -webkit-linear-gradient(-169deg, #d95651, #b84a30);
+    background-image: -ms-linear-gradient(-169deg, #d95651, #b84a30);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--red:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--red:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--green {
+    border-radius: 3px;
+    background-image: -moz-linear-gradient(-169deg, #2f8631, #278629);
+    background-image: -webkit-linear-gradient(-169deg, #2f8631, #278629);
+    background-image: -ms-linear-gradient(-169deg, #2f8631, #278629);
+    background-color: #2EA3F2;
+    color: #fff;
+    padding: 6px 20px;
+    border: none;
+    box-shadow: none;
+    text-transform: uppercase;
+    text-shadow: none;
+    letter-spacing: 0.05em;
+    text-decoration: none; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--green:hover {
+      cursor: pointer;
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b; }
+    .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__btn--green:focus {
+      background-image: -moz-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -webkit-linear-gradient(-169deg, #029249, #02cc7b);
+      background-image: -ms-linear-gradient(-169deg, #029249, #02cc7b);
+      background-color: #02cc7b;
+      border: none; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link .epkb-body__link__icon-after {
+    font-size: 12px; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link--blue {
+    color: #106ECD; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link--yellow {
+    color: #e3e305; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link--orange {
+    color: #efb659; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link--red {
+    color: #d95651; }
+  .epkb-admin-ad-container .epkb-aa__body-container .epkb-body__link--green {
+    color: #2f8631; }
 
 .epkb-ajax-loading-saving-icon {
   transition: background, box-shadow 0.3s;
@@ -8725,7 +9944,7 @@ stretch - fills the whole height of the cell (this is the default)
   .epkb-ajax-loading-saving-icon .fa-check-circle {
     display: inline-block;
     font-size: 100px;
-    color: #5cb85c; }
+    color: #2f8631; }
 
 /* Elements outside of ( #ekb-admin-page-wrap ) The container encapsulating all other KB Elements
 --------------------------------------------------------------*/
@@ -8896,15 +10115,15 @@ stretch - fills the whole height of the cell (this is the default)
       #ekb_core_top_heading .kb_status {
         bottom: 0px; } }
   #ekb_core_top_heading .kb_status_success {
-    color: #5cb85c;
-    border-left-color: #5cb85c; }
+    color: #2f8631;
+    border-left-color: #2f8631; }
     #ekb_core_top_heading .kb_status_success a {
-      color: #5cb85c; }
+      color: #2f8631; }
   #ekb_core_top_heading .kb_status_error {
-    color: #d9534f;
-    border-left-color: #d9534f; }
+    color: #d95651;
+    border-left-color: #d95651; }
     #ekb_core_top_heading .kb_status_error a {
-      color: #d9534f; }
+      color: #d95651; }
   #ekb_core_top_heading .kb_status_warning {
     color: #F0BC71;
     border-left-color: #F0BC71; }
@@ -9220,10 +10439,6 @@ stretch - fills the whole height of the cell (this is the default)
       font-weight: bold;
       font-size: .9em;
       margin: 10px 0; }
-  .epkb-plugin-info-container .form_options .callout li:before, .epkb-plugin-info-container .form_options .callout li:after,
-  .epkb-add-ons-container .form_options .callout li:before,
-  .epkb-add-ons-container .form_options .callout li:after {
-    display: none; }
   .epkb-plugin-info-container .input_group,
   .epkb-add-ons-container .input_group {
     margin-bottom: 25px;
@@ -9304,16 +10519,16 @@ stretch - fills the whole height of the cell (this is the default)
       border-left: 5px solid #eee; }
     .epkb-plugin-info-container .license_key_group .epkb_license_status .add_on_status .status_error,
     .epkb-add-ons-container .license_key_group .epkb_license_status .add_on_status .status_error {
-      border-left-color: #d9534f;
-      color: #d9534f; }
+      border-left-color: #d95651;
+      color: #d95651; }
     .epkb-plugin-info-container .license_key_group .epkb_license_status .add_on_status .status_success,
     .epkb-add-ons-container .license_key_group .epkb_license_status .add_on_status .status_success {
-      border-left-color: #5cb85c;
-      color: #5cb85c; }
+      border-left-color: #2f8631;
+      color: #2f8631; }
     .epkb-plugin-info-container .license_key_group .epkb_license_status .add_on_status .status_error,
     .epkb-add-ons-container .license_key_group .epkb_license_status .add_on_status .status_error {
-      border-left-color: #d9534f;
-      color: #d9534f; }
+      border-left-color: #d95651;
+      color: #d95651; }
     .epkb-plugin-info-container .license_key_group .epkb_license_status .add_on_status .status_warning,
     .epkb-add-ons-container .license_key_group .epkb_license_status .add_on_status .status_warning {
       border-left-color: #F0BC71;
@@ -9698,3 +10913,5 @@ stretch - fills the whole height of the cell (this is the default)
     transform: rotate(0deg); }
   100% {
     transform: rotate(360deg); } }
+#epkb-config-wizard-content .epkb-config-wizard-inner .epkb-wizard-header .epkb-wizard-header__exit-wizard--final-step .epkb-wizard-header__exit-wizard__label {
+  display: none; }

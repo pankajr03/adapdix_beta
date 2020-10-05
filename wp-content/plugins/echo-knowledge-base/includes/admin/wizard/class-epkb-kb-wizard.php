@@ -318,11 +318,14 @@ class EPKB_KB_Wizard {
 					self::show_demo_articles_categories_alert();
 					
 					$first_theme_id = $this->is_blank_kb ? 'theme_standard' : 'current';
-					$first_theme_config = $this->is_blank_kb ? EPKB_KB_Wizard_Themes::get_theme( 'theme_standard', $this->kb_config["article-structure-version"] ) : $this->kb_config; ?>
+					$first_theme_config = $this->is_blank_kb ? EPKB_KB_Wizard_Themes::get_theme( 'theme_standard', $this->kb_config ) : $this->kb_config; ?>
 					<div id="epkb-wt-theme-<?php echo $first_theme_id; ?>-panel" class="epkb-wt-panel epkb-wt-panel--active">	<?php
 
 							$handler = new EPKB_KB_Config_Page( $first_theme_config );
 							$handler->display_kb_main_page_layout_preview();
+							
+							do_action( 'eckb_after_theme_preview', $first_theme_config, '#epkb-wt-theme-' . $first_theme_id . '-panel' );
+							
 							$theme_data = EPKB_KB_Wizard_Themes::get_theme_data( $first_theme_config );
 							echo '<input type="hidden" class="theme-values" value="' . $theme_data . '">'; ?>
 
@@ -330,22 +333,15 @@ class EPKB_KB_Wizard {
 					foreach ( $this->templates as $template_id => $template ) {   ?>
 						<div id="epkb-wt-theme-<?php echo $template_id; ?>-panel" class="epkb-wt-panel">	<?php
 
-							$theme_kb_config = EPKB_KB_Wizard_Themes::get_theme( $template_id, $this->kb_config["article-structure-version"] );
-							if ( is_wp_error($theme_kb_config) || empty($theme_kb_config) ) {
-								echo '<div class="epkb-wizard-error-note">' . __('Error occurred', 'echo-knowledge-base') . ' (x42). ' . EPKB_Utilities::contact_us_for_support() . '</div>';
-								return;
-							}
+							$theme_kb_config = EPKB_KB_Wizard_Themes::get_theme( $template_id, $this->kb_config );
 
 							$handler = new EPKB_KB_Config_Page( $theme_kb_config );
 							$handler->display_kb_main_page_layout_preview();
 
 							$theme_data = EPKB_KB_Wizard_Themes::get_theme_data( $theme_kb_config );
-							if ( is_wp_error($theme_kb_config) || empty($theme_kb_config) ) {
-								echo '<div class="epkb-wizard-error-note">' . __('Error occurred', 'echo-knowledge-base') . ' (x43). ' . EPKB_Utilities::contact_us_for_support() . '</div>';
-								return;
-							}
 
 							echo '<input type="hidden" class="theme-values" value="' . $theme_data . '">'; ?>
+
 						</div>	<?php
 					}					?>
 				</div>
@@ -465,7 +461,7 @@ class EPKB_KB_Wizard {
 
 			<div class="epkb-wizard-row-1">
 				<p><?php _e( 'Documentation for Knowledge Base and add-ons.', 'echo-knowledge-base' ); ?></p>
-				<a href="https://www.echoknowledgebase.com/documentation/getting-started" target="_blank" class="epkb-wizard-button">
+				<a href="https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/" target="_blank" class="epkb-wizard-button">
 					<span class="epkb-wizard-btn-text"><?php _e( 'KB Documentation', 'echo-knowledge-base' ); ?></span>
 					<span class="epkb-wizard-btn-icon epkbfa epkbfa-book"></span></a>
 			</div>
@@ -651,7 +647,7 @@ class EPKB_KB_Wizard {
 		<div class="epkb-admin-dialog-box-loading">
 			<div class="epkb-admin-dbl__header">
 				<div class="epkb-admin-dbl-icon epkbfa epkbfa-hourglass-half"></div>
-				<div class="<div class="epkb-admin-dbl-text"><?php _e( 'Loading...', 'echo-knowledge-base' ); ?></div>
+				<div class="epkb-admin-text"><?php _e( 'Loading...', 'echo-knowledge-base' ); ?></div>
 			</div>
 		</div>
 		<div class="epkb-admin-dialog-box-overlay"></div> <?php

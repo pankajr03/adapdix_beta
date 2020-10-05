@@ -1990,7 +1990,7 @@ jQuery(document).ready(function($) {
 					//<-- Header -->
 					'<div class="epkb-admin-dbl__header">' +
 						'<div class="epkb-admin-dbl-icon epkbfa epkbfa-hourglass-half"></div>'+
-						(message ? '<div class="<div class="epkb-admin-dbl-text">' + message + '</div>' : '' ) +
+						(message ? '<div class="epkb-admin-dbl-text">' + message + '</div>' : '' ) +
 					'</div>'+
 
 				'</div>' +
@@ -2007,7 +2007,7 @@ jQuery(document).ready(function($) {
 
 	}
 
-	$('#epkb-config-open-old').click(function(){
+	$('#epkb-config-open-old, #show-old-config').click(function(){
 		$('.epkb-info-old').show();
 		$(this).closest('.epkb-info-section').hide();
 		$('#epkb-main-page').click();

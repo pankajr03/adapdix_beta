@@ -3,8 +3,8 @@ Contributors: wpshopmart
 Donate link: http://www.wpshopmart.com
 Tags: coming soon, coming soon page, maintenance mode, under construction, countdown timer, email, gmail, landing page, launch, launch page, maintenance,  message, newsletter, notify, offline, preview, subscriber, ultimate coming soon page, ultimate landing page, unavailable,  under construction page, wordpress coming soon, wordpress landing page, wordpress maintenance mode, wordpress maintenance mode plugin, wordpress under construction, wordpress under construction page
 Requires at least: 4.9
-Tested up to: 5.4
-Stable tag: 1.9
+Tested up to: 5.5
+Stable tag: 1.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,6 +220,16 @@ Check that you coming soon mode is enabled from setting, if coming soon is not e
 
 If you are using any cache plugin then first deactivate it now check your site in different browser. 
 
+= Having Problem in this plugin? =
+
+Submit your ticket here [support forum](https://wordpress.org/support/plugin/responsive-coming-soon/) 
+
+= I Really appreciate your effort on this plugin and now i want to support it ! =
+
+We love your feedback please submit your review here [pluigns review](https://wordpress.org/support/plugin/responsive-coming-soon/reviews/) 
+
+
+
 
 == Screenshots ==
 
@@ -245,6 +255,14 @@ If you are using any cache plugin then first deactivate it now check your site i
 
 
 == Changelog ==
+
+= 1.9.2 =
+* countdown default date updated 
+* Compatible With wordpress 5.5
+
+= 1.9.1 =
+* update ssl links
+* Compatible With wordpress 5.4.2
 
 = 1.9 =
 * minor bug resolved

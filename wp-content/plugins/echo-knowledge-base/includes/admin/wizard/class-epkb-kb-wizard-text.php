@@ -58,11 +58,6 @@ class EPKB_KB_Wizard_Text {
 							$kb_name = $this->kb_config['kb_name'];
 							echo __( 'for', 'echo-knowledge-base' ) . ' ' . '<span id="epkb_current_kb_name" class="epkb-wizard-header__info__current-kb__name">' . esc_html( $kb_name ) . '</span>';  ?>
 						</span>
-
-						<div class="epkb-wizard-button epkb-wizard-header__info__desc-toggle">
-							<span class="epkb-wizard-desc-toggle__text"><?php _e( 'Step Info', 'echo-knowledge-base' ); ?></span>
-							<span class="epkb-wizard-desc-toggle__icon epkbfa epkbfa-info-circle"></span>
-						</div>
 					</div>
 					<div class="epkb-wizard-button-link epkb-wizard-header__exit-wizard">
 						<a href="<?php echo esc_url( admin_url('edit.php?post_type=' . EPKB_KB_Handler::get_post_type( $this->kb_config['id'] ) . '&epkb-wizard-tab' ) ); ?>&page=epkb-kb-configuration">
@@ -72,13 +67,6 @@ class EPKB_KB_Wizard_Text {
 							<input type="checkbox" data-save_exit="<?php _e( 'Save and Exit', 'echo-knowledge-base' ); ?>" data-exit="<?php _e( 'Exit Wizard', 'echo-knowledge-base' ); ?>">
 							<span><?php _e( 'Save before exit', 'echo-knowledge-base' ); ?></span>
 						</div>
-					</div>
-
-					<div class="epkb-wizard-header__desc-container">
-						<p id="epkb-wizard-desc-step-1" class="epkb-wizard-header__desc__step epkb-wizard-desc-active"><?php _e( 'Set up texts for the Main Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-2" class="epkb-wizard-header__desc__step"><?php _e( 'Set up texts for the Article Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-3" class="epkb-wizard-header__desc__step"><?php _e( 'Set up texts for the Archive Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-4" class="epkb-wizard-header__desc__step"><?php _e( 'After you hit the Apply button we will save your knowledge base according to your selection.', 'echo-knowledge-base'); ?></p>
 					</div>
 				</div>
 
@@ -207,7 +195,7 @@ class EPKB_KB_Wizard_Text {
 
 			<div class="epkb-wizard-row-1">
 				<p><?php _e( 'Documentation for Knowledge Base and add-ons.', 'echo-knowledge-base' ); ?></p>
-				<a href="https://www.echoknowledgebase.com/documentation/getting-started" target="_blank" class="epkb-wizard-button">
+				<a href="https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/" target="_blank" class="epkb-wizard-button">
 					<span class="epkb-wizard-btn-text"><?php _e( 'KB Documentation', 'echo-knowledge-base' ); ?></span>
 					<span class="epkb-wizard-btn-icon epkbfa epkbfa-book"></span></a>
 			</div>
@@ -385,9 +373,9 @@ class EPKB_KB_Wizard_Text {
 			'option-heading'    => __('TOC', 'echo-knowledge-base'),
 			'class'             => 'eckb-wizard-texts eckb-wizard-accordion__body',
 			'depends'        => array(
-				'show_when' => array(
+				/*'show_when' => array(
 					'article_toc_enable' => 'on',
-				)
+				)*/
 			),
 			'inputs'            => array (
 				'0' => $form->text( $feature_specs['article_toc_title'] + array(
@@ -497,6 +485,32 @@ class EPKB_KB_Wizard_Text {
 			)
 		));
 		
+		// PREV/NEXT NAVIGATION TEXT
+		$form->option_group_wizard( $feature_specs, array(
+			'option-heading'    => __('Prev/Next Navigation', 'echo-knowledge-base'),
+			'class'             => 'eckb-wizard-texts eckb-wizard-accordion__body',
+			'inputs'            => array (
+				'0' => $form->text( $feature_specs['prev_navigation_text'] + array(
+						'value'             => $kb_config['prev_navigation_text'],
+						'input_group_class' => 'eckb-wizard-single-text',
+						'data' => array(
+							'wizard_input' => '1',
+							'target_selector' => '.epkb-article-navigation__previous a',
+							'text' => '1' // use this input like .text() 
+						)
+					) ),
+				'1' => $form->text( $feature_specs['next_navigation_text'] + array(
+						'value'             => $kb_config['next_navigation_text'],
+						'input_group_class' => 'eckb-wizard-single-text',
+						'data' => array(
+							'wizard_input' => '1',
+							'target_selector' => '.epkb-article-navigation__next a',
+							'text' => '1' // use this input like .text() 
+						)
+					) ),
+			)
+		));
+
 		do_action( 'epkb_text_wizard_after_article_page_texts', $kb_id );
 	}
 	
@@ -528,6 +542,27 @@ class EPKB_KB_Wizard_Text {
 							'example_image'     =>      'text-wizard/wizard-screenshot-archive-page-heading-description.jpg'
 						)
 					) ),
+				'1' => $form->text( $feature_specs['templates_for_kb_category_archive_read_more'] + array(
+						'value'             => $kb_config['templates_for_kb_category_archive_read_more'],
+						'input_group_class' => 'eckb-wizard-single-text',
+						'data' => array(
+							'example_image'     =>      'text-wizard/wizard-screenshot-archive-page-read-more.jpg'
+						)
+					) ),
+			)
+		));
+		
+		$form->option_group_wizard( $feature_specs, array(
+			'option-heading'    => __('Categories Menu', 'echo-knowledge-base'),
+			'class'             => 'eckb-wizard-texts eckb-wizard-accordion__body',
+			'inputs'            => array (
+				'0' => $form->text( $feature_specs['category_focused_menu_heading_text'] + array(
+						'value'             => $kb_config['category_focused_menu_heading_text'],
+						'input_group_class' => 'eckb-wizard-single-text',
+						'data' => array(
+							'example_image'     =>      'text-wizard/wizard-screenshot-category-focused-heading.jpg'
+						)
+					) ),
 			)
 		));
 
@@ -540,6 +575,7 @@ class EPKB_KB_Wizard_Text {
 	 * All other fields will be excluded when applying changes.
 	 * @var array
 	 */
+	// TODO remove advanced search and elegant layout fields
 	public static $text_fields = array(
 
 		// CORE TEXT
@@ -563,6 +599,10 @@ class EPKB_KB_Wizard_Text {
 		'back_navigation_text',
 		'breadcrumb_description_text',
 		'breadcrumb_home_text',
+
+		//PREV/NEXT TEXT
+		'prev_navigation_text',
+		'next_navigation_text',
 
 		// GRID SEARCH
 		'grid_search_title',
@@ -592,26 +632,7 @@ class EPKB_KB_Wizard_Text {
 		'sidebar_show_all_articles_msg',
 		'sidebar_main_page_intro_text',
 		
-		// ADVANCED SEARCH TEXTS MAIN PAGE
-		'advanced_search_mp_title',
-		'advanced_search_mp_description_below_title',
-		'advanced_search_mp_description_below_input',
-		'advanced_search_mp_box_hint',
-		'advanced_search_mp_results_msg',
-		'advanced_search_mp_no_results_found',
-		'advanced_search_mp_more_results_found',
-		'advanced_search_mp_filter_indicator_text',
-
-		// ADVANCED SEARCH TEXTS ARTICLE PAGE
-		'advanced_search_ap_title',
-		'advanced_search_ap_description_below_title',
-		'advanced_search_ap_description_below_input',
-		'advanced_search_ap_box_hint',
-		'advanced_search_ap_results_msg',
-		'advanced_search_ap_no_results_found',
-		'advanced_search_ap_more_results_found',
-		'advanced_search_ap_filter_indicator_text',
-
+		
 		// ARTICLE RATING Texts
 		'rating_text_value',
 		'rating_confirmation_positive',
@@ -634,5 +655,27 @@ class EPKB_KB_Wizard_Text {
 		
 		// ARCHIVE PAGE
 		'templates_for_kb_category_archive_page_heading_description',
+		'category_focused_menu_heading_text',
+		'templates_for_kb_category_archive_read_more',
+		
+		// ADVANCED SEARCH TEXTS MAIN PAGE
+		'advanced_search_mp_title',
+		'advanced_search_mp_description_below_title',
+		'advanced_search_mp_description_below_input',
+		'advanced_search_mp_box_hint',
+		'advanced_search_mp_results_msg',
+		'advanced_search_mp_no_results_found',
+		'advanced_search_mp_more_results_found',
+		'advanced_search_mp_filter_indicator_text',
+
+		// ADVANCED SEARCH TEXTS ARTICLE PAGE
+		'advanced_search_ap_title',
+		'advanced_search_ap_description_below_title',
+		'advanced_search_ap_description_below_input',
+		'advanced_search_ap_box_hint',
+		'advanced_search_ap_results_msg',
+		'advanced_search_ap_no_results_found',
+		'advanced_search_ap_more_results_found',
+		'advanced_search_ap_filter_indicator_text',
 	);
 }

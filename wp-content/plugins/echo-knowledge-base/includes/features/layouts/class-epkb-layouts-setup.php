@@ -57,6 +57,26 @@ class EPKB_Layouts_Setup {
 	 */
 	public static function output_kb_page_shortcode( $shortcode_attributes ) {
         $kb_config = self::get_kb_config( $shortcode_attributes );
+		
+		do_action( 'epkb_enqueue_scripts', $kb_config['id'] );
+
+		global $eckb_kb_id, $post;
+
+        // add page with KB shortcode to KB Main Pages if missing
+        if ( empty($eckb_kb_id) ) {
+
+            $kb_main_pages = $kb_config['kb_main_pages'];
+	        $query_post = empty($GLOBALS['wp_the_query']) ? null : $GLOBALS['wp_the_query']->get_queried_object();
+	        $post = empty($query_post) && ! empty($post) && $post instanceof WP_Post ? $post : $query_post;
+
+	        // add missing post to main pages
+            if ( ! empty( $post->post_type ) && $post->post_type == 'page' && ! empty($post->ID) &&
+                 is_array($kb_main_pages) && ! in_array($post->ID, array_keys($kb_main_pages)) && $post->post_status == 'publish' ) {
+                $post_id = $post->ID;
+                $kb_main_pages[$post_id] = empty($post->post_title) ? '[KB Main Page]' : $post->post_title;
+                epkb_get_instance()->kb_config_obj->set_value( $kb_config['id'], 'kb_main_pages', $kb_main_pages );
+            }
+        }
 
 		return self:: output_main_page( $kb_config );
 	}
@@ -82,7 +102,7 @@ class EPKB_Layouts_Setup {
 		$layout = empty($kb_config['kb_main_page_layout']) ? '' : $kb_config['kb_main_page_layout'];
 
 		$layout_output = '';
-		if ( ! self::is_core_layout( $layout ) ) {
+		if ( ! self::is_core_layout( $layout ) && EPKB_Utilities::is_elegant_layouts_enabled() ) {
 
 			if ( $layout == EPKB_KB_Config_Layouts::SIDEBAR_LAYOUT && EPKB_Articles_Setup::is_article_structure_v2( $kb_config ) ) {
 
@@ -94,6 +114,7 @@ class EPKB_Layouts_Setup {
 				$temp_article = new WP_Post( $temp_article );
 				$kb_config['sidebar_welcome'] = 'on';
 				$kb_config['back_navigation_toggle'] = 'off';
+                $kb_config['prev_next_navigation_enable'] = 'off';
 				$layout_output = EPKB_Articles_Setup::get_article_content_and_features( $temp_article, $temp_article->post_content, $kb_config );
 
 			} else {  // Grid Layout or V1 Sidebar Layout

@@ -38,10 +38,22 @@ class EPKB_KB_Wizard_Search {
 		$this->form                   = new EPKB_KB_Config_Elements();
 		$this->html                   = new EPKB_HTML_Elements();
 
-		$this->show_article_step = $this->kb_config['kb_main_page_layout'] != EPKB_KB_Config_Layout_Categories::LAYOUT_NAME &&                      // Categories layout has no search
-		                           $this->kb_config['kb_main_page_layout'] != 'Sidebar' &&                                                          // Sidebar Layout on Main Page has Article Search with same settings
-		                           ( EPKB_Utilities::is_advanced_search_enabled( $kb_config ) ||                                                    // Advanced Search has Article Page configuration
-		                             ( EPKB_Utilities::is_elegant_layouts_enabled() && $kb_config['article-structure-version'] == 'version-2' ) );  // Elegant Layout has Sidebar search configuration
+		// assume no search configuration on the Article Page STEP
+		$this->show_article_step = false;
+
+		// Advanced Search overwrites everything else
+		if ( EPKB_Utilities::is_advanced_search_enabled( $kb_config )  ) {
+			// show for all if ( in_array( $this->kb_config['kb_main_page_layout'], array( 'Grid', 'Sidebar' ) ) ) {
+				$this->show_article_step = true;
+			//}
+		// Elegant Layout overwrites basic search
+		} else if (  EPKB_Utilities::is_elegant_layouts_enabled() ) {
+			if ( in_array( $this->kb_config['kb_main_page_layout'], array( 'Grid' ) ) ) {
+				$this->show_article_step = true;
+			} else if ( in_array( $this->kb_config['kb_main_page_layout'], array( 'Basic', 'Tabs' ) ) && EPKB_Articles_Setup::is_article_structure_v2( $kb_config ) && $kb_config['kb_main_page_layout'] != 'Categories' ) {
+				$this->show_article_step = true;
+			}
+		}
 
 		$this->show_article_step = apply_filters( 'epkb_wizard_search_show_article_step_filter', $this->show_article_step, $this->kb_config );
 
@@ -64,11 +76,6 @@ class EPKB_KB_Wizard_Search {
 							$kb_name = $this->kb_config['kb_name'];
 							echo __( 'for', 'echo-knowledge-base' ) . ' ' . '<span id="epkb_current_kb_name" class="epkb-wizard-header__info__current-kb__name">' . esc_html( $kb_name ) . '</span>';  ?>
 						</span>
-
-						<div class="epkb-wizard-button epkb-wizard-header__info__desc-toggle">
-							<span class="epkb-wizard-desc-toggle__text"><?php  _e( 'Step Info', 'echo-knowledge-base' ); ?></span>
-							<span class="epkb-wizard-desc-toggle__icon epkbfa epkbfa-info-circle"></span>
-						</div>
 					</div>
 					<div class="epkb-wizard-button-link epkb-wizard-header__exit-wizard">
 						<a href="<?php echo esc_url( admin_url('edit.php?post_type=' . EPKB_KB_Handler::get_post_type( $this->kb_config['id'] ) . '&epkb-wizard-tab' ) ); ?>&page=epkb-kb-configuration">
@@ -78,19 +85,6 @@ class EPKB_KB_Wizard_Search {
 							<input type="checkbox" data-save_exit="<?php _e( 'Save and Exit', 'echo-knowledge-base' ); ?>" data-exit="<?php _e( 'Exit Wizard', 'echo-knowledge-base' ); ?>">
 							<span><?php _e( 'Save before exit', 'echo-knowledge-base' ); ?></span>
 						</div>
-					</div>
-
-					<div class="epkb-wizard-header__desc-container">
-						<?php if ( $this->show_article_step ) { ?>
-							<p id="epkb-wizard-desc-step-1" class="epkb-wizard-header__desc__step epkb-wizard-desc-active"><?php _e( 'Set up search for the Main Page', 'echo-knowledge-base'); ?></p>
-							<p id="epkb-wizard-desc-step-2" class="epkb-wizard-header__desc__step"><?php _e( 'Set up search for the Article Page', 'echo-knowledge-base'); ?></p>
-							<p id="epkb-wizard-desc-step-3" class="epkb-wizard-header__desc__step"><?php _e( 'After you hit the Apply button we will save your knowledge base according to your selection.', 'echo-knowledge-base'); ?>
-							</p>
-						<?php } else { ?>
-							<p id="epkb-wizard-desc-step-1" class="epkb-wizard-header__desc__step epkb-wizard-desc-active"><?php _e( 'Set up search for the Main Page', 'echo-knowledge-base'); ?></p>
-							<p id="epkb-wizard-desc-step-2" class="epkb-wizard-header__desc__step"><?php _e( 'After you hit the Apply button we will save your knowledge base according to your selection.', 'echo-knowledge-base'); ?>
-							</p>
-						<?php } ?>
 					</div>
 				</div>
 
@@ -209,7 +203,7 @@ class EPKB_KB_Wizard_Search {
 
 			<div class="epkb-wizard-row-1">
 				<p><?php _e( 'Documentation for Knowledge Base and add-ons.', 'echo-knowledge-base' ); ?></p>
-				<a href="https://www.echoknowledgebase.com/documentation/getting-started" target="_blank" class="epkb-wizard-button">
+				<a href="https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/" target="_blank" class="epkb-wizard-button">
 					<span class="epkb-wizard-btn-text"><?php _e( 'KB Documentation', 'echo-knowledge-base' ); ?></span>
 					<span class="epkb-wizard-btn-icon epkbfa epkbfa-book"></span></a>
 			</div>
@@ -323,7 +317,7 @@ class EPKB_KB_Wizard_Search {
 			)
 		));
 
-		// ELAY and WIDGET SEARCH
+		// Elegant Layouts and Widgets SEARCH
 		do_action( 'epkb_search_wizard_after_main_page', $kb_id );
 	}
 
@@ -344,6 +338,7 @@ class EPKB_KB_Wizard_Search {
 	 * All other fields will be excluded when applying changes.
 	 * @var array
 	 */
+	// TODO remove advanced search and elegant layout fields
 	public static $search_fields = array(
 
 		// CORE MAIN PAGE
@@ -363,6 +358,9 @@ class EPKB_KB_Wizard_Search {
 		'grid_search_box_input_width',
 		'grid_search_input_border_width',
 
+		// Widgets
+		'widg_search_preset_styles',
+		
 		// ADVANCED SEARCH - MAIN PAGE
 		'advanced_search_mp_box_visibility',
 		'advanced_search_mp_auto_complete_wait',
@@ -372,7 +370,8 @@ class EPKB_KB_Wizard_Search {
 		'advanced_search_mp_title_font_size',
 		'advanced_search_mp_title_font_weight',
 		'advanced_search_mp_title_padding_bottom',
-		'advanced_search_mp_filter_toggle',
+		'advanced_search_mp_box_font_width',
+		
 		'advanced_search_mp_box_input_width',
 		'advanced_search_mp_input_border_width',
 		'advanced_search_mp_input_box_radius',
@@ -415,6 +414,11 @@ class EPKB_KB_Wizard_Search {
 		'advanced_search_mp_title_text_shadow_y_offset',
 		'advanced_search_mp_title_text_shadow_blur',
 		'advanced_search_mp_title_text_shadow_toggle',
+		'advanced_search_mp_title_tag',
+		'advanced_search_mp_filter_category_level',
+		'advanced_search_mp_filter_toggle',
+		'advanced_search_mp_filter_dropdown_width',
+
 		'advanced_search_mp_description_below_title_font_size',
 		'advanced_search_mp_description_below_title_padding_top',
 		'advanced_search_mp_description_below_title_padding_bottom',
@@ -461,7 +465,12 @@ class EPKB_KB_Wizard_Search {
 		'advanced_search_ap_title_text_shadow_y_offset',
 		'advanced_search_ap_title_text_shadow_blur',
 		'advanced_search_ap_title_text_shadow_toggle',
+		'advanced_search_ap_title_tag',
+		'advanced_search_ap_filter_category_level',
 		'advanced_search_ap_filter_toggle',
+		'advanced_search_ap_filter_dropdown_width',
+		'advanced_search_ap_box_font_width',
+		
 		'advanced_search_ap_box_input_width',
 		'advanced_search_ap_input_border_width',
 		'advanced_search_ap_input_box_radius',
@@ -506,6 +515,7 @@ class EPKB_KB_Wizard_Search {
 		'advanced_search_ap_description_below_title_text_shadow_y_offset',
 		'advanced_search_ap_description_below_title_text_shadow_blur',
 		'advanced_search_ap_description_below_title_text_shadow_toggle',
+		'advanced_search_ap_description_below_input',
 		'advanced_search_ap_description_below_input_font_size',
 		'advanced_search_ap_description_below_input_padding_top',
 		'advanced_search_ap_description_below_input_padding_bottom',
@@ -529,8 +539,5 @@ class EPKB_KB_Wizard_Search {
 		'advanced_search_ap_filter_box_font_color',
 		'advanced_search_ap_filter_box_background_color',
 		'advanced_search_ap_filter_indicator_text',
-		
-		// Widgets
-		'widg_search_preset_styles',
 	);
 }

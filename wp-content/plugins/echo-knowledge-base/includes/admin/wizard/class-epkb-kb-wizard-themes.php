@@ -10,7 +10,7 @@ class EPKB_KB_Wizard_Themes {
 
 	/**
 	 * Retreive themes-specific configuration for core and add-ons
-	 * @return array|mixed
+	 * @return array
 	 */
 	public static function get_all_themes() {
 
@@ -49,10 +49,10 @@ class EPKB_KB_Wizard_Themes {
 	 * Return specific theme configuration + all other core and add-ons configuration so we can display preview
 	 *
 	 * @param $theme_id
-	 * @param string $article_structure_version
+	 * @param $kb_config
 	 * @return array
 	 */
-	public static function get_theme( $theme_id, $article_structure_version = '' ) {
+	public static function get_theme( $theme_id, $kb_config ) {
 
 		// current = 0, theme_standard = 1
 		$themes = self::get_all_themes();
@@ -65,10 +65,18 @@ class EPKB_KB_Wizard_Themes {
 
 		// overwrite default configuration with theme-specific settings
 		$new_config = array_merge($all_default_configuration, $theme_config);
-		if ( $article_structure_version ) {
-			$new_config["article-structure-version"] = $article_structure_version;
-		}
-		
+
+		// Fix for settings when change theme
+        $new_config['prev_next_navigation_enable'] = $kb_config['prev_next_navigation_enable'];
+        $new_config['next_navigation_text'] = $kb_config['next_navigation_text'];
+        $new_config['prev_navigation_text'] = $kb_config['prev_navigation_text'];
+        $new_config['breadcrumb_toggle'] = $kb_config['breadcrumb_toggle'];
+        $new_config['back_navigation_toggle'] = $kb_config['back_navigation_toggle'];
+
+        if ( ! empty($kb_config['article-structure-version']) ) {
+            $new_config["article-structure-version"] = $kb_config['article-structure-version'];
+        }
+
 		return $new_config;
 	}
 
@@ -125,6 +133,7 @@ class EPKB_KB_Wizard_Themes {
 	 * All other fields will be excluded when applying changes.
 	 * @var array
 	 */
+	// TODO remove advanced search and elegant layout fields
 	public static $theme_fields = array(
 
 		// GENERAL
@@ -250,7 +259,14 @@ class EPKB_KB_Wizard_Themes {
 		'back_navigation_bg_color',
 		'back_navigation_border_color',
 
-		// GRID COLORS
+        // PREV/NEXT NAVIGATION
+        'prev_next_navigation_text_color',
+        'prev_next_navigation_bg_color',
+        'prev_next_navigation_hover_text_color',
+        'prev_next_navigation_hover_bg_color',
+
+
+        // GRID COLORS
 		'grid_background_color',
 		'grid_search_title_font_color',
 		'grid_search_background_color',
@@ -477,6 +493,7 @@ class EPKB_KB_Wizard_Themes {
 		'advanced_search_ap_box_visibility',
 		'advanced_search_ap_description_below_title',
 		'advanced_search_ap_description_below_input',
+			
 		// RATING ARTICLE
 		'rating_element_color',
 		'rating_like_color',
@@ -1101,8 +1118,8 @@ class EPKB_KB_Wizard_Themes {
 			'kb_main_page_layout'			                    => 'Tabs',
 			'theme_category'                                    => 'Tabs Layout',
 			'templates_for_kb_category_archive_page_style'	    => 'eckb-category-archive-style-4',
-			'breadcrumb_text_color'			                    => '#00b4b3',
-			'back_navigation_text_color'			            => '#00b4b3',
+			'breadcrumb_text_color'			                    => '#6e6767',
+			'back_navigation_text_color'			            => '#6e6767',
 			'nof_articles_displayed'			                => '10',
 			'search_box_input_width'			                => '50',
 			'section_box_height_mode'                           => 'section_no_height',
@@ -1169,8 +1186,8 @@ class EPKB_KB_Wizard_Themes {
 			'kb_main_page_layout'			                    => 'Tabs',
 			'theme_category'                                    => 'Tabs Layout',
 			'templates_for_kb_category_archive_page_style'	    => 'eckb-category-archive-style-4',
-			'breadcrumb_text_color'			                    => '#00b4b3',
-			'back_navigation_text_color'			            => '#00b4b3',
+			'breadcrumb_text_color'			                    => '#1e73be',
+			'back_navigation_text_color'			            => '#1e73be',
 			'nof_articles_displayed'			                => '10',
 			'search_box_input_width'			                => '50',
 			'section_box_height_mode'                           => 'section_no_height',
@@ -1278,8 +1295,8 @@ class EPKB_KB_Wizard_Themes {
 			'article_font_color'                    =>  '#666666',
 			'article_icon_color'                    =>  '#2991a3',
 
-			'breadcrumb_text_color'			            => '#8c1515',
-			'back_navigation_text_color'			    => '#8c1515',
+			'breadcrumb_text_color'			            => '#2991a3',
+			'back_navigation_text_color'			    => '#2991a3',
 			'width'			                            => 'epkb-boxed',
 			'section_font_size'			                => 'section_small_font',
 			'expand_articles_icon'			            => 'ep_font_icon_plus_box',
@@ -1356,8 +1373,8 @@ class EPKB_KB_Wizard_Themes {
 			'article_font_color'                    =>  '#0bcad9',
 			'article_icon_color'                    =>  '#2991a3',
 
-			'breadcrumb_text_color'			            => '#8c1515',
-			'back_navigation_text_color'			    => '#8c1515',
+			'breadcrumb_text_color'			            => '#1e73be',
+			'back_navigation_text_color'			    => '#1e73be',
 			'width'			                            => 'epkb-boxed',
 			'section_font_size'			                => 'section_small_font',
 			'expand_articles_icon'			            => 'ep_font_icon_plus_box',
@@ -1437,8 +1454,8 @@ class EPKB_KB_Wizard_Themes {
 			'article_font_color'                    =>  '#666666',
 			'article_icon_color'                    =>  '#e8a298',
 
-			'breadcrumb_text_color'			            => '#8c1515',
-			'back_navigation_text_color'			    => '#8c1515',
+			'breadcrumb_text_color'			            => '#1e73be',
+			'back_navigation_text_color'			    => '#1e73be',
 			'width'			                            => 'epkb-boxed',
 			'section_font_size'			                => 'section_small_font',
 			'expand_articles_icon'			            => 'ep_font_icon_plus_box',
@@ -1518,8 +1535,8 @@ class EPKB_KB_Wizard_Themes {
 			'article_font_color'                    =>  '#666666',
 			'article_icon_color'                    =>  '#6fb24c',
 
-			'breadcrumb_text_color'			            => '#8c1515',
-			'back_navigation_text_color'			    => '#8c1515',
+			'breadcrumb_text_color'			            => '#1e73be',
+			'back_navigation_text_color'			    => '#1e73be',
 			'width'			                            => 'epkb-boxed',
 			'section_font_size'			                => 'section_small_font',
 			'expand_articles_icon'			            => 'ep_font_icon_plus_box',

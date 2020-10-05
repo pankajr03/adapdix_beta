@@ -48,6 +48,10 @@ abstract class EPKB_Layout {
 		}
 
 		$this->is_builder_on = $is_builder_on;
+		if ( empty($this->category_seq_data) && empty($this->articles_seq_data) ) {
+			echo __( 'This Knowledge Base is not set up.', 'echo-knowledge-base' );
+			return;
+		}
 
 		$this->generate_kb_main_page();
 	}
@@ -58,14 +62,15 @@ abstract class EPKB_Layout {
 	protected abstract function generate_kb_main_page();
 
 	/**
-	 * Display a link to a KB article.
-	 *
-	 * @param $title
-	 * @param $article_id
-	 * @param string $link_other
-	 * @param string $prefix
-	 */
-	public function single_article_link( $title , $article_id, $link_other='', $prefix='' ) {
+	* Display a link to a KB article.
+	*
+	* @param $title
+	* @param $article_id
+	* @param string $link_other
+	* @param string $prefix
+	* @param string $seq_no
+	*/
+	public function single_article_link( $title , $article_id, $link_other='', $prefix='', $seq_no='' ) {
 
 		if ( empty($article_id) ) {
 			return;
@@ -84,6 +89,7 @@ abstract class EPKB_Layout {
 		}
 
 		$link = get_permalink( $article_id );
+        $link = empty($seq_no) || $seq_no < 2 ? $link : add_query_arg( 'seq_no', $seq_no, $link );
 		$link = empty($link) || is_wp_error( $link ) ? '' : $link;  ?>
 
 		<a href="<?php echo esc_url( $link ); ?>" <?php echo $link_other; ?>>
@@ -139,14 +145,9 @@ abstract class EPKB_Layout {
 				<div class="epkb-search-box">
 					<input type="text" <?php echo $style4; ?> id="epkb_search_terms" aria-label="<?php echo esc_attr( $this->kb_config['search_box_hint'] ); ?>" name="epkb_search_terms" value="" placeholder="<?php echo esc_attr( $this->kb_config['search_box_hint'] ); ?>" />
 					<input type="hidden" id="epkb_kb_id" value="<?php echo $this->kb_id; ?>"/>
-					<button type="submit" id="epkb-search-kb" <?php echo $style2; ?>><?php echo esc_html( $this->kb_config['search_button_name'] ); ?> </button>
-					<!-- Chrome 77 fix rendering text issue Sidebar Layout -->
-					<script>
-						jQuery( "#epkb-search-kb" ).load(function() {
-							let search_text = $( '#epkb-search-kb' ).text();
-							$( '#epkb-search-kb' ).text( search_text );
-						});
-					</script>
+					<div class="epkb-search-box_button-wrap">
+						<button type="submit" id="epkb-search-kb" <?php echo $style2; ?>><?php echo esc_html( $this->kb_config['search_button_name'] ); ?> </button>
+					</div>
 					<div class="loading-spinner"></div>
 				</div>
 				<div id="epkb_search_results"></div>

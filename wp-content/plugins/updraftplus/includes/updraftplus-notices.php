@@ -136,8 +136,12 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 			'social_media' => array(
 				'prefix' => '',
 				'title' => __('UpdraftPlus is on social media - check us out!', 'updraftplus'),
-				'text' => $this->url_start(true, 'twitter.com/updraftplus', true).__('Twitter', 'updraftplus').$this->url_end(true, 'twitter.com/updraftplus', true).' - '.$this->url_start(true, 'facebook.com/updraftplus', true).__('Facebook', 'updraftplus').$this->url_end(true, 'facebook.com/updraftplus', true).' - '.$this->url_start(true, 'plus.google.com/u/0/b/112313994681166369508/112313994681166369508/about', true).__('Google+', 'updraftplus').$this->url_end(true, 'plus.google.com/u/0/b/112313994681166369508/112313994681166369508/about', true).' - '.$this->url_start(true, 'www.linkedin.com/company/updraftplus', true).__('LinkedIn', 'updraftplus').$this->url_end(true, 'www.linkedin.com/company/updraftplus', true),
-				'text_plain' => $this->url_start(false, 'twitter.com/updraftplus', true).__('Twitter', 'updraftplus').$this->url_end(false, 'twitter.com/updraftplus', true).' - '.$this->url_start(false, 'facebook.com/updraftplus', true).__('Facebook', 'updraftplus').$this->url_end(false, 'facebook.com/updraftplus', true).' - '.$this->url_start(false, 'plus.google.com/u/0/b/112313994681166369508/112313994681166369508/about', true).__('Google+', 'updraftplus').$this->url_end(false, 'plus.google.com/u/0/b/112313994681166369508/112313994681166369508/about', true).' - '.$this->url_start(false, 'www.linkedin.com/company/updraftplus', true).__('LinkedIn', 'updraftplus').$this->url_end(false, 'www.linkedin.com/company/updraftplus', true),
+				'text' => $this->url_start(true, 'twitter.com/updraftplus', true). __('Twitter', 'updraftplus'). $this->url_end(true, 'twitter.com/updraftplus', true).
+						' - '.
+						$this->url_start(true, 'facebook.com/updraftplus', true). __('Facebook', 'updraftplus'). $this->url_end(true, 'facebook.com/updraftplus', true),
+				'text_plain' => $this->url_start(false, 'twitter.com/updraftplus', true). __('Twitter', 'updraftplus'). $this->url_end(false, 'twitter.com/updraftplus', true).
+						' - '.
+						$this->url_start(false, 'facebook.com/updraftplus', true). __('Facebook', 'updraftplus'). $this->url_end(false, 'facebook.com/updraftplus', true),
 				'image' => 'notices/updraft_logo.png',
 				'dismiss_time' => false,
 				'supported_positions' => $this->anywhere,
@@ -197,15 +201,6 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'supported_positions' => $this->anywhere,
 				'validity_function' => 'wp_optimize_installed',
 			),
-			'metaslider' => array(
-				'prefix' => '',
-				'title' => "MetaSlider: The world's #1 slider plugin from the makers of UpdraftPlus",
-				'text' => __("With Metaslider, you can easily add style and flare with beautifully-designed sliders.", "updraftplus") . ' ' . $this->url_start(true, 'metaslider.com'),
-				'image' => 'notices/metaslider_logo.png',
-				'dismiss_time' => 'dismiss_notice',
-				'supported_positions' => $this->anywhere,
-				'validity_function' => 'metaslider_installed',
-			),
 			
 			// The sale adverts content starts here
 			'blackfriday' => array(
@@ -217,9 +212,9 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'campaign' => 'blackfriday',
 				'button_meta' => 'updraftplus',
 				'dismiss_time' => 'dismiss_season',
-				'discount_code' => 'blackfridaysale2019',
-				'valid_from' => '2019-11-20 00:00:00',
-				'valid_to' => '2019-11-30 23:59:59',
+				'discount_code' => 'blackfridaysale2020',
+				'valid_from' => '2020-11-20 00:00:00',
+				'valid_to' => '2020-11-30 23:59:59',
 				'supported_positions' => $this->dashboard_top_or_report,
 			),
 			'christmas' => array(
@@ -231,9 +226,9 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'campaign' => 'christmas',
 				'button_meta' => 'updraftplus',
 				'dismiss_time' => 'dismiss_season',
-				'discount_code' => 'christmassale2019',
-				'valid_from' => '2019-12-01 00:00:00',
-				'valid_to' => '2019-12-25 23:59:59',
+				'discount_code' => 'christmassale2020',
+				'valid_from' => '2020-12-01 00:00:00',
+				'valid_to' => '2020-12-25 23:59:59',
 				'supported_positions' => $this->dashboard_top_or_report,
 			),
 			'newyear' => array(
@@ -245,9 +240,9 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'campaign' => 'newyear',
 				'button_meta' => 'updraftplus',
 				'dismiss_time' => 'dismiss_season',
-				'discount_code' => 'newyearsale2020',
-				'valid_from' => '2019-12-26 00:00:00',
-				'valid_to' => '2020-01-14 23:59:59',
+				'discount_code' => 'newyearsale2021',
+				'valid_from' => '2020-12-26 00:00:00',
+				'valid_to' => '2021-01-14 23:59:59',
 				'supported_positions' => $this->dashboard_top_or_report,
 			),
 			'spring' => array(
@@ -277,6 +272,20 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 				'valid_from' => '2020-07-01 00:00:00',
 				'valid_to' => '2020-07-31 23:59:59',
 				'supported_positions' => $this->dashboard_top_or_report,
+			),
+			'collection' => array(
+				'prefix' => '',
+				'title' => __('The Updraft Plugin Collection Sale', 'updraftplus'),
+				'text' => __('Get 20% off any of our plugins. But hurry - offer ends 30th September, use this discount code:', 'updraftplus').' ',
+				'image' => 'notices/updraft_logo.png',
+				'button_link' => 'https://teamupdraft.com',
+				'campaign' => 'collection',
+				'button_meta' => 'collection',
+				'dismiss_time' => 'dismiss_season',
+				'discount_code' => 'UDP2020',
+				'valid_from' => '2020-09-01 00:00:00',
+				'valid_to' => '2020-09-30 23:59:59',
+				'supported_positions' => $this->dashboard_top_or_report,
 			)
 		);
 
@@ -293,9 +302,9 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 		$this->notices_content = (defined('UPDRAFTPLUS_NOADS_B') && UPDRAFTPLUS_NOADS_B) ? array() : $this->populate_notices_content();
 		global $updraftplus;
 		$enqueue_version = $updraftplus->use_unminified_scripts() ? $updraftplus->version.'.'.time() : $updraftplus->version;
-		$min_or_not = $updraftplus->use_unminified_scripts() ? '' : '.min';
+		$updraft_min_or_not = $updraftplus->get_updraftplus_file_version();
 
-		wp_enqueue_style('updraftplus-notices-css',  UPDRAFTPLUS_URL.'/css/updraftplus-notices'.$min_or_not.'.css', array(), $enqueue_version);
+		wp_enqueue_style('updraftplus-notices-css',  UPDRAFTPLUS_URL.'/css/updraftplus-notices'.$updraft_min_or_not.'.css', array(), $enqueue_version);
 	}
 
 	protected function translation_needed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable, Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
@@ -312,37 +321,6 @@ class UpdraftPlus_Notices extends Updraft_Notices {
 			}
 		}
 		return true;
-	}
-
-	protected function metaslider_installed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
-		if (!function_exists('get_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
-		$plugins = get_plugins();
-
-		foreach ($plugins as $key => $value) {
-			if ('ml-slider' == $value['TextDomain']) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	protected function clef_2fa_installed($plugin_base_dir = null, $product_name = null) {// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Filter use
-
-		if (!function_exists('get_plugins')) include_once(ABSPATH.'wp-admin/includes/plugin.php');
-
-		$plugins = get_plugins();
-		$clef_found = false;
-
-		foreach ($plugins as $key => $value) {
-			if ('wpclef' == $value['TextDomain']) {
-				$clef_found = true;
-			} elseif ('two-factor-authentication' == $value['TextDomain'] || 'two-factor-authentication-premium' == $value['TextDomain']) {
-				return false;
-			}
-		}
-
-		return $clef_found;
-		
 	}
 	
 	protected function url_start($html_allowed = false, $url, $https = false, $website_home = 'updraftplus.com') {

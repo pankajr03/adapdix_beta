@@ -867,14 +867,19 @@ class EPKB_KB_Config_Page {
 
         // display link to KB Main Page if any
 		$link_output = EPKB_KB_Handler::get_first_kb_main_page_url( $this->kb_config );
-		if ( ! empty($link_output) ) {
+		$style = '';
+		if ( empty($link_output) ) {
+			$global_wizard_link = esc_url( admin_url('edit.php?post_type=' . EPKB_KB_Handler::get_post_type( $this->kb_config['id'] ) . '&page=epkb-kb-configuration&wizard-global' ) );
+            $link_output = '<a href="' . $global_wizard_link . '" class="shortcode_error" style="text-decoration:underline">' . __( "Add Shortcode", "echo-knowledge-base" ) . '</a>';
+            $style = 'style="padding: 20px 10px;"';
+		} else {
 			$link_output = '<a href="' . $link_output . '" target="_blank"><div class="epkb-view ep_font_icon_external_link"></div></a>';
-		}   ?>
+		}		?>
 
 		<div class="epkb-info-section epkb-kb-name-section">   <?php
 			self::display_list_of_kbs( $this->kb_config ); 			?>
 		</div>
-        <div class="epkb-info-section epkb-info-main has-margin" id="epkb-view-kb-button">
+        <div class="epkb-info-section epkb-info-main has-margin" id="epkb-view-kb-button" <?php echo $style; ?>>
 			<div class="overview-icon-container">
 				<p><?php _e( 'View KB', 'echo-knowledge-base' ); ?></p>
             	<?php echo $link_output; ?>
@@ -891,7 +896,7 @@ class EPKB_KB_Config_Page {
 
 		<div class="epkb-info-section epkb-info-main <?php echo $this->show_wizard_page ? 'epkb-active-page' : ''; ?>"">
 				<div class="wizard-icon-container">
-					<p><?php _e( 'Wizards', 'echo-knowledge-base' ); ?></p>
+					<p><?php _e( 'Configuration', 'echo-knowledge-base' ); ?></p>
 					<div class="page-icon wizard-icon epkbfa epkbfa-magic" id="epkb-config-wizards"></div>
 				</div>
 		</div>
@@ -901,7 +906,8 @@ class EPKB_KB_Config_Page {
 				<div class="page-icon wizard-icon epkbfa epkbfa-puzzle-piece" id="epkb-config-advanced-config"></div>
 			</div>
 		</div>
-		<div class="epkb-info-section epkb-info-old-button epkb-info-main">
+		
+		<div class="epkb-info-section epkb-info-old-button epkb-info-main" <?php if ($this->kb_config['article-structure-version'] == 'version-2') echo 'style="display: none;"'; ?>>
 			<div class="wizard-icon-container">
 				<p><?php _e( 'Old Config', 'echo-knowledge-base' ); ?></p>
 				<div class="page-icon wizard-icon epkbfa epkbfa-sitemap" id="epkb-config-open-old"></div>

@@ -19,7 +19,6 @@ class EPKB_Add_Ons_Page {
 			<div class="epkb-config-wrapper">
 				<div class="wrap" id="ekb_core_top_heading"></div>
 				<div class="eckb-top-notice-message"></div>      <?php
-
 				self::display_add_ons_details();  ?>
 			</div>
 
@@ -49,7 +48,11 @@ class EPKB_Add_Ons_Page {
 					<li class="nav_tab <?php echo ($tab == 'add-ons' ? 'active' : ''); ?>">
 						<h2><?php _e( 'Add-ons', 'echo-knowledge-base' ); ?></h2>
 						<p><?php _e( 'More Possibilities', 'echo-knowledge-base' ); ?></p>
-					</li>					<?php
+					</li>
+					<!-- <li class="nav_tab <?php //echo ($tab == 'plugins' ? 'active' : ''); ?>">
+						<h2><?php //_e( 'Plugins', 'echo-knowledge-base' ); ?></h2>
+						<p><?php //_e( 'More Possibilities', 'echo-knowledge-base' ); ?></p>
+					</li>--> 	<?php
 
 					if ( ! empty($license_content) ) {  ?>
 						<li id="eckb_license_tab" class="nav_tab <?php echo ($tab == 'licenses' ? 'active' : ''); ?>">
@@ -61,6 +64,10 @@ class EPKB_Add_Ons_Page {
 					<li class="nav_tab <?php echo ($tab == 'debug' ? 'active' : ''); ?>">
 						<h2><span class="ep_font_icon_tools"></span> <?php esc_html_e( 'Debug', 'echo-knowledge-base' ); ?></h2>
 						<p><?php esc_html_e( 'Information required for support.', 'echo-knowledge-base' ); ?></p>
+					</li>
+					<li class="nav_tab <?php echo ($tab == 'other' ? 'active' : ''); ?>">
+						<h2><?php esc_html_e( 'Other', 'echo-knowledge-base' ); ?></h2>
+						<p><?php esc_html_e( 'Site wide settings', 'echo-knowledge-base' ); ?></p>
 					</li>
 				</ul>
 			</section>
@@ -81,11 +88,21 @@ class EPKB_Add_Ons_Page {
 
 						$i18_grid = '<strong>' . __( 'Grid Layout', 'echo-knowledge-base' ) . '</strong>';
 						$i18_sidebar = '<strong>' . __( 'Sidebar Layout', 'echo-knowledge-base' ) . '</strong>';
+
+						self::add_on_product( array(
+							'id'                => '',
+							'title'             => __( 'KB Articles Import', 'echo-knowledge-base' ),
+							'special_note'      => __( 'Import Articles and Categoies', 'echo-knowledge-base' ),
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/edd/2020/08/KB-Import-Export-Banner.jpg',
+							'desc'              => sprintf( __( 'Import articles and categories into your knowledge base from CSV file. Migrate and move your articles from another KB.', 'echo-knowledge-base' ), $i18_grid, $i18_sidebar ),
+							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/kb-import-export//?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=kb-import-export/',
+						) );
+
 						self::add_on_product( array(
 							'id'                => '',
 							'title'             => __( 'Elegant Layouts', 'echo-knowledge-base' ),
 							'special_note'      => __( 'More ways to design your KB', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2017/08/EL'.'AY-Featured-image.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-ELAY-1.1.jpg',
 							'desc'              => sprintf( __( 'Use %s or %s for KB Main page or combine Basic, Tabs, Grid and Sidebar layouts in many cool ways.', 'echo-knowledge-base' ), $i18_grid, $i18_sidebar ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/elegant-layouts/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=elegant-layouts',
 						) );
@@ -95,7 +112,7 @@ class EPKB_Add_Ons_Page {
 							'id'                => '',
 							'title'             => __( 'Multiple Knowledge Bases', 'echo-knowledge-base' ),
 							'special_note'      => __( 'Expand your documentation', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2017/08/MKB-Featured-image-2.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-MKB-1.jpg',
 							'desc'              => sprintf( _x( 'Create a separate Knowledge Base for each %s.',
                                                     'product, service and team.', 'echo-knowledge-base' ), $i18_list ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/multiple-knowledge-bases/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=multiple-kbs'
@@ -105,7 +122,7 @@ class EPKB_Add_Ons_Page {
 							'id'                => '',
 							'title'             => __( 'Advanced Search', 'echo-knowledge-base' ),
 							'special_note'      => __( 'Enhance and analyze user searches', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2019/11/add-ons-advanced-search-featured-image.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-ASEA-1.jpg',
 							'desc'              => __( 'Enhance users search experience and view search analytics including popular searches and no results searches.', 'echo-knowledge-base' ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/advanced-search/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=advanced-search'
 						) );
@@ -126,7 +143,7 @@ class EPKB_Add_Ons_Page {
 							'id'                => '',
 							'title'             => __( 'Access Manager', 'echo-knowledge-base' ),
 							'special_note'      => __( 'Protect your KB content', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2018/02/AM'.'GR-Featured-image.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-AMGR-1.jpg',
 							'desc'              => sprintf( __( 'Restrict your Articles to certain %s using KB Categories. Assign users to specific %s within Groups.', 'echo-knowledge-base' ), $i18_groups, $i18_roles ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/access-manager/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=access-manager'
 						) );
@@ -136,7 +153,7 @@ class EPKB_Add_Ons_Page {
 							'id'                => '',
 							'title'             => __( 'Widgets', 'echo-knowledge-base' ),
 							'special_note'      => __( 'Shortcodes, Widgets, Sidebars', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2015/08/Widgets-Featured-image.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-WIDG-2.jpg',
 							'desc'              => sprintf( __( 'Add KB Search, Most Recent Articles and other %s to your articles, sidebars and pages.',
                                                 'echo-knowledge-base' ), $i18_what ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/widgets/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=widgets'
@@ -146,13 +163,18 @@ class EPKB_Add_Ons_Page {
 							'id'                => '',
 							'title'             => __( 'Links Editor for PDFs and More', 'echo-knowledge-base' ),
 							'special_note'      => __( 'Link to PDFs, posts and pages', 'echo-knowledge-base' ),
-							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2018/02/LINK-Featured-image.jpg',
+							'img'               => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/07/featured-image-LINK-2.jpg',
 							'desc'              => sprintf( __( 'Set Articles to links to %s. On KB Main Page, choose icons for your articles.', 'echo-knowledge-base' ), $i18_objects ),
 							'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/links-editor-for-pdfs-and-more/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=links-editor'
 						) );    ?>
 
 					</div>
 				</div>
+
+				<!-- PLUGINS INFO -->
+				<!-- <div class="ekb-admin-page-tab-panel container-fluid <?php //echo ($tab == 'plugins' ? 'active' : ''); ?>">
+					
+				</div> -->
 
 				<!--   LICENSES ONLY -->		<?php
 				if ( ! empty($license_content) ) { ?>
@@ -162,14 +184,21 @@ class EPKB_Add_Ons_Page {
 								echo $license_content;      ?>
 							</ul>
 						</section>
-					</div>
-				<?php }  ?>
+					</div>				<?php
+				}  ?>
 
 				<!-- DEBUG INFO -->
 				<div class="ekb-admin-page-tab-panel container-fluid <?php echo ($tab == 'debug' ? 'active' : ''); ?>">
                     <p><?php _e( 'Enable debugging when instructed by the Echo team.', 'echo-knowledge-base' ); ?></p>
                     <?php
 					self::display_debug_info( new EPKB_HTML_Elements() );       ?>
+				</div>
+
+				<!-- Other -->
+				<div class="ekb-admin-page-tab-panel container-fluid <?php echo ($tab == 'other' ? 'active' : ''); ?>">
+					<?php
+					$delete_kb = new EPKB_Delete_KB();
+					$delete_kb->display_delete_tab( new EPKB_HTML_Elements() );       ?>
 				</div>
 			</div>
 		</div>   <?php
@@ -417,8 +446,8 @@ class EPKB_Add_Ons_Page {
 			if ( ! in_array( $plugin_path, $active_plugins ) )
 				continue;
 
-			if ( in_array($plugin['Name'], array('KB - Article Rating and Feedback','KB - Links Editor','KB - Import Export','KB - Multiple Knowledge Bases','KB - Widgets',
-												'Knowledge Base for Documents and FAQs'))) {
+			if ( in_array($plugin['Name'], array('KB - Article Rating and Feedback','KB - Links Editor','KB Articles Import','KB - Multiple Knowledge Bases','KB - Widgets',
+												'Knowledge Base for Documents and FAQs', 'KB - Elegant Layouts'))) {
 				echo "		" . $plugin['Name'] . ': ' . $plugin['Version'] ."\n";
 			}
 		}
@@ -431,7 +460,7 @@ class EPKB_Add_Ons_Page {
 			if ( ! in_array( $plugin_path, $active_plugins ) )
 				continue;
 
-			if ( ! in_array($plugin['Name'], array('KB - Article Rating and Feedback','KB - Links Editor','KB - Import Export','KB - Multiple Knowledge Bases','KB - Widgets',
+			if ( ! in_array($plugin['Name'], array('KB - Article Rating and Feedback','KB - Links Editor','KB Articles Import','KB - Multiple Knowledge Bases','KB - Widgets',
 					'Knowledge Base for Documents and FAQs'))) {
 				echo "		" . $plugin['Name'] . ': ' . $plugin['Version'] ."\n";
 			}

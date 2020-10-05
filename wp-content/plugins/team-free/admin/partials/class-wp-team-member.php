@@ -37,18 +37,6 @@ class SPTP_Member {
 						/* translators: %s is replaced with 'Member' */
 						'content' => wp_sprintf( __( '%s DETAILS', 'wp-team' ), strtoupper( $name ) ),
 					),
-					
-					
-					array(
-						'id'    => 'sptp_job_type',
-						'type'    => 'select',
-						'options' 	=> array(
-							'Our Team'=> 'Our Team',
-							'Board & Advisor' => 'Board & Advisor'
-						),
-						'title' => __( 'Team Type', 'wp-team' )
-						
-					),
 					array(
 						'id'    => 'sptp_job_title',
 						'type'  => 'text',

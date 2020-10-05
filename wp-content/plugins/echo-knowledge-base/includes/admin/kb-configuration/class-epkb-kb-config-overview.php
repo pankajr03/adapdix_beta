@@ -115,108 +115,7 @@ class EPKB_KB_Config_Overview {
 	        </section>		<?php
 		}   ?>
 
-        <!-- Configuration --------------------------------------------->
-        <section id="epkb-overview-section-config" class="overview-info-section">
-            <div class="overview-config">
-                <div class="overview-header">
-                    <div class="overview-title"><?php _e( 'General', 'echo-knowledge-base' ); ?></div>
-                </div>
-                <div class="overview-content">
 
-	                <div class="epkb-overview-row epkb-flex-stretch epkb-flex-align-items-stretch">		                <?php
-		                self::display_overview_box( array(
-			                'option_classes' => array(
-				                'epkb-overview-box-icon-location-left',
-				                'epkb-overview-box-center-align',
-				                'epkb-overview-box-green',
-				                'epkb-overview-box-margin',
-				                'epkb-overview-box-width-one-third'
-			                ),
-			                'icon_class'    => 'epkbfa-cogs',
-			                'title'         => __( 'KB Main Page', 'echo-knowledge-base' ),
-			                'content'       =>
-				                '<p>' . __( 'To display a <strong>Knowledge Base Main page</strong>, add the following KB shortcode to any page:', 'echo-knowledge-base' ) . '</p><br />'.
-				                '<p style="color:#5cb85c;"><strong> ['.EPKB_KB_Handler::KB_MAIN_PAGE_SHORTCODE_NAME . ' id=' . $kb_id.']</strong></p><br />'.
-				                '<p><strong>' . __( 'Existing KB Main Page(s):', 'echo-knowledge-base' ) . '</strong></p>'.
-				                '<ul class="epkb-overview-box-form-list">'.wp_kses_post( $kb_main_pages_url ).'</ul>',
-		                ) );
-
-		                if ( EPKB_KB_Wizard::is_wizard_disabled() ) {
-
-			                self::display_overview_box( array(
-				                'option_classes' => array(
-					                'epkb-overview-box-icon-location-left',
-					                'epkb-overview-box-center-align',
-					                'epkb-overview-box-border-right',
-					                'epkb-overview-box-border-left',
-					                'epkb-overview-box-green',
-					                'epkb-overview-box-margin',
-					                'epkb-overview-box-width-one-third'
-				                ),
-				                'form_id'        => 'epkb-config-config3',
-				                'icon_class'     => 'epkbfa-cogs',
-				                'title'          => __( 'KB Name', 'echo-knowledge-base' ),
-				                'content'        =>
-					                '<ul class="epkb-overview-box-form-list">' .
-					                $form->text( array(
-						                             'value'             => $kb_config['kb_name'],
-						                             'input_group_class' => '',//
-						                             'label_class'       => '',//config-col-3
-						                             'input_class'       => ''//config-col-9
-					                             ) + $feature_specs['kb_name'], true ) .
-					                '<li>' . $config_elements->submit_button( array(
-						                'label'       => __( 'Update', 'echo-knowledge-base' ),
-						                'id'          => 'epkb_save_dashboard',
-						                'main_class'  => 'epkb_save_dashboard',
-						                'action'      => 'epkb_save_dashboard',
-						                'input_class' => 'epkb-info-settings-button primary-btn'
-					                ), true ) .
-					                $config_elements->submit_button( array(
-						                'label'       => __( 'Cancel', 'echo-knowledge-base' ),
-						                'id'          => 'epkb_cancel_dashboard',
-						                'main_class'  => 'epkb_cancel_dashboard',
-						                'action'      => 'epkb_cancel_dashboard',
-						                'input_class' => 'epkb-info-settings-button error-btn',
-					                ), true ) . '</li>' .
-					                '</ul>'
-
-			                ) );
-
-			                self::display_overview_box( array(
-				                'option_classes' => array(
-					                'epkb-overview-box-icon-location-left',
-					                'epkb-overview-box-center-align',
-					                'epkb-overview-box-green',
-					                'epkb-overview-box-margin',
-					                'epkb-overview-box-width-one-third'
-				                ),
-				                'form_id'       => 'epkb-wpml-enabled-config',
-				                'icon_class'    => 'epkbfa-cogs',
-				                'title'         => 'WPML',
-				                'content'       =>
-					                $form->checkbox( array(
-						                'label'       => __( 'WPML Enabled', 'echo-knowledge-base' ),
-						                'name'        => 'epkb_wpml_is_enabled',
-						                'type'        => EPKB_Input_Filter::CHECKBOX,
-						                'label_class' => '',//col-4
-						                'input_class' => '',//col-4
-						                'value'       => $wpml_value
-					                ), true ) .
-					                $config_elements->submit_button( array(
-						                'label'             => __( 'Save', 'echo-knowledge-base' ),
-						                'id'                => 'epkb_save_wpml_settings',
-						                'main_class'        => 'epkb_save_wpml_settings',
-						                'action'            => 'epkb_save_wpml_settings',
-						                'input_class'       => 'epkb-info-settings-button primary-btn'
-					                ) , true ) .
-					               // $config_elements->submit_button( __( 'Save', 'echo-knowledge-base' ), 'epkb_save_wpml_settings','','','',true ).
-			                '<br /><a href="https://www.echoknowledgebase.com/documentation/setup-wpml-for-knowledge-base/" target="_blank">' . __( 'WPML Setup for Knowledge Base documentation', 'echo-knowledge-base' ) . '</a> ',
-			                ) );
-		                }		                ?>
-	                </div>
-                </div>
-            </div>
-        </section>
 
 		<!-- Resources ------------------------------------------------->
 		<section id="epkb-overview-section-resources" class="overview-info-section">
@@ -299,7 +198,7 @@ class EPKB_KB_Config_Overview {
 							'title'         => __( 'Getting Started', 'echo-knowledge-base' ),
 							'content'       => '<p>' . __( 'Learn the basic structure of KB and how to get started.', 'echo-knowledge-base' ) . '</p>',
 							'btn_text_1'      => __( 'Getting Started', 'echo-knowledge-base' ),
-							'btn_url_1'       => 'https://www.echoknowledgebase.com/documentation/getting-started/',
+							'btn_url_1'       => 'https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/',
 							'show_box_spacer'   => true,
 							'box_spacer_loc'    => 'show-box-spacer-top-right'
 						) );

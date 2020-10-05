@@ -89,20 +89,6 @@ class SPTP_Layout {
 						),
 						'default' => 'carousel',
 					),
-					
-					array(
-						'id'          => 'filter_type',
-						'class'       => 'filter_type',
-						'type'        => 'select',
-						'title'       => __( 'Filter Type', 'wp-team' ),
-						'placeholder' => '',
-						'options'     => array(
-							'Our Team'   => 'Our Team',
-							'Board & Advisor'    => 'Board & Advisor'
-						)
-						
-					),
-					
 					array(
 						'id'          => 'filter_members',
 						'class'       => 'filter_members',

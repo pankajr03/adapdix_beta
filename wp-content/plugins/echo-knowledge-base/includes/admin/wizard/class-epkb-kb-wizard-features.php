@@ -58,11 +58,6 @@ class EPKB_KB_Wizard_Features {
 							$kb_name = $this->kb_config['kb_name'];
 							echo __( 'for', 'echo-knowledge-base' ) . ' ' . '<span id="epkb_current_kb_name" class="epkb-wizard-header__info__current-kb__name">' . esc_html( $kb_name ) . '</span>';  ?>
 						</span>
-
-						<div class="epkb-wizard-button epkb-wizard-header__info__desc-toggle">
-							<span class="epkb-wizard-desc-toggle__text"><?php _e( 'Step Info', 'echo-knowledge-base' ); ?></span>
-							<span class="epkb-wizard-desc-toggle__icon epkbfa epkbfa-info-circle"></span>
-						</div>
 					</div>
 					<div class="epkb-wizard-button-link epkb-wizard-header__exit-wizard">
 						<a href="<?php echo esc_url( admin_url('edit.php?post_type=' . EPKB_KB_Handler::get_post_type( $this->kb_config['id'] ) . '&epkb-wizard-tab' ) ); ?>&page=epkb-kb-configuration">
@@ -72,13 +67,6 @@ class EPKB_KB_Wizard_Features {
 							<input type="checkbox" data-save_exit="<?php _e( 'Save and Exit', 'echo-knowledge-base' ); ?>" data-exit="<?php _e( 'Exit Wizard', 'echo-knowledge-base' ); ?>" >
 							<span><?php _e( 'Save before exit', 'echo-knowledge-base' ); ?></span>
 						</div>
-					</div>
-					<div class="epkb-wizard-header__desc-container">
-						<p id="epkb-wizard-desc-step-1" class="epkb-wizard-header__desc__step epkb-wizard-desc-active"><?php _e( 'Set up features for the Main Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-2" class="epkb-wizard-header__desc__step"><?php _e( 'Set up features for the Article Sidebar', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-3" class="epkb-wizard-header__desc__step"><?php _e( 'Set up features for the Article Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-4" class="epkb-wizard-header__desc__step"><?php _e( 'Set up features for the Archive Page', 'echo-knowledge-base'); ?></p>
-						<p id="epkb-wizard-desc-step-5" class="epkb-wizard-header__desc__step"><?php _e( 'After you hit the Apply button we will save your knowledge base according to your selection.', 'echo-knowledge-base'); ?></p>
 					</div>
 				</div>
 
@@ -215,7 +203,7 @@ class EPKB_KB_Wizard_Features {
 
 			<div class="epkb-wizard-row-1">
 				<p><?php _e( 'Documentation for Knowledge Base and add-ons.', 'echo-knowledge-base' ); ?></p>
-				<a href="https://www.echoknowledgebase.com/documentation/getting-started" target="_blank" class="epkb-wizard-button">
+				<a href="https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/" target="_blank" class="epkb-wizard-button">
 					<span class="epkb-wizard-btn-text"><?php _e( 'KB Documentation', 'echo-knowledge-base' ); ?></span>
 					<span class="epkb-wizard-btn-icon epkbfa epkbfa-book"></span></a>
 			</div>
@@ -742,6 +730,22 @@ class EPKB_KB_Wizard_Features {
 						)
 					) ),
 		)));
+		// FEATURES - Prev/Next Navigation
+		$form->option_group_wizard( $feature_specs, array(
+			'option-heading'    => __( 'Prev/Next Navigation', 'echo-knowledge-base' ),
+			'class'             => 'eckb-wizard-features eckb-wizard-accordion__body',
+			'inputs'            => array(
+				'0' => $form->checkbox( $feature_specs['prev_next_navigation_enable'] + array(
+						'value'             =>$kb_config['prev_next_navigation_enable'],
+						'input_group_class' => 'eckb-wizard-single-checkbox',
+						'label_class'       => 'config-col-5',
+						'input_class'       => 'config-col-2',
+						'data' => array(
+							'preview' => '1'
+						)
+					) ),
+			)
+		));
 
 		do_action( 'epkb_features_wizard_after_article_page_features', $kb_id, $kb_config );
 	}
@@ -1236,6 +1240,49 @@ class EPKB_KB_Wizard_Features {
 					) ),
 			)
 		));
+		$archive_container_width = array($kb_config['archive-container-width-v2'],
+				'value'             =>$kb_config['archive-container-width-v2'],
+				'input_group_class' => 'eckb-wizard-single-text',
+				'label_class'       => 'config-col-5',
+				'input_class'       => 'config-col-5',
+			) + $feature_specs['archive-container-width-v2'];
+
+		$archive_container_width_units = $feature_specs['archive-container-width-units-v2'] + array(
+				'value' =>$kb_config['archive-container-width-units-v2'],
+				'current' =>$kb_config['archive-container-width-units-v2'],
+				'input_group_class' => 'eckb-wizard-single-dropdown',
+				'main_label_class'  => 'config-col-3',
+				'label_class' => 'config-col-5',
+				'input_class' => 'config-col-4',
+			);
+
+		
+		$form->option_group_wizard( $feature_specs, array(
+			'option-heading'    => __( 'Content', 'echo-knowledge-base' ),
+			'class'             => 'eckb-wizard-features eckb-wizard-accordion__body',
+			'depends'        => array(
+				'show_when' => array(
+					'article-structure-version' => 'version-2'
+				)
+			),
+			'inputs'            => array(
+				'0' => $form->text_and_select_fields_horizontal( array(
+					'input_group_class' => 'eckb-wizard-units',
+					'label' => __( 'Width', 'echo-knowledge-base' ),
+				), $archive_container_width, $archive_container_width_units ),
+
+
+				'1' => $form->text( $feature_specs['archive-content-padding-v2'] + array(
+						'value'             =>$kb_config['archive-content-padding-v2'],
+						'input_group_class' => 'eckb-wizard-single-text',
+			            'label_class'       => 'config-col-5',
+			            'input_class'       => 'config-col-5',
+			            'data' => array(
+				            'example_image'     =>      'features-wizard/wizard-archive-content-padding.jpg'
+			            )
+					) ),
+			)
+		));
 
 		do_action( 'epkb_features_wizard_after_archive_page_features', $kb_id );
 	}
@@ -1311,6 +1358,9 @@ class EPKB_KB_Wizard_Features {
 		'date_format',
 		'categories_box_font_size',
 		
+		//Prev/Next Navigation
+		'prev_next_navigation_enable',
+
 		// Elegant Layouts MAIN PAGE
 		'grid_width',
 		'grid_nof_columns',
@@ -1356,7 +1406,9 @@ class EPKB_KB_Wizard_Features {
 		'widgets_sidebar_location',
 		
 		// ARCHIVE PAGE
-		'templates_for_kb_category_archive_page_style'
-		
+		'templates_for_kb_category_archive_page_style',
+		'archive-container-width-v2',
+		'archive-content-padding-v2',
+		'archive-container-width-units-v2'
 	);
 }

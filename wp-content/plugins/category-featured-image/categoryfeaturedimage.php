@@ -3,10 +3,10 @@
  * Plugin Name: Category Featured Image
  * Plugin URI:  https://wordpress.org/plugins/category-featured-image/
  * Description: Set a featured image for post by a category.
- * Version:     2.02
+ * Version:     2.04
  * Author:      Katsushi Kawamori
  * Author URI:  https://riverforest-wp.info/
- * License:     GPL2
+ * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: category-featured-image
  *
@@ -28,16 +28,6 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
-add_action( 'plugins_loaded', 'category_featured_image_load_textdomain' );
-/** ==================================================
- * i18n
- *
- * @since 1.00
- */
-function category_featured_image_load_textdomain() {
-	load_plugin_textdomain( 'category-featured-image' );
-}
 
 if ( ! class_exists( 'CategoryFeaturedImage' ) ) {
 	require_once( dirname( __FILE__ ) . '/lib/class-categoryfeaturedimage.php' );

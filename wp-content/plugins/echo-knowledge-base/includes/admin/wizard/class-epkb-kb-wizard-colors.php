@@ -712,8 +712,56 @@ class EPKB_KB_Wizard_Colors {
 				
 			)
 		));
-	
-		do_action( 'epkb_wizard_after_article_page_colors', $kb_config['id'] ); // support old addons, delete on future 
+
+        // PREV/NEXT NAVIGATION - COLORS
+        $form->option_group_wizard( $feature_specs, array(
+            'option-heading'    => __('Prev/Next Navigation', 'echo-knowledge-base'),
+            'class'             => 'eckb-wizard-colors eckb-wizard-accordion__body',
+            'inputs'            => array(
+                '0' => $form->text( $feature_specs['prev_next_navigation_text_color'] + array(
+                        'value'             => $kb_config['prev_next_navigation_text_color'],
+                        'input_class'       => 'ekb-color-picker',
+                        'input_group_class' => 'eckb-wizard-single-color',
+                        'data' => array(
+                            'wizard_input' => '1',
+                            'target_selector' => '.eckb-wizard-step-4 .epkb-article-navigation-container a',
+                            'style_name' => 'color'
+                        )
+                    ) ),
+                '1' => $form->text( $feature_specs['prev_next_navigation_bg_color'] + array(
+                        'value'             => $kb_config['prev_next_navigation_bg_color'],
+                        'input_class'       => 'ekb-color-picker',
+                        'input_group_class' => 'eckb-wizard-single-color',
+                        'data' => array(
+                            'wizard_input' => '1',
+                            'target_selector' => '.eckb-wizard-step-4 .epkb-article-navigation-container a',
+                            'style_name' => 'background-color'
+                        )
+                    ) ),
+                '2' => $form->text( $feature_specs['prev_next_navigation_hover_text_color'] + array(
+                        'value'             => $kb_config['prev_next_navigation_hover_text_color'],
+                        'input_class'       => 'ekb-color-picker',
+                        'input_group_class' => 'eckb-wizard-single-color',
+                        'data' => array(
+                            'wizard_input' => '1',
+                            'target_selector' => '.eckb-wizard-step-4 .epkb-article-navigation-container a',
+                            'style_name' => 'color'
+                        )
+                    ) ),
+                '3' => $form->text( $feature_specs['prev_next_navigation_hover_bg_color'] + array(
+                        'value'             => $kb_config['prev_next_navigation_hover_bg_color'],
+                        'input_class'       => 'ekb-color-picker',
+                        'input_group_class' => 'eckb-wizard-single-color',
+                        'data' => array(
+                            'wizard_input' => '1',
+                            'target_selector' => '.eckb-wizard-step-4 .epkb-article-navigation-container a',
+                            'style_name' => 'background-color'
+                        )
+                    ) ),
+            )
+        ));
+
+        do_action( 'epkb_wizard_after_article_page_colors', $kb_config['id'] ); // support old addons, delete on future
 		do_action( 'epkb_theme_wizard_after_article_page_colors', $kb_config['id'] );
 	}
 }

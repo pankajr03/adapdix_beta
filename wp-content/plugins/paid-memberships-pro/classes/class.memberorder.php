@@ -134,15 +134,12 @@
 				$this->gateway_environment = $dbobj->gateway_environment;
 				$this->payment_transaction_id = $dbobj->payment_transaction_id;
 				$this->subscription_transaction_id = $dbobj->subscription_transaction_id;
-				$this->timestamp = $dbobj->timestamp;
+				$this->timestamp = strtotime( $dbobj->timestamp );
 				$this->affiliate_id = $dbobj->affiliate_id;
 				$this->affiliate_subid = $dbobj->affiliate_subid;
 
 				$this->notes = $dbobj->notes;
 				$this->checkout_id = $dbobj->checkout_id;
-
-				// Fix the timestamp for local time
-				$this->timestamp = strtotime( get_date_from_gmt( $this->timestamp, 'Y-m-d H:i:s' ) );
 
 				//reset the gateway
 				if(empty($this->nogateway))
@@ -398,7 +395,7 @@
 			//check if there is an entry in memberships_users first
 			if(!empty($this->user_id))
 			{
-				$this->membership_level = $wpdb->get_row("SELECT l.id as level_id, l.name, l.description, l.allow_signups, l.expiration_number, l.expiration_period, mu.*, UNIX_TIMESTAMP(mu.startdate) as startdate, UNIX_TIMESTAMP(mu.enddate) as enddate, l.name, l.description, l.allow_signups FROM $wpdb->pmpro_membership_levels l LEFT JOIN $wpdb->pmpro_memberships_users mu ON l.id = mu.membership_id WHERE mu.status = 'active' AND l.id = '" . $this->membership_id . "' AND mu.user_id = '" . $this->user_id . "' LIMIT 1");
+				$this->membership_level = $wpdb->get_row("SELECT l.id as level_id, l.name, l.description, l.allow_signups, l.expiration_number, l.expiration_period, mu.*, UNIX_TIMESTAMP(CONVERT_TZ(mu.startdate, '+00:00', @@global.time_zone)) as startdate, UNIX_TIMESTAMP(CONVERT_TZ(mu.enddate, '+00:00', @@global.time_zone)) as enddate, l.name, l.description, l.allow_signups FROM $wpdb->pmpro_membership_levels l LEFT JOIN $wpdb->pmpro_memberships_users mu ON l.id = mu.membership_id WHERE mu.status = 'active' AND l.id = '" . $this->membership_id . "' AND mu.user_id = '" . $this->user_id . "' LIMIT 1");
 
 				//fix the membership level id
 				if(!empty($this->membership_level->level_id))
@@ -526,6 +523,16 @@
 		}
 
 		/**
+		 * Get the timestamp for this order.
+		 *
+		 * @param bool $gmt whether to return GMT time or local timestamp.
+		 * @return int timestamp.
+		 */
+		function getTimestamp( $gmt = false ) {
+			return $gmt ? $this->timestamp : strtotime( get_date_from_gmt( date( 'Y-m-d H:i:s', $this->timestamp ) ) );
+		}
+
+		/**
 		 * Change the timestamp of an order by passing in year, month, day, time.
 		 *
 		 * $time should be adjusted for local timezone.
@@ -545,10 +552,12 @@
 			global $wpdb;
 			$this->sqlQuery = "UPDATE $wpdb->pmpro_membership_orders SET timestamp = '" . $date . "' WHERE id = '" . $this->id . "' LIMIT 1";
 
-			if($wpdb->query($this->sqlQuery) !== "false")
+			if($wpdb->query($this->sqlQuery) !== "false") {
+				$this->timestamp = strtotime( $date );
 				return $this->getMemberOrderByID($this->id);
-			else
+			} else {
 				return false;
+			}
 		}
 
 		/**
@@ -925,6 +934,10 @@
 		 * @since  1.9.5
 		 */
 		function get_tos_consent_log_entry() {
+			if ( empty( $this->id ) ) {
+				return false;
+			}
+			
 			$consent_log = pmpro_get_consent_log( $this->user_id );
 			foreach( $consent_log as $entry ) {
 				if( $entry['order_id'] == $this->id ) {

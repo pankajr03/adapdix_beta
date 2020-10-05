@@ -95,13 +95,13 @@
 									</li>
 								<?php } ?>
 								</ul>
-								<a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/icon.jpg'; ?>" style="padding-right: 30px;" class="img-responsive" /></a>
+								<a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/icon.jpg'; ?>" style="padding-right: 30px;" class="img-responsive" /></a>
 						
 							</td>
 						</tr>
 							<tr class="radio-span" style="border-bottom:none;">
 								<td >
-									<h4><a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock More 10+ Social Profiles with Drag And Drop Position Feature In pro version Buy Now</a></h4>
+									<h4><a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock More 10+ Social Profiles with Drag And Drop Position Feature In pro version Buy Now</a></h4>
 								</td>
 							</tr>
 						

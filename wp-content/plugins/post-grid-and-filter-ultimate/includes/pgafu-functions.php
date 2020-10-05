@@ -35,6 +35,28 @@ function pgafu_get_unique() {
 	return $unique;
 }
 
+/**
+ * Sanitize Multiple HTML class
+ * 
+ * @package Blog Designer - Post and Widget
+ * @since 1.0.0
+ */
+function pgafu_get_sanitize_html_classes($classes, $sep = " ") {
+    $return = "";
+
+    if( !is_array($classes) ) {
+        $classes = explode($sep, $classes);
+    }
+
+    if( !empty($classes) ) {
+        foreach($classes as $class){
+            $return .= sanitize_html_class($class) . " ";
+        }
+        $return = trim( $return );
+    }
+
+    return $return;
+}
 
 /**
  * Function to get post excerpt

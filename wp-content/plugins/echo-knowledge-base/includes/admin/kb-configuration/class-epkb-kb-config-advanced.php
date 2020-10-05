@@ -650,7 +650,11 @@ class EPKB_KB_Config_Advanced {
 			)
 		));
 		
-		do_action( 'epkb_advanced_config_after_article_page', $kb_config['id'], $kb_config );	?>
+		do_action( 'epkb_advanced_config_after_article_page', $kb_config['id'], $kb_config );	
+
+		if ( $kb_config['article-structure-version'] == 'version-2' ) { ?>
+			<a href="#" id="show-old-config"><?php _e('Use old configurator (not recommended)', 'echo-knowledge-base'); ?></a><?php
+		}		?>
 			</div>
 		</div>		<?php
 	}

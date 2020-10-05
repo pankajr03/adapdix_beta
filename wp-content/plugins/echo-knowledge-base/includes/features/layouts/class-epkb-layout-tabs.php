@@ -8,6 +8,8 @@
  */
 class EPKB_Layout_Tabs extends EPKB_Layout {
 
+	private $displayed_article_ids = array();
+
 	/**
 	 * Generate content of the KB main page
 	 */
@@ -191,7 +193,6 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 			);
 		}
 
-
 		$style31 = $this->get_inline_style(
 			'color:: section_head_font_color'
 		);
@@ -221,6 +222,7 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 		// loop through LEVEL 1 CATEGORIES: for the active TOP-CATEGORY display a) its articles and b) top-level SUB-CATEGORIES with its articles
 		$ix = 0;
 		$articles_coming_soon_msg = $this->kb_config['category_empty_msg'];
+		$this->displayed_article_ids = array();
 		foreach ( $this->category_seq_data as $category_id => $box_categories_array ) {
 
 			$box_category_list = is_array($box_categories_array) ? $box_categories_array : array();
@@ -233,6 +235,11 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 				$top_category_id_data = 'data-kb-top-category-id=' . $category_id;
 				if ( empty($box_category_list) && ! empty($articles_coming_soon_msg) ) {
 					echo '<div class="epkb-articles-coming-soon" ' . $top_category_id_data . ' data-kb-type=top-category-no-articles ' . '>' . esc_html( $articles_coming_soon_msg ) . '</div>';
+				}
+
+
+				if (  $this->kb_config['show_articles_before_categories'] != 'off' ) {
+					$this->adjust_article_seq_no( $category_id );
 				}
 
 				/** DISPLAY LEVEL 2 CATEGORIES (BOX) + ARTICLES + SUB-SUB-CATEGORIES */
@@ -325,8 +332,11 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 						</div><!-- Section Body End -->
 
 					</section><!-- Section End -->  <?php
+				}
 
-				}   ?>
+				if (  $this->kb_config['show_articles_before_categories'] == 'off' ) {
+					$this->adjust_article_seq_no( $category_id );
+				}				?>
 
 			</div>  <?php
 		}
@@ -429,6 +439,8 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 			$nof_articles_displayed = $this->kb_config['nof_articles_displayed'];
 			foreach ( $articles_list as $article_id => $article_title ) {
 				$article_num++;
+                $this->displayed_article_ids[$article_id] = isset($this->displayed_article_ids[$article_id]) ? $this->displayed_article_ids[$article_id] + 1 : 1;
+                $seq_no = $this->displayed_article_ids[$article_id];
 				$hide_class = $article_num > $nof_articles_displayed ? 'epkb-hide-elem' : '';
 				if ( $this->is_builder_on ) {
 					$article_data = $this->is_builder_on ? 'data-kb-article-id=' . $article_id . ' data-kb-type=' . $data_kb_type : '';
@@ -436,7 +448,8 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 
 				/** DISPLAY ARTICLE LINK */         ?>
 				<li class="epkb-article-level-<?php echo $level . ' ' . $hide_class; ?>" <?php echo $article_data; ?> <?php echo $this->get_inline_style( 'padding-bottom:: article_list_spacing,padding-top::article_list_spacing' ); ?> >   <?php
-					$this->single_article_link( $article_title, $article_id ); ?>
+                    $article_link_data = 'class="epkb-mp-article" ' . 'data-kb-article-id=' . $article_id;
+                    $this->single_article_link( $article_title, $article_id, $article_link_data, '', $seq_no );                    ?>
 				</li> <?php
 			}
 
@@ -451,4 +464,22 @@ class EPKB_Layout_Tabs extends EPKB_Layout {
 
 		</ul> <?php
 	}
+
+	/**
+	* Set Article Sequence No
+	* @param $category_id
+	*/
+	public function adjust_article_seq_no( $category_id ) {
+		$articles_list = array();
+		if ( isset($this->articles_seq_data[$category_id]) ) {
+		   $articles_list = $this->articles_seq_data[$category_id];
+		   unset($articles_list[0]);
+		   unset($articles_list[1]);
+		}
+		if ( ! empty($articles_list) ) {
+		   foreach ( $articles_list as $article_id => $article_title ) {
+		       $this->displayed_article_ids[$article_id] = isset($this->displayed_article_ids[$article_id]) ? $this->displayed_article_ids[$article_id] + 1 : 1;
+		   }
+		}
+    }
 }

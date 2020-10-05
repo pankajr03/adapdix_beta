@@ -20,7 +20,7 @@ class EPKB_Articles_DB {
 	 *
 	 * @return array of matching articles or empty array
 	 */
-	function get_published_articles_by_sub_or_category( $kb_id, $sub_or_category_id, $order_by='date', $nof_articles=200, $include_children=false ) {
+	function get_published_articles_by_sub_or_category( $kb_id, $sub_or_category_id, $order_by='date', $nof_articles=500, $include_children=false ) {
 		/** @var $wpdb Wpdb */
 		global $wpdb;
 		
@@ -53,7 +53,7 @@ class EPKB_Articles_DB {
 
 		$kb_config = epkb_get_instance()->kb_config_obj->get_kb_config( $kb_id );
 		if ( ! is_wp_error( $kb_config ) && EPKB_Utilities::is_wpml_enabled( $kb_config ) ) {
-			$order_by = $order_by == 'title' ? 'post_title' : 'post_modified';
+			$order_by = $order_by == 'title' ? 'post_title' : 'post_date';
 			return $wpdb->get_results( " SELECT * " .
 			                                " FROM $wpdb->posts p " .
 			                                " WHERE p.ID in " .

@@ -8,6 +8,8 @@
  */
 class EPKB_Layout_Categories extends EPKB_Layout {
 
+	private $displayed_article_ids = array();
+
 	/**
 	 * Generate content of the KB main page
 	 */
@@ -117,6 +119,7 @@ class EPKB_Layout_Categories extends EPKB_Layout {
 		<div <?php echo $class1; //Classes that are controlled by config settings ?> >   <?php
 
 			/** DISPLAY BOXED CATEGORIES */
+			$this->displayed_article_ids = array();
 			foreach ( $this->category_seq_data as $box_category_id => $box_sub_categories ) {
 
 				$category_name = isset($this->articles_seq_data[$box_category_id][0]) ?	$this->articles_seq_data[$box_category_id][0] : '';
@@ -271,8 +274,26 @@ class EPKB_Layout_Categories extends EPKB_Layout {
 							</span>   <?php
 						}   ?>
 
-					</div>
+					</div>                    <?php
 
+					//Sequence number calculation :: START
+
+					/** TOP-CATEGORY ARTICLES LIST */
+					if ( $this->kb_config['show_articles_before_categories'] != 'off' ) {
+						$this->adjust_article_seq_no(  $box_sub_category_id );
+					}
+
+					/** SUB-SUB-CATEGORIES */
+					if ( ! empty($box_sub_sub_category_list) ) {
+						$this->adjust_article_sub_sub_categories_seq( $box_sub_sub_category_list );
+					}
+
+					/** TOP-CATEGORY ARTICLES LIST */
+					if ( $this->kb_config['show_articles_before_categories'] == 'off' ) {
+						$this->adjust_article_seq_no(  $box_sub_category_id );
+					}
+
+					//Sequence number calculation :: END                    ?>
 				</li>  <?php
 			}           ?>
 
@@ -327,6 +348,8 @@ class EPKB_Layout_Categories extends EPKB_Layout {
 			$nof_articles_displayed = $this->kb_config['nof_articles_displayed'];
 			foreach ( $articles_list as $article_id => $article_title ) {
 				$article_num++;
+				$this->displayed_article_ids[$article_id] = isset($this->displayed_article_ids[$article_id]) ? $this->displayed_article_ids[$article_id] + 1 : 1;
+				$seq_no = $this->displayed_article_ids[$article_id];
 				$hide_class = $article_num > $nof_articles_displayed ? 'epkb-hide-elem' : '';
 				if ( $this->is_builder_on ) {
 					$article_data = $this->is_builder_on ? 'data-kb-article-id=' . $article_id . ' data-kb-type=' . $data_kb_type : '';
@@ -334,7 +357,8 @@ class EPKB_Layout_Categories extends EPKB_Layout {
 
 				/** DISPLAY ARTICLE LINK */         ?>
 				<li class="epkb-article-level-<?php echo $level . ' ' . $hide_class; ?>" <?php echo $article_data; ?> <?php echo $this->get_inline_style( 'padding-bottom:: article_list_spacing,padding-top::article_list_spacing' ); ?> >   <?php
-					$this->single_article_link( $article_title, $article_id ); ?>
+								$article_link_data = 'class="epkb-mp-article" ' . 'data-kb-article-id=' . $article_id;
+								$this->single_article_link( $article_title, $article_id, $article_link_data, '', $seq_no ); ?>
 				</li> <?php
 			}
 
@@ -373,5 +397,51 @@ class EPKB_Layout_Categories extends EPKB_Layout {
 		}
 
 		return $counter;
+	}
+
+	/**
+	* Set Article sub-sub-categories Sequence No
+	*
+	* @param $box_sub_sub_category_list
+	* @param string $level
+	*/
+	private function adjust_article_sub_sub_categories_seq( $box_sub_sub_category_list, $level = 'sub-' ) {
+
+		$level .= 'sub-';
+		/** SUB-SUB-CATEGORIES */
+		foreach ( $box_sub_sub_category_list as $box_sub_sub_category_id => $box_sub_sub_sub_category_list ) {
+		   /** TOP-CATEGORY ARTICLES LIST */
+		   if (  $this->kb_config['show_articles_before_categories'] != 'off' ) {
+		       $this->adjust_article_seq_no( $box_sub_sub_category_id );
+		   }
+
+		   /** RECURSION DISPLAY SUB-SUB-...-CATEGORIES */
+		   if ( ! empty($box_sub_sub_sub_category_list) && strlen($level) < 20 ) {
+		       $this->adjust_article_sub_sub_categories_seq( $box_sub_sub_sub_category_list, $level );
+		   }
+
+		   /** TOP-CATEGORY ARTICLES LIST */
+		   if (  $this->kb_config['show_articles_before_categories'] == 'off' ) {
+		       $this->adjust_article_seq_no( $box_sub_sub_category_id );
+		   }
+		}
+	}
+
+	/**
+	* Set Article Sequence No
+	* @param $category_id
+	*/
+	public function adjust_article_seq_no( $category_id ){
+		$articles_list = array();
+		if ( isset($this->articles_seq_data[$category_id]) ) {
+			$articles_list = $this->articles_seq_data[$category_id];
+			unset($articles_list[0]);
+			unset($articles_list[1]);
+		}
+		if ( ! empty($articles_list) ) {
+			foreach ( $articles_list as $article_id => $article_title ) {
+			    $this->displayed_article_ids[$article_id] = isset($this->displayed_article_ids[$article_id]) ? $this->displayed_article_ids[$article_id] + 1 : 1;
+			}
+		}
 	}
 }

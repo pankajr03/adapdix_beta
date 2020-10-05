@@ -120,7 +120,7 @@ class CategoryFeaturedImage {
 				}
 			}
 			wp_enqueue_media();
-			$value = get_term_meta( $tag->term_id, 'featured_image_id', true );
+			$value = intval( get_term_meta( $tag->term_id, 'featured_image_id', true ) );
 			$this->edit_category_html( $value, true );
 		}
 
@@ -180,7 +180,7 @@ class CategoryFeaturedImage {
 	public function add_term_custom_column( $content, $column_name, $term_id ) {
 
 		if ( 'image' === $column_name ) {
-			$featured_image_id = get_term_meta( $term_id, 'featured_image_id', true );
+			$featured_image_id = intval( get_term_meta( $term_id, 'featured_image_id', true ) );
 			$content = wp_get_attachment_image( $featured_image_id, array( 64, 64 ) );
 		}
 
@@ -196,9 +196,14 @@ class CategoryFeaturedImage {
 	 */
 	public function update_thumbnail( $post_id ) {
 
+		/* Skip if current theme doesn't support post thumbnails */
+		if ( ! current_theme_supports( 'post-thumbnails' ) ) {
+			return;
+		}
+
 		$term_id = $this->choose_term( $post_id );
 		if ( 0 < $term_id ) {
-			$featured_image_id = get_term_meta( $term_id, 'featured_image_id', true );
+			$featured_image_id = intval( get_term_meta( $term_id, 'featured_image_id', true ) );
 			update_post_meta( $post_id, '_thumbnail_id', $featured_image_id );
 		} else {
 			delete_post_meta( $post_id, '_thumbnail_id' );
@@ -259,9 +264,8 @@ class CategoryFeaturedImage {
 		foreach ( $posts as $post ) {
 			if ( $featured_image_id > 0 ) {
 				$term_id_parent = $this->choose_term( $post->ID );
-				$featured_image_id_parent = get_term_meta( $term_id_parent, 'featured_image_id', true );
 				if ( 0 < $term_id_parent ) {
-					$featured_image_id_parent = get_term_meta( $term_id_parent, 'featured_image_id', true );
+					$featured_image_id_parent = intval( get_term_meta( $term_id_parent, 'featured_image_id', true ) );
 					if ( $featured_image_id_parent == $featured_image_id ) {
 						update_post_meta( $post->ID, '_thumbnail_id', $featured_image_id );
 					}
@@ -269,7 +273,7 @@ class CategoryFeaturedImage {
 					delete_post_meta( $post->ID, '_thumbnail_id' );
 				}
 			} else {
-				$featured_image_id_org = get_post_meta( $post->ID, '_thumbnail_id', true );
+				$featured_image_id_org = intval( get_post_meta( $post->ID, '_thumbnail_id', true ) );
 				if ( abs( $featured_image_id ) == $featured_image_id_org ) {
 					delete_post_meta( $post->ID, '_thumbnail_id' );
 				}

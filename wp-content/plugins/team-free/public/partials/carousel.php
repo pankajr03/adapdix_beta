@@ -60,7 +60,7 @@
 			<div class="swiper-wrapper <?php echo esc_html( $position ); ?>">
 		<?php
 		foreach ( $filter_members as $member ) :
-		?>
+			?>
 			<div class="swiper-slide">
 			<?php
 			include 'single-member.php';

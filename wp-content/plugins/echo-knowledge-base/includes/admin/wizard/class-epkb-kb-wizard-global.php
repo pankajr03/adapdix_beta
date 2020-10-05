@@ -62,9 +62,7 @@ class EPKB_KB_Wizard_Global {
 							<input type="checkbox" data-save_exit="<?php _e( 'Save and Exit', 'echo-knowledge-base' ); ?>" data-exit="<?php _e( 'Exit Wizard', 'echo-knowledge-base' ); ?>">
 							<span><?php _e( 'Save before exit', 'echo-knowledge-base' ); ?></span>
 						</div>
-
 					</div>
-					<div class="epkb-wizard-header__desc-container"></div>
 				</div>
 
 				<!------- Wizard Status Bar ------->
@@ -104,9 +102,15 @@ class EPKB_KB_Wizard_Global {
 	private function slug_options() {
 
 		// check if we have any KB Main Pages
-		if ( empty( $this->kb_config['kb_main_pages'] ) ) {   ?>
+		if ( empty( $this->kb_config['kb_main_pages'] ) ) {
+
+			$message_shortcode = "[epkb-knowledge-base id=" . $this->kb_config['id'] ."]";
+			$message = sprintf( __( 'We did not detect any page with KB shortcode for your knowledge base %s. If you do have such a page please re-save it and come back. Otherwise create a page and insert KB shortcode in the format of %s', 'echo-knowledge-base' ), $this->kb_config['kb_name'], $message_shortcode);
+
+			?>
+
 			<div id="epkb-wsb-step-1-panel" class="epkb-wc-step-panel eckb-wizard-step-1 epkb-wc-step-panel--active">
-				<h4 class='epkb-wizard-error-note'><?php _e( 'We did not detect any page with KB shortcode. If you do have such a page please re-save it and come back, KB shortcode should be in format of [epkb-knowledge-base id=1].', 'echo-knowledge-base' ); ?></h4>
+				<h4 class='epkb-wizard-error-note'><?php echo $message; ?></h4>
 			</div>  <?php
 			return;
 		}
@@ -140,7 +144,7 @@ class EPKB_KB_Wizard_Global {
 			$article_path_matches = $article_path_matches || $main_page_slugs[$post_id] == $this->kb_config['kb_articles_common_path'];
 		}
 
-		$is_category_on_off = $this->kb_config['kb_main_page_layout'] == EPKB_KB_Config_Layout_Categories::LAYOUT_NAME;		?>
+		$site_url = site_url();		?>
 
 		<div id="epkb-wsb-step-1-panel" class="epkb-wc-step-panel eckb-wizard-step-1 epkb-wc-step-panel--active">
 			<h4 class="epkb-wizard-error-note"><?php _e( 'For expert users only. Backup your site first. This can break your site navigation! Limited support available.', 'echo-knowledge-base' ); ?></h4>
@@ -157,7 +161,12 @@ class EPKB_KB_Wizard_Global {
 
 					foreach ( $kb_main_pages as $post_id => $title ) {
 
-						$page_url = get_the_permalink( $post_id ); ?>
+						$kb_page_post = get_post( $post_id );
+						if ( empty($kb_page_post) || empty($kb_page_post->post_name) ) {
+							continue;
+						}
+
+						$page_url = $site_url . '/' . urldecode(sanitize_title_with_dashes( $kb_page_post->post_name, '', 'save' )) . '/' ; ?>
 
 						<li>
 							<div class="epkb-wizard-mps-title"><?php echo $title; ?></div>
@@ -177,13 +186,12 @@ class EPKB_KB_Wizard_Global {
 				if ( $article_path_matches ) {
 					_e( 'Choose the article path that represents all the knowledge bases in step 1.', 'echo-knowledge-base' );
 				} else {
-					_e( 'Your article slug does not match your new KB Main Page slug. Choose the desired path.', 'echo-knowledge-base' );
+					_e( 'Your article slug does not match your KB Main Page slug above (STEP 1). Choose the desired path.', 'echo-knowledge-base' );
 				}							?></p>
 			<div class="epkb-wizard-slug-options">
 			<ul>						<?php
 
 				// display all pages with KB shortcode
-				$site_url = site_url();
 				$input_1 = 0;
 				$input_2 = 50;
 				foreach ( $kb_main_pages as $post_id => $title ) {
@@ -197,19 +205,17 @@ class EPKB_KB_Wizard_Global {
 
 					<li>    <?php
 
-						// currently only Category Focused Layout has that option
-						if ( $is_category_on_off ) {						?>
-							<!-- With Category -->
-							<div class="epkb-wso-option-container epkb-wso-option--with-category">
-								<input id="q<?php echo $input_2; ?>" type="radio" data-path="<?php echo $kb_main_page_slug; ?>" data-category="on" class="eckb_slug" name="eckb_slug">
-								<label for="q<?php echo $input_2; ?>" class="epkb-global-wizard-slug-label">
-									<span class="epkb-wso-with-category__site-url">         <?php echo $site_url; ?></span> /
-									<span class="epkb-wso-with-category__main-page-slug">   <?php echo $kb_main_page_slug; ?></span> /
-									<span class="epkb-wso-with-category__category">         <?php _e( 'kb-category', 'echo-knowledge-base' ); ?></span> /
-									<span class="epkb-wso-with-category__article">          <?php echo 'kb-article'; ?></span>
-								</label>
-							</div>      <?php
-						}							?>
+						// currently only Category Focused Layout has that option					?>
+						<!-- With Category -->
+						<div class="epkb-wso-option-container epkb-wso-option--with-category">
+							<input id="q<?php echo $input_2; ?>" type="radio" data-path="<?php echo $kb_main_page_slug; ?>" data-category="on" class="eckb_slug" name="eckb_slug">
+							<label for="q<?php echo $input_2; ?>" class="epkb-global-wizard-slug-label">
+								<span class="epkb-wso-with-category__site-url">         <?php echo $site_url; ?></span> /
+								<span class="epkb-wso-with-category__main-page-slug">   <?php echo $kb_main_page_slug; ?></span> /
+								<span class="epkb-wso-with-category__category">         <?php _e( 'kb-category', 'echo-knowledge-base' ); ?></span> /
+								<span class="epkb-wso-with-category__article">          <?php echo 'kb-article'; ?></span>
+							</label>
+						</div>
 
 						<!-- Without Category -->
 						<div class="epkb-wso-option-container epkb-wso-option--without-category">
@@ -228,7 +234,7 @@ class EPKB_KB_Wizard_Global {
 				if ( ! $article_path_matches ) {
 					$input_2++;
 					$input_1++;
-					if ( $is_category_on_off && $this->kb_config['categories_in_url_enabled'] == 'on' ) {	?>
+					if ( $this->kb_config['categories_in_url_enabled'] == 'on' ) {	?>
 						<div class="epkb-wso-option-container epkb-wso-option--with-category">
 						<input id="q<?php echo $input_2; ?>" type="radio" data-path="<?php echo $this->kb_config['kb_articles_common_path']; ?>" data-category="on" class="eckb_slug" name="eckb_slug">
 						<label for="q<?php echo $input_2; ?>" class="epkb-global-wizard-slug-label">
@@ -253,7 +259,7 @@ class EPKB_KB_Wizard_Global {
 				</ul>
 			</div>
 
-			<input type="hidden" name="categories_in_url_enabled" id="categories_in_url_enabled" value="<?php echo $is_category_on_off ? $this->kb_config['categories_in_url_enabled'] : 'off'; ?>">
+			<input type="hidden" name="categories_in_url_enabled" id="categories_in_url_enabled" value="<?php echo $this->kb_config['categories_in_url_enabled']; ?>">
 			<input type="hidden" name="kb_articles_common_path" id="kb_articles_common_path" value="<?php echo $this->kb_config['kb_articles_common_path']; ?>">
 
 			<h4 class="epkb-wizard-warning-note" style="display: none;"><?php _e('Your article slug does not match your new KB Main Page slug. Please complete the Wizard to fix this mismatch.', 'echo-knowledge-base'); ?></h4>
@@ -313,7 +319,7 @@ class EPKB_KB_Wizard_Global {
 
 			<div class="epkb-wizard-row-1">
 				<p><?php _e( 'Documentation for Knowledge Base and add-ons.', 'echo-knowledge-base' ); ?></p>
-				<a href="https://www.echoknowledgebase.com/documentation/getting-started" target="_blank" class="epkb-wizard-button">
+				<a href="https://www.echoknowledgebase.com/documentation/setup-your-initial-knowledge-base/" target="_blank" class="epkb-wizard-button">
 					<span class="epkb-wizard-btn-text"><?php _e( 'KB Documentation', 'echo-knowledge-base' ); ?></span>
 					<span class="epkb-wizard-btn-icon epkbfa epkbfa-book"></span></a>
 			</div>
@@ -398,16 +404,17 @@ class EPKB_KB_Wizard_Global {
 			'option-heading'    => __('Navigation', 'echo-knowledge-base'),
 			'class'             => 'eckb-wizard-features eckb-wizard-accordion__body',
 			'inputs' => array(
-				'0' => $form->radio_buttons_vertical( $global_specs['section_hyperlink_text_on'] + array(
-						'current'             => $kb_config['section_hyperlink_text_on'],
-						'input_group_class' => 'eckb-wizard-radio-btn-vertical',
-						'main_label_class'  => 'config-col-5',
-						'input_class'       => 'config-col-7',
-						'radio_class'       => 'config-col-12',
+				'1' => $form->checkbox( array(
+						'value'             => $kb_config['section_hyperlink_text_on'],
+						'name'             => 'section_hyperlink_text_on',
+						'label'              => __('Click on Category', 'echo-knowledge-base'),
+						'input_group_class' => 'eckb-wizard-single-checkbox',
+						'label_class'       => 'config-col-5',
+						'input_class'       => 'config-col-2',
 						'data' => array(
-							'example_image'     =>      'global-wizard/wizard-screenshot-category-archive-link.jpg'
+								'example_image'     =>      'global-wizard/wizard-screenshot-category-archive-link.jpg'
 						)
-					) )
+					) ),
 			)));
 
 		// WPML

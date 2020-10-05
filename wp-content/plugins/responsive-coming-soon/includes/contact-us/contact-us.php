@@ -176,7 +176,7 @@
 					</table>
 				</div>
 			</div>
-			<a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/contact.jpg'; ?>" class="contact_us_section"  style="width:100%" /></a>
+			<a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/contact.jpg'; ?>" class="contact_us_section"  style="width:100%" /></a>
 			
 			
 			
@@ -190,7 +190,7 @@
 						</tr>
 						<tr class="radio-span" style="border-bottom:none;">
 							<td >
-								<a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/map.jpg'; ?>" class="contact_us_section"  /></a>
+								<a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank"><img src="<?php echo WPSM_RCS_PLUGIN_URL.'images/map.jpg'; ?>" class="contact_us_section"  /></a>
 							</td>
 						</tr>
 					</table>

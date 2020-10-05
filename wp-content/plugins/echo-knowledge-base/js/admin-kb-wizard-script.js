@@ -38,7 +38,7 @@ jQuery(document).ready(function($) {
 	function wizard_change_buttons(){
 		wizard.find( '.epkb-wizard-button-container' ).removeClass( 'epkb-wizard-button-container--final-step' );
 		wizard.find( '.epkb-wizard-button-container' ).removeClass( 'epkb-wizard-button-container--first-step' );
-
+		wizard.find('.epkb-wizard-header__exit-wizard').removeClass( 'epkb-wizard-header__exit-wizard--final-step' );
 		let id = wizard.find( '.epkb-wsb-step--active' ).attr( 'id' );
 
 		// Get last character the number of each ID
@@ -50,6 +50,7 @@ jQuery(document).ready(function($) {
 		
 		if( lastChar === stepLength ){
 			wizard.find( '.epkb-wizard-button-container' ).addClass( 'epkb-wizard-button-container--final-step' );
+			wizard.find('.epkb-wizard-header__exit-wizard').addClass( 'epkb-wizard-header__exit-wizard--final-step' );
 		}
 	}
 
@@ -134,7 +135,8 @@ jQuery(document).ready(function($) {
 				$('.epkb-wizard-features-article-page-preview').prependTo('#epkb-wsb-step-2-panel');
 			}
 		}
-
+		
+		epkb_fix_collapsed_button();
 	}
 
 	/**
@@ -143,15 +145,6 @@ jQuery(document).ready(function($) {
 	function wizard_scroll_to_top(){
 		$("html, body").animate({ scrollTop: 0 }, 0);
 	}
-
-	/**
-	 * Toggle the Step information
-	 *
-	 */
-	wizard.find( '.epkb-wizard-header__info__desc-toggle' ).on( 'click', function(){
-		wizard.find( '.epkb-wizard-header__desc-container' ).slideToggle();
-	});
-
 
 	/**
 	 * Button JS for next Step.
@@ -234,16 +227,18 @@ jQuery(document).ready(function($) {
 
 		// Remove all Active Tab classes
 		$( '.epkb-wt-tab' ).removeClass( 'epkb-wt--active' );
-
+		
+		
 		// Add Active class to click on theme.
 		tab.addClass( 'epkb-wt--active' );
-
+		
+		
 		// Remove all active class from panels.
 		$( '.epkb-wt-panel' ).removeClass( ' epkb-wt-panel--active' );
-
+		$( '.epkb-wt-panel' ).css({'opacity' : '0'});
 		// Add Active class to panel with the same id
 		panel.addClass( 'epkb-wt-panel--active' );
-		
+		panel.animate({'opacity' : '1'}, 200);
 		// change styles for the tabs 
 		let styles = JSON.parse(panel.find('.theme-values').val());
 		
@@ -269,6 +264,8 @@ jQuery(document).ready(function($) {
 		
 		// set value true to change color pickers on "next" button click
 		need_to_apply_theme = true;
+		
+		epkb_fix_collapsed_button();
 	});
 
 	/** Change colors on the Main and Article page settings */
@@ -571,7 +568,7 @@ jQuery(document).ready(function($) {
 			} else if ( wizard_type == 'search' ) {  // for Search Wizard
 				if ( ! response.error && typeof response.message !== 'undefined' ) {
 					
-					if ( $("#epkb_wizard_show_article_step").val() ) {
+					if ( $("#epkb_wizard_show_article_step").val() == 1 ) {
 						$('#epkb-wsb-step-3-panel').removeClass('epkb-wc-step-panel--active');
 						$('#epkb-wsb-step-4-panel').addClass('epkb-wc-step-panel--active').show();
 					} else {
@@ -1880,6 +1877,8 @@ jQuery(document).ready(function($) {
 			
 			epkb_toggle_options_groups( $('#eckb_current_theme_values').val() );
 			
+			setTimeout(epkb_fix_collapsed_button, 210);
+			
 		}, false, epkb_vars.load_template, silent);
 	}
 
@@ -1919,7 +1918,7 @@ jQuery(document).ready(function($) {
 				//<-- Header -->
 				'<div class="epkb-admin-dbl__header">' +
 				'<div class="epkb-admin-dbl-icon epkbfa epkbfa-hourglass-half"></div>'+
-				(message ? '<div class="<div class="epkb-admin-dbl-text">' + message + '</div>' : '' ) +
+				(message ? '<div class="epkb-admin-text">' + message + '</div>' : '' ) +
 				'</div>'+
 
 				'</div>' +
@@ -1960,8 +1959,9 @@ jQuery(document).ready(function($) {
 	 *************************************************************************************************/
 	 
 	// Features Wizard
+	let image_icons = $('.epkb-cat-icon.epkb-cat-icon--image').length ? true : false;
 	$('.eckb-wizard-features-content #section_head_category_icon_location').on('change', function(){
-		let image_icons = $('.epkb-cat-icon.epkb-cat-icon--image').length ? true : false;
+		
 		
 		if ($(this).val() == 'top' && !image_icons) {
 			$('.eckb-wizard-features-content #section_head_category_icon_size').val('40');
@@ -1971,11 +1971,19 @@ jQuery(document).ready(function($) {
 			$('.eckb-wizard-features-content #section_head_category_icon_size').val('40');
 		}
 		
+		if ($(this).val() == 'right' && !image_icons) {
+			$('.eckb-wizard-features-content #section_head_category_icon_size').val('40');
+		}
+		
 		if ($(this).val() == 'top' && image_icons) {
 			$('.eckb-wizard-features-content #section_head_category_icon_size').val('150');
 		}
 		
 		if ($(this).val() == 'left' && image_icons) {
+			$('.eckb-wizard-features-content #section_head_category_icon_size').val('150');
+		}
+		
+		if ($(this).val() == 'right' && image_icons) {
 			$('.eckb-wizard-features-content #section_head_category_icon_size').val('150');
 		}
 
@@ -2451,9 +2459,23 @@ jQuery(document).ready(function($) {
 			input.closest('.config-input-group').css({'background-color' : '#fff', 'color':'black'});
 		}, 2000 );
 	}
+	
+	function epkb_fix_collapsed_button() {
+		setTimeout(function(){
+			$('.epkb-search-box button').each(function(){
+				let search_text = $( this ).text();
+				$( this ).text( search_text );
+			});
+		}, 1);
+	}
+
+	//Fix WordPress 5.5 remove text string from color picker.
+	$( '.ekb-color-picker').find( '.wp-color-result-text' ).text( '' );
+	
 	/** Remove loader, should be last function in this file */
 	// We need timeout to skip all start accordion animations
 	setTimeout(function(){
+		epkb_fix_collapsed_button();
 		$( '.epkb-admin-dialog-box-loading' ).remove();
 		$( '.epkb-admin-dialog-box-overlay' ).remove();
 	}, 500);

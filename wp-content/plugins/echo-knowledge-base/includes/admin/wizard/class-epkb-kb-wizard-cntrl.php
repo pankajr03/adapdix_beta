@@ -50,16 +50,16 @@ class EPKB_KB_Wizard_Cntrl {
 		// get Wizard type specific filter
 		switch( $wizard_type ) {
 			case 'theme':
-				$wizard_fields = EPKB_KB_Wizard_Themes::$theme_fields;
+				$wizard_fields = apply_filters( 'epkb_kb_theme_fields_list', EPKB_KB_Wizard_Themes::$theme_fields );
 				break;
 			case 'text':
-				$wizard_fields = EPKB_KB_Wizard_Text::$text_fields;
+				$wizard_fields = apply_filters( 'epkb_kb_text_fields_list', EPKB_KB_Wizard_Text::$text_fields );
 				break;
 			case 'features':
 				$wizard_fields = EPKB_KB_Wizard_Features::$feature_fields;
 				break;
 			case 'search':
-				$wizard_fields = EPKB_KB_Wizard_Search::$search_fields;
+				$wizard_fields = apply_filters( 'epkb_kb_search_fields_list', EPKB_KB_Wizard_Search::$search_fields );
 				break;
 			case 'ordering':
 				$wizard_fields = EPKB_KB_Wizard_Ordering::$ordering_fields;
@@ -151,7 +151,7 @@ class EPKB_KB_Wizard_Cntrl {
 				$categories_icons_ids[] = $term_id;
 			}
 
-			$kb_categories = EPKB_Categories_DB::get_top_level_categories( $wizard_kb_id, '' );
+			$kb_categories = EPKB_Categories_DB::get_top_level_categories( $wizard_kb_id );
 			foreach ( $kb_categories as $kb_category ) {
 				$term_id = $kb_category->term_id;
 				if ( in_array( $term_id, $categories_icons_ids) ) {
@@ -171,14 +171,16 @@ class EPKB_KB_Wizard_Cntrl {
 
 			EPKB_Utilities::save_kb_option( $wizard_kb_id, EPKB_Icons::CATEGORIES_ICONS, $categories_icons, true );
 
-		// set each icon as font icon
-		} else {
+		}
+
+        // set each icon as font icon
+		/* NOT NEEDED: if ( ! EPKB_Icons::is_theme_with_image_icons( $new_config ) && EPKB_Icons::is_theme_with_image_icons( $orig_config ) ) {
 			$categories_icons = EPKB_Utilities::get_kb_option( $wizard_kb_id, EPKB_Icons::CATEGORIES_ICONS, array(), true );
 			foreach( $categories_icons as $term_id => $categories_icon ) {
 				$categories_icons[$term_id]['type'] = EPKB_Icons::DEFAULT_CATEGORY_TYPE;
 			}
 			EPKB_Utilities::save_kb_option( $wizard_kb_id, EPKB_Icons::CATEGORIES_ICONS, $categories_icons, true );
-		}
+		} */
 
 		// set sidebar priority
 		$article_sidebar_component_priority = EPKB_Utilities::post('article_sidebar_component_priority');
@@ -230,9 +232,9 @@ class EPKB_KB_Wizard_Cntrl {
 			$new_config['status'] = EPKB_KB_Status::BLANK;
 			$orig_config = EPKB_KB_Config_Specs::get_default_kb_config( $wizard_kb_id );
 			$orig_config['status'] = EPKB_KB_Status::BLANK;
-			$udpate_kb_msg = $this->update_kb_configuration( $wizard_kb_id, $orig_config, $new_config );
-			if ( ! empty($udpate_kb_msg) ) {
-				EPKB_Utilities::ajax_show_error_die( __( 'Error occurred. Could not create KB. ', 'echo-knowledge-base' ) . ' (34) ' . EPKB_Utilities::contact_us_for_support() );
+			$update_kb_msg = $this->update_kb_configuration( $wizard_kb_id, $orig_config, $new_config );
+			if ( ! empty($update_kb_msg) ) {
+				EPKB_Utilities::ajax_show_error_die( __( 'Error occurred. Could not create KB. ', 'echo-knowledge-base' ) . $update_kb_msg . ' (34) ' . EPKB_Utilities::contact_us_for_support() );
 			}
 
 			// get KB slug
@@ -422,18 +424,6 @@ class EPKB_KB_Wizard_Cntrl {
 		
 		$new_config['kb_articles_common_path'] = $articles_common_path_out;
 		
-		// check common path before saving - since we are not leeting user enter custom slug then this should not be needed
-		/* if ( $new_config['kb_articles_common_path'] != $orig_config['kb_articles_common_path'] || $new_config['categories_in_url_enabled'] != $orig_config['categories_in_url_enabled'] ) {
-			
-			// ensure no other KB has the same common article path
-			$all_kb_configs = epkb_get_instance()->kb_config_obj->get_kb_configs();
-			foreach ( $all_kb_configs as $one_kb_config ) {
-				if ( $new_config['id'] != $one_kb_config['id'] && $new_config['kb_articles_common_path'] == $one_kb_config['kb_articles_common_path'] ) {
-					EPKB_Utilities::ajax_show_error_die(__( 'Entered common path already exists in KB: ' . $one_kb_config['kb_name'], 'echo-knowledge-base' ));
-				}
-			}
-		} */
-		
 		// update KB and add-ons configuration
 		$update_kb_msg = $this->update_kb_configuration( $orig_config['id'], $orig_config, $new_config );
 		if ( ! empty($update_kb_msg) ) {
@@ -447,8 +437,8 @@ class EPKB_KB_Wizard_Cntrl {
 			// always flush the rules; this will ensure that proper rewrite rules for layouts with article visible will be added
 			flush_rewrite_rules( false );
 			update_option('epkb_flush_rewrite_rules', true);
-			
-			EPKB_Admin_Notices::dismiss_long_notice( 'epkb_changed_slug' );
+
+			EPKB_Admin_Notices::remove_ongoing_notice( 'epkb_changed_slug' );
 		}
 		
 		$message = __('Configuration Saved', 'echo-knowledge-base');
@@ -542,7 +532,7 @@ class EPKB_KB_Wizard_Cntrl {
 			if ( empty($message) ) {
 				return __( 'Could not save the new configuration', 'echo-knowledge-base' ) . '(4)';
 			} else {
-				return __( 'Configuration NOT saved due to following problem:' . $message, 'echo-knowledge-base' ) . '(4)';
+				return __( 'Configuration NOT saved due to following problem:' . $message, 'echo-knowledge-base' );
 			}
 		}
 
@@ -561,7 +551,7 @@ class EPKB_KB_Wizard_Cntrl {
 			if ( empty($message) ) {
 				return __( 'Could not save the new configuration', 'echo-knowledge-base' ) . '(3)';
 			} else {
-				return __( 'Configuration NOT saved due to following problem:' . $message, 'echo-knowledge-base' ) . '(4)';
+				return __( 'Configuration NOT saved due to following problem:' . $message, 'echo-knowledge-base' );
 			}
 		}
 
@@ -657,6 +647,11 @@ class EPKB_KB_Wizard_Cntrl {
 		$new_kb_config['article_toc_title'] = '';
 		unset($_POST['epkb-wizard-demo-data']);
 
+		//Display Basic Layout for Category Layout in ordering wizard
+        if ( $new_kb_config['kb_main_page_layout'] == EPKB_KB_Config_Layouts::CATEGORIES_LAYOUT ) {
+            $new_kb_config['kb_main_page_layout'] = EPKB_KB_Config_Layout_Basic::LAYOUT_NAME;
+            $new_kb_config['expand_articles_icon'] = "ep_font_icon_arrow_carrot_right";
+        }
 		$handler = new EPKB_KB_Config_Page( $new_kb_config );
 		if ( $new_kb_config['kb_main_page_layout'] == 'Grid' ) {
 			// article page

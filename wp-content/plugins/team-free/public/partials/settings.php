@@ -45,8 +45,6 @@ $preloader                = isset( $settings['preloader_switch'] ) ? $settings['
 
 // get members of this layout.
 $filter_members = isset( $layout['filter_members'] ) ? $layout['filter_members'] : 'newest';
-$filter_type = isset( $layout['filter_type'] ) ? $layout['filter_type'] : 'Our Team';
-
 if ( ! empty( $filter_members ) ) {
 	switch ( $filter_members ) {
 		case 'newest':
@@ -70,14 +68,13 @@ if ( ! empty( $filter_members ) ) {
 				'orderby'        => 'post__in',
 			);
 			$filter_members_query = new WP_Query( $sptp_newest_arg );
+
+
 			$filter_members = $filter_members_query->posts;
 			break;
 		default:
 			break;
 	};
-	
-	
-	
 }
 
 // Carousel settings.

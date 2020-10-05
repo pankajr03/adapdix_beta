@@ -685,7 +685,17 @@ if ( function_exists( 'pmpro_add_email_order_modal' ) ) {
 			</tr>
 			<?php
 			if ( in_array( 'ExpirationDate', $read_only_fields ) && $order_id > 0 ) {
-				echo esc_html( $order->ExpirationDate );
+				?>
+
+				<tr>
+				    <th scope="row" valign="top"><label
+						for="expirationmonth"><?php esc_html_e( 'Expiration Month', 'paid-memberships-pro' ); ?>:</label></th>
+				    <td>
+					<?php echo esc_html( $order->expirationmonth . '/' . $order->expirationyear ); ?>
+				    </td>
+				</tr>
+
+				<?php
 			} else {
 						?>
 							<tr>
@@ -805,11 +815,11 @@ if ( function_exists( 'pmpro_add_email_order_modal' ) ) {
 				<td>
 					<?php
 					if ( in_array( 'timestamp', $read_only_fields ) && $order_id > 0 ) {
-						echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $order->timestamp ) );
+						echo esc_html( date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), $order->getTimestamp() ) );
 					} else {
 						// set up date vars
 						if ( ! empty( $order->timestamp ) ) {
-							$timestamp = $order->timestamp;
+							$timestamp = $order->getTimestamp();
 						} else {
 							$timestamp = current_time( 'timestamp' );
 						}
@@ -1353,7 +1363,7 @@ if ( function_exists( 'pmpro_add_email_order_modal' ) ) {
 								foreach ( $actions as $action => $link ) {
 									++ $i;
 									( $i == $action_count ) ? $sep = '' : $sep = ' | ';
-									$out .= "<span class='" . esc_attr( $action ) . "'>" . esc_html( $link ) . $sep . "</span>";
+									$out .= "<span class='" . esc_attr( $action ) . "'>" . $link . $sep . "</span>";
 								}
 								echo $out;
 							}
@@ -1442,8 +1452,8 @@ if ( function_exists( 'pmpro_add_email_order_modal' ) ) {
 					</td>
 					<td><?php echo esc_html( $order->status ); ?></td>
 					<td>
-						<?php echo esc_html( date_i18n( get_option( 'date_format' ), $order->timestamp ) ); ?><br/>
-						<?php echo esc_html( date_i18n( get_option( 'time_format' ), $order->timestamp ) ); ?>
+						<?php echo esc_html( date_i18n( get_option( 'date_format' ), $order->getTimestamp() ) ); ?><br/>
+						<?php echo esc_html( date_i18n( get_option( 'time_format' ), $order->getTimestamp() ) ); ?>
 					</td>
 					<td>
 						<?php if ( $order->getDiscountCode() ) { ?>

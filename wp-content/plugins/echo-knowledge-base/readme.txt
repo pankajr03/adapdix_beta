@@ -1,11 +1,11 @@
-=== Knowledge Base for Documentation & FAQs ===
-Author URI: https://www.echoknowledgebase.com
+=== Knowledge Base for Documentation and FAQs ===
+Author URI: https://www.echoknowledgebase.com/about-us/
 Plugin URI: https://www.echoknowledgebase.com
 Contributors: echoplugins
-Tags: knowledge base, docs, documentation, faq, knowledgebase, documents, help documentation, help articles, user manual
+Tags: knowledge base, faq, knowledgebase, docs, documents, documentation, help, wiki, knowledge, table of content, TOC, articles
 Requires at least: 4.0
-Tested up to: 5.4
-Stable tag: 6.4.2
+Tested up to: 5.5
+Stable tag: 6.8.1
 License: GPL2+
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,7 +13,9 @@ Organize documentation and FAQ pages with the best WordPress Knowledge Base plug
 
 == Description ==
 
-The most popular WordPress Knowledge Base plugin for articles, documents and FAQs that is easy to use and works with any theme.
+= The most popular WordPress Knowledge Base plugin =
+
+Our Knowledge Base is a powerful tool for creating articles, documents, and FAQs. It is easy to use and works with any theme.
 
 Create modern, professional-looking documentation with our wizard with 26 predefined themes and over 500 icons.
 
@@ -32,7 +34,6 @@ Create modern, professional-looking documentation with our wizard with 26 predef
 * Basic Layout - Demo 2 [here](https://www.echoknowledgebase.com/demo-2-knowledge-base-basic-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo2 "KB Demo 2")
 * Tabs Layout - Demo 3 [here](https://www.echoknowledgebase.com/demo-3-knowledge-base-tabs-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo3 "KB Demos 3") (Multi Product Example)
 * Tabs Layout - Demo 4 [here](https://www.echoknowledgebase.com/demo-4-knowledge-base-tabs-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo4 "KB Demos 4") (Multi Product Example)
-* Uploaded Images - Demo 12 [here](https://www.echoknowledgebase.com/demo-12-knowledge-base-image-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo12 "KB Demos 12")
 
 See our knowledgebase documentation [here](https://www.echoknowledgebase.com/documentation/ "KB documentation")
 
@@ -56,6 +57,7 @@ See our knowledgebase documentation [here](https://www.echoknowledgebase.com/doc
 * Control public and private articles and who can read, write, and edit articles.
 * Create multiple Knowledge Bases with separate articles, categories, tags, and more.
 * Create Sidebar and Grid layouts.
+* Import articles and categories.
 * Vote on articles, a feedback form, and analytics.
 * Use widgets and shortcodes for categories, articles, and the search bar.
 * Replace articles with PDFs, external docs, video links, and more.
@@ -118,6 +120,10 @@ Enjoy many other features to help you build better documentation:
 > <strong>Links Editor for PDFs and More</strong><br>
 > Set Articles to links to PDFs, pages, posts and websites. On KB Main Page, choose icons for your articles. [Learn More](https://www.echoknowledgebase.com/wordpress-plugin/links-editor-for-pdfs-and-more/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=links-editor).
 >
+>
+> <strong>KB Articles Import</strong><br>
+> Import articles and categories from the CSV file into your Knowledge Base. [Learn More](https://www.echoknowledgebase.com/wordpress-plugin/kb-import-export/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=import).
+>
 
 * (PRO) Grid Layout - Demo 5 [here](https://www.echoknowledgebase.com/demo-5-knowledge-base-grid-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo5 "KB Demo 5")
 * (PRO) Sidebar Layout - Demo 8 [here](https://www.echoknowledgebase.com/demo-8-knowledge-base-sidebar-layout/?utm_source=plugin&utm_medium=readme&utm_content=home&utm_campaign=demo8 "KB Demo 8")
@@ -178,6 +184,43 @@ Full searchable docs can be found at [Knowledge Base](http://www.echoknowledgeba
 
 == Changelog ==
 
+= 6.8.1 =
+Release Date: Sept 18, 2020
+
+Changes:
+* Update: Each KB will now have its own sidebar
+* Update: Add features for upcoming KB blocks/widgets.
+* Fix: Cleanup and minor fixes
+
+
+= 6.8.0 =
+Release Date: Aug 9, 2020
+
+Changes:
+* New: Ability to import articles with Import utility
+* New: User can now delete all plugin data.
+* Update: WordPress 5.5. compatibility
+* Fix: Cleanup and minor fixes
+
+= 6.7.0 =
+Release Date: July 10, 2020
+
+Changes:
+* New: Previous and Next navigation between articles
+* New: Manage KBs page
+* Update: Control Archive page width
+* Fix: Archive tags page
+* Fix: Cleanup and minor fixes
+
+= 6.5.1 =
+Release Date: June 7, 2020
+
+Changes:
+* New: Import and export of KB config
+* Update: Category Archive Page articles ordering
+* Update: Update translation strings
+* Fix: Initial KB URL and Wizard issues
+
 = 6.4.2 =
 Release Date: April 26th, 2020
 
@@ -197,15 +240,6 @@ Release Date: April 13th, 2020
 Changes:
 * New: Article structure v2 with sidebars
 * Update: Language translations
-* Fix: Wizard issues
-
-= 6.3.0 =
-Release Date: March 20th, 2020
-
-Changes:
-* New: Global Wizard KB slug selection
-* Update: add misisng translations
-* Update: Category Archive page dates format
 * Fix: Wizard issues
 
 

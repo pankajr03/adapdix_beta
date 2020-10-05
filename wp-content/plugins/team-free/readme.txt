@@ -3,7 +3,7 @@ Contributors: shapedplugin
 Donate link: http://shapedplugin.com/donate
 Tags: team, wp team, team members, team showcase, team members showcase, our team members, our team, best team member plugin, wordpress team showcase plugin, meet the team, our stuff, responsive team plugin,  wordpress team, team carousel, team slider,  team grid, team list, team mosaic, team inline, team member filter, staff, workers, team profile, staff showcase, crew, squad, employees, modal, hexagonal grid, thumbnail pager, gallery, team gallery, people, company, organization
 Requires at least: 4.0
-Tested up to: 5.4
+Tested up to: 5.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -276,6 +276,12 @@ The WordPress codex contains <a href="https://codex.wordpress.org/Managing_Plugi
 
 
 == Changelog ==
+
+= 2.0.6 - Aug 18, 2020 =
+* Fix: WordPress 5.5 compatible issue.
+
+= 2.0.5 - Jun 08, 2020 =
+* Fix: Word-break in short bio issue.
 
 = 2.0.4 - Jan 24, 2020 =
 * Fix: Top Navigation appears from bottom issue.

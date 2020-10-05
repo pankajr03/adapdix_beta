@@ -30,6 +30,24 @@ class EPKB_Templates_Various {
 			$articles_seq_data = EPKB_WPML::apply_article_language_filter( $articles_seq_data );
 		}
 
+        if ( $kb_config['show_articles_before_categories'] != 'off' ) {
+            return self::get_article_breadcrumb_v1( $article_id, $articles_seq_data, $category_seq_data );
+        } else {
+            return self::get_article_breadcrumb_v2( $article_id, $articles_seq_data, $category_seq_data );
+        }
+    }
+
+	/**
+	 * If Articles are listed before Category
+	 *
+	 * @param $article_id
+	 * @param $articles_seq_data
+	 * @param $category_seq_data
+	 *
+	 * @return array
+	 */
+    private static function get_article_breadcrumb_v1( $article_id, $articles_seq_data, $category_seq_data ) {
+
 		$seq_no = EPKB_Utilities::get('seq_no', 1, false);
 		$seq_no = EPKB_Utilities::sanitize_int( $seq_no );
 		$seq_cnt = 0;
@@ -147,7 +165,144 @@ class EPKB_Templates_Various {
 
 		return $first_instance;
 	}
-	
+
+	/**
+	 * If Articles are listed after Category
+	 *
+	 * @param $article_id
+	 * @param $articles_seq_data
+	 * @param $category_seq_data
+	 *
+	 * @return array
+	 */
+	private static function get_article_breadcrumb_v2( $article_id, $articles_seq_data, $category_seq_data ) {
+
+        $seq_no = EPKB_Utilities::get('seq_no', 1, false);
+        $seq_no = EPKB_Utilities::sanitize_int( $seq_no );
+        $seq_cnt = 0;
+        $first_instance = array();
+
+        // find it on the first level
+        foreach( $category_seq_data as $category_id => $sub_categories ) {
+
+            if ( empty($articles_seq_data[$category_id][0]) ) {
+                continue;
+            }
+
+            // find it on the second level
+            foreach( $sub_categories as $sub_category_id => $sub_sub_categories ) {
+
+                if ( empty($articles_seq_data[$sub_category_id][0]) ) {
+                    continue;
+                }
+
+                // find it on the third level
+                foreach( $sub_sub_categories as $sub_sub_category_id => $sub_sub_sub_categories ) {
+
+                    if ( empty($articles_seq_data[$sub_sub_category_id][0]) ) {
+                        continue;
+                    }
+
+
+
+                    // find it on the fourth level
+                    foreach( $sub_sub_sub_categories as $sub_sub_sub_category_id => $sub_sub_sub_sub_categories ) {
+
+                        if ( empty($articles_seq_data[$sub_sub_sub_category_id][0]) ) {
+                            continue;
+                        }
+
+
+
+                        // find it on the fifth level
+                        foreach( $sub_sub_sub_sub_categories as $sub_sub_sub_sub_category_id => $sub_sub_sub_sub_sub_categories ) {
+
+                            if ( empty($articles_seq_data[$sub_sub_sub_sub_category_id][0]) ) {
+                                continue;
+                            }
+
+
+                            // find it on the sixth level
+                            foreach( $sub_sub_sub_sub_sub_categories as $sub_sub_sub_sub_sub_category_id => $sub_sub_sub_sub_sub_sub_categories ) {
+
+                                if ( empty($articles_seq_data[$sub_sub_sub_sub_sub_category_id][0]) ) {
+                                    continue;
+                                }
+
+                                if ( isset($articles_seq_data[$sub_sub_sub_sub_sub_category_id][$article_id]) ) {
+                                    $result = array($category_id => $articles_seq_data[$category_id][0],
+                                        $sub_category_id => $articles_seq_data[$sub_category_id][0],
+                                        $sub_sub_category_id => $articles_seq_data[$sub_sub_category_id][0],
+                                        $sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_category_id][0],
+                                        $sub_sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_sub_category_id][0],
+                                        $sub_sub_sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_sub_sub_category_id][0]);
+                                    if ( ++$seq_cnt >= $seq_no ) {
+                                        return $result;
+                                    }
+                                    $first_instance = empty($first_instance) ? $result : $first_instance;
+                                }
+                            }
+
+                            if ( isset($articles_seq_data[$sub_sub_sub_sub_category_id][$article_id]) ) {
+                                $result = array($category_id => $articles_seq_data[$category_id][0],
+                                    $sub_category_id => $articles_seq_data[$sub_category_id][0],
+                                    $sub_sub_category_id => $articles_seq_data[$sub_sub_category_id][0],
+                                    $sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_category_id][0],
+                                    $sub_sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_sub_category_id][0]);
+                                if ( ++$seq_cnt >= $seq_no ) {
+                                    return $result;
+                                }
+                                $first_instance = empty($first_instance) ? $result : $first_instance;
+                            }
+
+                        }
+
+                        if ( isset($articles_seq_data[$sub_sub_sub_category_id][$article_id]) ) {
+                            $result = array($category_id => $articles_seq_data[$category_id][0],
+                                $sub_category_id => $articles_seq_data[$sub_category_id][0],
+                                $sub_sub_category_id => $articles_seq_data[$sub_sub_category_id][0],
+                                $sub_sub_sub_category_id => $articles_seq_data[$sub_sub_sub_category_id][0]);
+                            if ( ++$seq_cnt >= $seq_no ) {
+                                return $result;
+                            }
+                            $first_instance = empty($first_instance) ? $result : $first_instance;
+                        }
+                    }
+
+                    if ( isset($articles_seq_data[$sub_sub_category_id][$article_id]) ) {
+                        $result = array($category_id => $articles_seq_data[$category_id][0],
+                            $sub_category_id => $articles_seq_data[$sub_category_id][0],
+                            $sub_sub_category_id => $articles_seq_data[$sub_sub_category_id][0]);
+                        if ( ++$seq_cnt >= $seq_no ) {
+                            return $result;
+                        }
+                        $first_instance = empty($first_instance) ? $result : $first_instance;
+                    }
+                }
+
+                if ( isset($articles_seq_data[$sub_category_id][$article_id]) ) {
+                    $result = array($category_id => $articles_seq_data[$category_id][0],
+                        $sub_category_id => $articles_seq_data[$sub_category_id][0]);
+                    if ( ++$seq_cnt >= $seq_no ) {
+                        return $result;
+                    }
+                    $first_instance = empty($first_instance) ? $result : $first_instance;
+                }
+            }
+
+            if ( isset($articles_seq_data[$category_id][$article_id]) ) {
+
+                $result = array($category_id => $articles_seq_data[$category_id][0]);
+                if ( ++$seq_cnt >= $seq_no ) {
+                    return $result;
+                }
+                $first_instance = empty($first_instance) ? $result : $first_instance;
+            }
+        }
+
+        return $first_instance;
+    }
+
 	/**
 	 * BREADCRUMB: get given term breadcrumb categories
 	 *

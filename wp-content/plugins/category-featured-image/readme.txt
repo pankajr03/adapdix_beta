@@ -2,10 +2,10 @@
 Contributors: Katsushi Kawamori
 Donate link: https://shop.riverforest-wp.info/donate/
 Tags: category, featured image, post
-Requires at least: 3.6.0
+Requires at least: 4.6
 Requires PHP: 5.6
-Tested up to: 5.4
-Stable tag: 2.02
+Tested up to: 5.5
+Stable tag: 2.04
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,13 @@ none
 2. Update image of category
 
 == Changelog ==
+
+= 2.04 =
+Fixed an issue with theme support.
+
+= 2.03 =
+Fixed an issue with getting category metadata.
+Thanks @prionkor !
 
 = 2.02 =
 Fixed an error when acquiring terms.

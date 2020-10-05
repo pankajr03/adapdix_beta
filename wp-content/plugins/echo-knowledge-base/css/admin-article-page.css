@@ -2633,15 +2633,15 @@
       #ekb_core_top_heading .kb_status {
         bottom: 0px; } }
   #ekb_core_top_heading .kb_status_success {
-    color: #5cb85c;
-    border-left-color: #5cb85c; }
+    color: #2f8631;
+    border-left-color: #2f8631; }
     #ekb_core_top_heading .kb_status_success a {
-      color: #5cb85c; }
+      color: #2f8631; }
   #ekb_core_top_heading .kb_status_error {
-    color: #d9534f;
-    border-left-color: #d9534f; }
+    color: #d95651;
+    border-left-color: #d95651; }
     #ekb_core_top_heading .kb_status_error a {
-      color: #d9534f; }
+      color: #d95651; }
   #ekb_core_top_heading .kb_status_warning {
     color: #F0BC71;
     border-left-color: #F0BC71; }

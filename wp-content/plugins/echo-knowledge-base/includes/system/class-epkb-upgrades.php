@@ -326,13 +326,54 @@ class EPKB_Upgrades {
 	 */
 	public static function features_list( $features=array() ) {
 
+		$features['2020.09.01'] = array(
+			'plugin'            => __( 'KB Articles Import', 'echo-knowledge-base'),
+			'title'             => __( 'Import Articles and Categories into KB', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( 'Import articles and categories into your Knowledge Base.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/edd/2020/08/KB-Import-Export-Banner.jpg',
+			'learn_more_url'    => 'https://www.echoknowledgebase.com/wordpress-plugin/kb-import-export/',
+			'plugin-type'       => 'add-on',
+			'type'              => 'new-feature'
+		);
+
+		$features['2020.08.09'] = array(
+			'plugin'            => __( 'Advanced Search', 'echo-knowledge-base'),
+			'title'             => __( 'Advanced Search Shortcode for One or More KBs', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( 'Add Advanced Search box to any page like the Contact Us form. Search across multiple KBs.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/08/featured-screenshots-asea-shortcode.jpg',
+			'learn_more_url'    => 'https://www.echoknowledgebase.com/documentation/shortcode-for-one-or-more-kbs/',
+			'plugin-type'       => 'add-on',
+			'type'              => 'new-feature'
+		);
+
+
+		$features['2020.07.02'] = array(
+			'plugin'            => __( 'KB Core', 'echo-knowledge-base'),
+			'title'             => __( 'Article Previous/Next Buttons', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( 'Allow your users to navigate to the next article or previous articles using previous/next buttons.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/06/new-feature-article-navigation-btns.jpg',
+			'learn_more_url'    => 'https://www.echoknowledgebase.com/documentation/meta-data-authors-dates/',
+			'plugin-type'       => 'core',
+			'type'              => 'new-feature'
+		);
+
+		$features['2020.06.01'] = array(
+			'plugin'            => __( 'Advanced Search', 'echo-knowledge-base'),
+			'title'             => __( 'Sub Category Filter', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( 'New sub-category filter option to narrow down your search.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/06/new-feature-sub-category-filter.jpg',
+			'learn_more_url'    => 'https://www.echoknowledgebase.com/demo-11/',
+			'plugin-type'       => 'core',
+			'type'              => 'new-feature'
+		);
+
 		$features['2020.04.01'] = array(
 			'plugin'            => __( 'KB Core', 'echo-knowledge-base'),
 			'title'             => __( 'Article Sidebars', 'echo-knowledge-base'),
 			'description'       => '<p>' . __( 'New article sidebars with the ability to add your own Widgets, TOC and custom code.', 'echo-knowledge-base') . '</p>',
 			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/2020/04/new-feature-wizards-sidebars.jpg',
-			'learn_more_url'    => '',
-			'plugin-type'       => 'core',
+			'learn_more_url'    => 'https://www.echoknowledgebase.com/documentation/sidebar-overview/',
+			'plugin-type'       => 'add-on',
 			'type'              => 'new-feature'
 		);
 

@@ -1,3 +1,17 @@
+<?php
+/**
+ * Template for Post grid and filter ultimate Loop - Design-2
+ *
+* @package Post grid and filter ultimate
+ * @version 1.0
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly
+}
+
+global $post; ?>
+
 <div class="pgafu-post-grid">		
 	<div class="pgafu-post-grid-content <?php if ( !has_post_thumbnail() ) { echo 'no-thumb-image'; } ?>">
 		<?php		

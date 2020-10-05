@@ -129,14 +129,14 @@ class EPKB_Input_Filter {
 			$result = $this->filter_input_field( $input_value, $field_spec );
 			if ( is_wp_error($result) ) {
 
-                EPKB_Logging::add_log( 'Please change the value of ' . $field_spec['label'] . ' field. ' . $result->get_error_message(), $result );
+                EPKB_Logging::add_log( 'Please change the value of ' . $field_spec['label'] . ' field. Current value: "' . $input_value . '" - ' . $result->get_error_message() . ', code: ' . $result->get_error_message(), $result );
 
 				// log error only if a) NOT internal fields and more than 1 error encountered OR b) debug on
                 if ( ( empty($field_spec['internal']) && count($errors) > 0 ) || ( defined('SCRIPT_DEBUG') && SCRIPT_DEBUG ) ||
                  ! in_array( $field_spec['type'], array(self::CHECKBOX, self::SELECTION, self::CHECKBOXES_MULTI_SELECT, self::CHECKBOXES_MULTI_SELECT_NOT, self::TRUE_FALSE, self::ENUMERATION) )) {
 
-	                $lang = '<strong>' . $field_spec['label'] . '</strong>';
-                    $errors[] = '<div style="padding: 20px 0 20px 0;">'. sprintf( __( 'Please change the value of %s field.', 'echo-knowledge-base' ), $lang ) . $result->get_error_message() . '</div>';
+                    $lang = '<strong style="color:#d5ff8b">' . $field_spec['label'] . '</strong>';
+                    $errors[] = '<div style="padding: 20px 0 20px 0;">'. sprintf( __( 'Please change value of the %s field.', 'echo-knowledge-base' ), $lang ) . ' ' . $result->get_error_message() . '</div>';
 
                 // internal fields and first error will just use default value
                 } else {
@@ -153,7 +153,7 @@ class EPKB_Input_Filter {
 			return $sanitized_input;
 		}
 
-		return new WP_Error('invalid_input', __( 'validation failed', 'echo-knowledge-base' ) . EPKB_Utilities::get_variable_string($errors), $errors );
+		return new WP_Error('invalid_input', ' ' . implode(" ", $errors) );
 	}
 
 	private function filter_input_field( $value, $field_spec ) {
@@ -299,10 +299,10 @@ class EPKB_Input_Filter {
 		}
 
 		if ( $number > $field_spec['max'] ) {
-			$msg = sprintf( __( 'The value %s is larger than maximum of: %s', 'echo-knowledge-base' ), $number, $field_spec['max'] );
+			$msg = sprintf( __( 'The value %s is larger than maximum of %s', 'echo-knowledge-base' ), $number, $field_spec['max'] );
 			return new WP_Error( 'filter_not_number', $msg );
 		} else if ( $number < $field_spec['min'] ) {
-			$msg = sprintf( __( 'The value %s is smaller than minimum of: %s', 'echo-knowledge-base' ), $number, $field_spec['min'] );
+			$msg = sprintf( __( 'The value %s is smaller than minimum of %s', 'echo-knowledge-base' ), $number, $field_spec['min'] );
 			return new WP_Error( 'filter_not_number', $msg );
 		}
 

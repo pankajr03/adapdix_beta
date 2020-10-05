@@ -11,7 +11,11 @@
 .spf-ab-icon {
     top: 2px
 }
-
+#_sptp_generator_layout .postbox-header,
+#_sptp_generator .postbox-header,
+#_sptp_add_member .postbox-header{
+    display: none;
+}
 #screen-meta-links+.spf-options {
     margin-top: 40px
 }

@@ -54,7 +54,7 @@
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td >
-							<h4><a style="text-decoration: underline;" href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock Maintenance Mode And Website Redirect Mode In pro version Buy Now</a></h4>
+							<h4><a style="text-decoration: underline;" href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock Maintenance Mode And Website Redirect Mode In pro version Buy Now</a></h4>
 						</td>
 					</tr>	
 				</table>
@@ -86,42 +86,40 @@
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td>
-						<style>
-						
-							.wpsm-rate-us{
-							text-align:center;
-							width:100%;
-							}
-							.wpsm-rate-us span.dashicons {
-								width: 40px;
-								height: 40px;
-								font-size:20px;
-								color : #31a3dd !important;
-							}
-							.wpsm-rate-us span.dashicons-star-filled:before {
-								content: "\f155";
-								font-size: 40px;
-							}
-							.wpsm-rate-us span{
-								display:inline-block
-							}
-							 .button-hero{
-								background: #fff;
-								color: #000;
-								box-shadow: none;
-								text-shadow: none;
-								font-weight: 900;
-								font-size: 23px;
-								border:1px solid #000;
-								
-							}
-							 .button-hero{
-								display:block;
-								text-align:center;
-								margin-bottom:15px;
-							}
-						</style>
-							
+							<style>
+								.wpsm-rate-us{
+									text-align:center;
+									width:100%;
+								}
+								.wpsm-rate-us span.dashicons {
+									width: 40px;
+									height: 40px;
+									font-size:20px;
+									color : #31a3dd !important;
+								}
+								.wpsm-rate-us span.dashicons-star-filled:before {
+									content: "\f155";
+									font-size: 40px;
+								}
+								.wpsm-rate-us span{
+									display:inline-block
+								}
+								 .button-hero{
+									background: #fff;
+									color: #000;
+									box-shadow: none;
+									text-shadow: none;
+									font-weight: 900;
+									font-size: 23px;
+									border:1px solid #000;
+									
+								}
+								 .button-hero{
+									display:block;
+									text-align:center;
+									margin-bottom:15px;
+								}
+							</style>
 							<a href="https://wordpress.org/support/plugin/responsive-coming-soon" target="_blank" class="button button-primary button-hero ">Get Support Here</a>
 						</td>
 					</tr>					

@@ -329,9 +329,18 @@ class EPKB_Utilities {
 		/* array $EZSQL_ERROR */
 		global $EZSQL_ERROR;
 
-		if ( ! empty($EZSQL_ERROR) ) {
-			EPKB_Logging::add_log( 'Database error', $EZSQL_ERROR );
-			$message .= __( '. Database Error.', 'echo-knowledge-base' );
+		if ( ! empty($EZSQL_ERROR) && is_array($EZSQL_ERROR) ) {
+			foreach ( $EZSQL_ERROR as $error ){
+				$amgr_tables = array("amgr_access_kb_categories", "amgr_access_read_articles", "amgr_access_read_categories", "amgr_kb_group_users", "amgr_kb_groups", "amgr_kb_public_groups");
+				foreach ( $amgr_tables as $table_name ) {
+					if ( !empty($error['error_str']) && strpos($error['error_str'], $table_name) !== false ) {
+						//LOG Only Acess Manager Error
+						EPKB_Logging::add_log( 'Database error', $EZSQL_ERROR );
+						$message .= __( '. Database Error.', 'echo-knowledge-base' );
+					}
+				}
+
+			}
 		}
 
 		$title = empty($title) ? '' : '<h4>' . $title . '</h4>';
@@ -395,8 +404,8 @@ class EPKB_Utilities {
 				if ( isset($values['form_inputs']) ) {
 					foreach ( $values['form_inputs'] as $input ) {
 						echo '<div class="epkb-dbf__form__input">' . $input . '</div>';
-					}				
-				}; 			?>
+					}
+				}; ?>
 			</form>
 
 			<!---- Footer ---->
@@ -1232,7 +1241,10 @@ class EPKB_Utilities {
 	 */
 	public static function get_current_user() {
 
-		$user = wp_get_current_user();
+		$user = null;
+		if ( function_exists('wp_get_current_user') ) {
+			$user = wp_get_current_user();
+		}
 
 		// is user not logged in? user ID is 0 if not logged
 		if ( empty($user) || ! $user instanceof WP_User || empty($user->ID) ) {
@@ -1399,6 +1411,18 @@ class EPKB_Utilities {
 	public static function is_multiple_kbs_enabled() {
 		return defined('E'.'MKB_PLUGIN_NAME');
 	}
+	
+	public static function is_export_import_enabled() {
+		return defined('E'.'PIE_PLUGIN_NAME');
+	}
+	
+	public static function is_creative_addons_widgets_enabled() {
+		return defined( 'CREATIVE_ADDONS_VERSION' ) && defined( 'ELEMENTOR_VERSION' );
+	}
+	
+	public static function is_elementor_enabled() {
+		return defined( 'ELEMENTOR_VERSION' );
+	}
 
 	/**
 	 * Show error message at the top of WordPress page
@@ -1446,14 +1470,14 @@ class EPKB_Utilities {
 			return '';
 		}
 
-		$slug      = $kb_page->post_name;
+		$slug      = urldecode(sanitize_title_with_dashes( $kb_page->post_name, '', 'save' ));
 		$ancestors = get_post_ancestors( $kb_page );
 		foreach ( $ancestors as $ancestor_id ) {
 			$post_ancestor = get_post( $ancestor_id );
 			if ( empty($post_ancestor) ) {
 				continue;
 			}
-			$slug = $post_ancestor->post_name . '/' . $slug;
+			$slug = urldecode(sanitize_title_with_dashes( $post_ancestor->post_name, '', 'save' )) . '/' . $slug;
 			if ( $kb_main_page_id == $ancestor_id ) {
 				break;
 			}

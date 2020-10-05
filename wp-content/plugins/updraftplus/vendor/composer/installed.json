@@ -66,20 +66,20 @@
     },
     {
         "name": "components/jquery",
-        "version": "3.4.1",
-        "version_normalized": "3.4.1.0",
+        "version": "3.5.1",
+        "version_normalized": "3.5.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/components/jquery.git",
-            "reference": "901828b7968b18319e377dc23d466f28426ee083"
+            "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/components/jquery/zipball/901828b7968b18319e377dc23d466f28426ee083",
-            "reference": "901828b7968b18319e377dc23d466f28426ee083",
+            "url": "https://api.github.com/repos/components/jquery/zipball/b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
+            "reference": "b33e8f0f9a1cb2ae390cf05d766a900b53d2125b",
             "shasum": ""
         },
-        "time": "2019-10-23T05:15:13+00:00",
+        "time": "2020-05-05T13:21:02+00:00",
         "type": "component",
         "extra": {
             "component": {
@@ -379,17 +379,17 @@
     },
     {
         "name": "phpseclib/phpseclib",
-        "version": "1.0.18",
-        "version_normalized": "1.0.18.0",
+        "version": "1.0.19",
+        "version_normalized": "1.0.19.0",
         "source": {
             "type": "git",
             "url": "https://github.com/phpseclib/phpseclib.git",
-            "reference": "ec1fcfe648e5696efa2dd26ffa54436e3478ae5c"
+            "reference": "6537e74746c09cde3bb94317ae039bd89e1decf9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/ec1fcfe648e5696efa2dd26ffa54436e3478ae5c",
-            "reference": "ec1fcfe648e5696efa2dd26ffa54436e3478ae5c",
+            "url": "https://api.github.com/repos/phpseclib/phpseclib/zipball/6537e74746c09cde3bb94317ae039bd89e1decf9",
+            "reference": "6537e74746c09cde3bb94317ae039bd89e1decf9",
             "shasum": ""
         },
         "require": {
@@ -406,7 +406,7 @@
             "ext-mcrypt": "Install the Mcrypt extension in order to speed up a wide variety of cryptographic operations.",
             "pear-pear/PHP_Compat": "Install PHP_Compat to get phpseclib working on PHP < 5.0.0."
         },
-        "time": "2019-09-17T04:11:10+00:00",
+        "time": "2020-07-08T04:31:58+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
@@ -476,27 +476,41 @@
             "twofish",
             "x.509",
             "x509"
+        ],
+        "funding": [
+            {
+                "url": "https://github.com/terrafrost",
+                "type": "github"
+            },
+            {
+                "url": "https://www.patreon.com/phpseclib",
+                "type": "patreon"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/phpseclib/phpseclib",
+                "type": "tidelift"
+            }
         ]
     },
     {
         "name": "psr/log",
-        "version": "1.1.2",
-        "version_normalized": "1.1.2.0",
+        "version": "1.1.3",
+        "version_normalized": "1.1.3.0",
         "source": {
             "type": "git",
             "url": "https://github.com/php-fig/log.git",
-            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
-            "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
+            "url": "https://api.github.com/repos/php-fig/log/zipball/0f73288fd15629204f9d42b7055f72dacbe811fc",
+            "reference": "0f73288fd15629204f9d42b7055f72dacbe811fc",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2019-11-01T11:05:21+00:00",
+        "time": "2020-03-23T09:12:05+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -709,23 +723,23 @@
     },
     {
         "name": "symfony/process",
-        "version": "v3.4.37",
-        "version_normalized": "3.4.37.0",
+        "version": "v3.4.44",
+        "version_normalized": "3.4.44.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/process.git",
-            "reference": "5b9d2bcffe4678911a4c941c00b7c161252cf09a"
+            "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/process/zipball/5b9d2bcffe4678911a4c941c00b7c161252cf09a",
-            "reference": "5b9d2bcffe4678911a4c941c00b7c161252cf09a",
+            "url": "https://api.github.com/repos/symfony/process/zipball/af8d812d75fcdf2eae30928b42396fe17df137e4",
+            "reference": "af8d812d75fcdf2eae30928b42396fe17df137e4",
             "shasum": ""
         },
         "require": {
             "php": "^5.5.9|>=7.0.8"
         },
-        "time": "2020-01-01T11:03:25+00:00",
+        "time": "2020-07-16T09:41:49+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -756,6 +770,20 @@
             }
         ],
         "description": "Symfony Process Component",
-        "homepage": "https://symfony.com"
+        "homepage": "https://symfony.com",
+        "funding": [
+            {
+                "url": "https://symfony.com/sponsor",
+                "type": "custom"
+            },
+            {
+                "url": "https://github.com/fabpot",
+                "type": "github"
+            },
+            {
+                "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                "type": "tidelift"
+            }
+        ]
     }
 ]

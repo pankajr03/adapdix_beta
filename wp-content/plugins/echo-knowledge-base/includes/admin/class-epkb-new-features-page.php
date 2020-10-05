@@ -53,19 +53,27 @@ class EPKB_New_Features_Page {
 			</div>
 
 			<!-- Tab Navigation -->
-			<div class="epkb-features__nav-container">
-				<ul>
-					<li id="features" class="epkb-fnc--active-tab"><?php _e( 'New Features', 'echo-knowledge-base' ); ?></li>
+			<div class="epkb-features__nav-container" >
+				<ul id="new_features_tabs_nav">
+					<li id="features" class="nav_tab active"><?php _e( 'New Features', 'echo-knowledge-base' ); ?></li>
+					<!-- <li id="crel" class="nav_tab"><span class="ep_font_icon_document"></span><?php // _e( 'Creative Add-ons', 'echo-knowledge-base' ); ?></li>
+					<li id="epbl" class="nav_tab"><span class="ep_font_icon_document"></span><?php //_e( 'Documentation Blocks', 'echo-knowledge-base' ); ?></li> -->
 					<!-- <li id="history">History</li>-->
 				</ul>
 			</div>
 
 			<!-- Tab Panels -->
-			<div class="epkb-features__panel-container">
-				<div id="features-panel" class="epkb-features__panel epkb-features__panel--active">
+			<div class="epkb-features__panel-container" id="new_features_tab_panel">
+				<div id="features-panel" class="ekb-admin-page-tab-panel epkb-features__panel active">
 					<?php self::display_new_features_details();  ?>
 				</div>
-				<div id="history-panel" class="epkb-features__panel"></div>
+				<!-- <div id="crel-panel" class="ekb-admin-page-tab-panel epkb-features__panel">
+					<?php //self::display_crel_features_details();  ?>
+				</div>
+				<div id="epbl-panel" class="ekb-admin-page-tab-panel epkb-features__panel">
+					<?php //self::display_epbl_features_details();  ?>
+				</div> -->
+				<div id="history-panel" class="ekb-admin-page-tab-panel epkb-features__panel"></div>
 			</div>
 
 		</div>      <?php
@@ -92,6 +100,43 @@ class EPKB_New_Features_Page {
 		</div>		  <?php
 	}
 
+	private static function display_epbl_features_details(){
+		$features['2020.09.15'] = array(
+			'plugin'            => __( 'Document Blocks', 'echo-knowledge-base'),
+			'title'             => __( 'Blocks for Documents, Articles and FAQs', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( '(Initial Beta) Create Amazing Documentation with ease using our Knowledge Base Blocks.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/edd/2020/08/KB-Import-Export-Banner.jpg',
+			'learn_more_url'    => 'https://wordpress.org/plugins/blocks-for-documents-articles-and-faqs/',
+			'plugin-type'       => 'plugin',
+			'type'              => 'new-plugin'
+		);
+		?>
+
+		<div class="epkb-grid-row-5-col">			<?php
+			foreach ( $features as $date => $feature ) {
+				self::new_feature( $date, $feature );
+			}        ?>
+		</div>		<?php
+	}
+
+	private static function display_crel_features_details(){
+		$features['2020.09.15'] = array(
+			'plugin'            => __( 'Creative Add-ons', 'echo-knowledge-base'),
+			'title'             => __( 'Blocks for Documents, Articles and FAQs', 'echo-knowledge-base'),
+			'description'       => '<p>' . __( '(Initial Beta) Create Amazing Documentation with ease using our Knowledge Base Blocks.', 'echo-knowledge-base') . '</p>',
+			'image'             => 'https://www.echoknowledgebase.com/wp-content/uploads/edd/2020/08/KB-Import-Export-Banner.jpg',
+			'learn_more_url'    => 'https://wordpress.org/plugins/blocks-for-documents-articles-and-faqs/',
+			'plugin-type'       => 'plugin',
+			'type'              => 'new-plugin'
+		);
+		?>
+
+		<div class="epkb-grid-row-5-col">			<?php
+			foreach ( $features as $date => $feature ) {
+				self::new_feature( $date, $feature );
+			}        ?>
+		</div>		<?php
+	}
 	/**
 	 * Display feature information with image.
 	 * @param $date
@@ -114,7 +159,11 @@ class EPKB_New_Features_Page {
 			case 'core':
 				$pluginType = '<div class="epkb-fnf__meta__core">' . __( 'Core', 'echo-knowledge-base') . '</div>';
 				break;
+			case 'plugin':
+				$pluginType = '<div class="epkb-fnf__meta__addon">' . __( 'Plugin', 'echo-knowledge-base') . '</div>';
+				break;
 		}
+
 		$type = '';
 		switch ($values['type']) {
 			case 'new-addon':
@@ -122,6 +171,9 @@ class EPKB_New_Features_Page {
 				break;
 			case 'new-feature':
 				$type = '<span class="epkb-fnf__header__new-feature"> <i class="epkbfa epkbfa-star" aria-hidden="true"></i>' . __( 'New Feature', 'echo-knowledge-base') . '</span>';
+				break;
+			case 'new-plugin':
+				$type = '<span class="epkb-fnf__header__new-add-on"> <i class="epkbfa epkbfa-diamond" aria-hidden="true"></i>' . __( 'New Plugin', 'echo-knowledge-base') . '</span>';
 				break;
 		}		?>
 

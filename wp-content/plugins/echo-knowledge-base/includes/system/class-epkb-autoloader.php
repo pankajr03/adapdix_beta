@@ -29,6 +29,9 @@ class EPKB_Autoloader {
 				'epkb_templates'                    =>  'includes/system/class-epkb-templates.php',
 				'epkb_upgrades'                     =>  'includes/system/class-epkb-upgrades.php',
 				'epkb_wpml'                         =>  'includes/system/class-epkb-wpml.php',
+				'epkb_file_manager'                 =>  'includes/system/class-epkb-file-manager.php',
+				'epkb_delete_kb'                	=>  'includes/system/class-epkb-delete-kb.php',
+				'epkb_deactivate_feedback'          =>  'includes/system/class-epkb-deactivate-feedback.php',
 
 				// ADMIN CORE
 				'epkb_admin_notices'                =>  'includes/admin/class-epkb-admin-notices.php',
@@ -38,6 +41,8 @@ class EPKB_Autoloader {
 				'epkb_settings_specs'               =>  'includes/admin/settings/class-epkb-settings-specs.php',
 				'epkb_settings_db'                  =>  'includes/admin/settings/class-epkb-settings-db.php',
 				'epkb_analytics_page'               =>  'includes/admin/settings/class-epkb-analytics-page.php',
+				'epkb_manage_kb_page'               =>  'includes/admin/class-epkb-manage-kb-page.php',
+				'epkb_export_import'                =>  'includes/admin/class-epkb-export-import.php',
 
 				// KB Configuration
 				'epkb_kb_config_controller'         =>  'includes/admin/kb-configuration/class-epkb-kb-config-controller.php',

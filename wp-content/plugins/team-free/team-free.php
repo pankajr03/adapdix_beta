@@ -13,7 +13,7 @@
  * Plugin Name:       WP Team
  * Plugin URI:        https: //shapedplugin.com/plugin/wp-team/
  * Description:       The most versatile and industry-leading WordPress team showcase plugin built to create and manage team members showcases with excellent design and multiple options.
- * Version:           2.0.4
+ * Version:           2.0.6
  * Author:            ShapedPlugin
  * Author URI:        https://shapedplugin.com
  * License:           GPL-2.0+
@@ -32,7 +32,7 @@ if ( ! defined( 'WPINC' ) ) {
  */
 define( 'SPT_PLUGIN_NAME', 'wp-team' );
 define( 'SPT_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
-define( 'SPT_PLUGIN_VERSION', '2.0.4' );
+define( 'SPT_PLUGIN_VERSION', '2.0.6' );
 define( 'SPT_PLUGIN_ROOT', plugin_dir_url( __FILE__ ) );
 
 if ( ! function_exists( 'activate_wp_team' ) ) {
@@ -64,8 +64,8 @@ register_deactivation_hook( __FILE__, 'deactivate_wp_team' );
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
+require plugin_dir_path( __FILE__ ) . 'includes/class-wp-team-updates.php';
 require plugin_dir_path( __FILE__ ) . 'includes/class-wp-team.php';
-
 require plugin_dir_path( __FILE__ ) . 'deprecated/deprecated-team.php';
 
 /**

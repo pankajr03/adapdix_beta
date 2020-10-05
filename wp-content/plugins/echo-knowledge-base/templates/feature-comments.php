@@ -20,6 +20,7 @@ if ( post_password_required() ) { ?>
 	return;
 }
 
+// all themes show comments even if disabled as long as there is comment for given article.
 if ( comments_open() || get_comments_number() ) {
 
 	echo '<div class="epkb-comments-container">';

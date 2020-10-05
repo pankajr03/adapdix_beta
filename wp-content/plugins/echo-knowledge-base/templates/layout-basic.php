@@ -57,8 +57,14 @@ $template_style1 = EPKB_Utilities::get_inline_style(
 
 			// output KB Main Page
 			$striped_content = empty($post_content) ? '' : preg_replace('/\s+|&nbsp;/', '', $post_content);
-			$generate_main_page_directly = empty($striped_content) || strlen($striped_content) < 27;
-
+			$plugin_first_version = get_option( 'epkb_version_first' );
+			$plugin_first_version = empty($plugin_first_version) ? '6.7.0' : $plugin_first_version;
+			$generate_main_page_directly = ( empty($striped_content) || strlen($striped_content) < 27 );
+			
+			if ( EPKB_Utilities::is_elementor_enabled() || version_compare( $plugin_first_version, '6.6.0', '>' ) ) {
+				$generate_main_page_directly = false; // always show with the_content for new users that are have elementor
+			}
+		
 			// if the page contains only shortcode then directly generate the Main Page
 			if ( $generate_main_page_directly ) {
 				echo EPKB_Layouts_Setup::output_main_page( $kb_config );

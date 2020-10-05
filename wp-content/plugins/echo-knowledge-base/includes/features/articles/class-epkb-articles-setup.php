@@ -164,7 +164,7 @@ class EPKB_Articles_Setup {
 	    // KB widgets sidebar for V2
 	    if ( self::is_article_structure_v2( $kb_config ) ) {
 		    if ( $sidebar_priority['kb_sidebar_left'] ) {
-			    add_action( 'eckb-article-left-sidebar', array('EPKB_Articles_Setup', 'display_article_sidebar'), 10 * $sidebar_priority['kb_sidebar_left']);
+			    add_action( 'eckb-article-left-sidebar', array('EPKB_Articles_Setup', 'display_article_sidebar'), 10 * $sidebar_priority['kb_sidebar_left'] );
 		    } else if ( $sidebar_priority['kb_sidebar_right'] ) {
 			    add_action( 'eckb-article-right-sidebar', array('EPKB_Articles_Setup', 'display_article_sidebar'), 10 * $sidebar_priority['kb_sidebar_right'] );
 		    }
@@ -210,13 +210,254 @@ class EPKB_Articles_Setup {
 	    add_action( 'eckb-article-content-footer', array('EPKB_Articles_Setup', 'meta_container_footer'), 10, 3 );
 
 	    add_action( 'eckb-article-content-footer', array('EPKB_Articles_Setup', 'tags'), 10, 3 );
+        add_action( 'eckb-article-content-footer', array('EPKB_Articles_Setup', 'prev_next_navigation'), 10, 3 );
         add_action( 'eckb-article-footer', array('EPKB_Articles_Setup', 'comments'), 10, 3 );
     }
 
+	/**
+	 * Function to flatten array
+	 * @param array $category_array
+	 * @param $kb_config
+	 * @return array
+	 */
+	public static function epkb_get_array_keys_multiarray( array $category_array, $kb_config ) {
+		$keys = array();
+
+		foreach ( $category_array as $key => $value ) {
+            if ( $kb_config['show_articles_before_categories'] != 'off' ) {
+                $keys[] = $key;
+            }
+
+			if ( is_array($category_array[$key]) ) {
+				$keys = array_merge($keys, self::epkb_get_array_keys_multiarray( $category_array[$key], $kb_config ));
+			}
+
+			if ( $kb_config['show_articles_before_categories'] == 'off' ) {
+                $keys[] = $key;
+         }
+		}
+
+		return $keys;
+	}
+
+	/**
+	 * Output PREV/NEXT buttons within a category
+	 * @param $args
+	 */
+	public static function prev_next_navigation( $args ) {
+		global $eckb_kb_id, $post;
+
+		if ( (empty($post) or ! isset($post->ID) or empty($eckb_kb_id)) and !isset($_POST['epkb-wizard-demo-data']) ) {
+			return;
+		}
+
+		$post_id = $post->ID;
+		$kb_id = $eckb_kb_id;
+		$kb_config = $args['config'];
+
+		if ( empty($kb_config['prev_next_navigation_enable']) || $kb_config['prev_next_navigation_enable'] != 'on' ) {
+			return;
+		}
+
+		$styles = '
+			#eckb-article-content-footer .epkb-article-navigation-container a {
+				background-color:   ' . $kb_config['prev_next_navigation_bg_color'] . ';
+				color:              ' . $kb_config['prev_next_navigation_text_color'] . ';
+			}
+			#eckb-article-content-footer .epkb-article-navigation-container a:hover {
+				background-color:   ' . $kb_config['prev_next_navigation_hover_bg_color'] . ';
+				color:              ' . $kb_config['prev_next_navigation_hover_text_color'] . ';
+			}
+		';
+
+		$prev_navigation_text = empty($kb_config['prev_navigation_text']) ? __( 'Previous', 'echo-knowledge-base' ) : $kb_config['prev_navigation_text'];
+		$next_navigation_text = empty($kb_config['next_navigation_text']) ? __( 'Next', 'echo-knowledge-base' ) : $kb_config['next_navigation_text'];
+
+		$demo_prev_link = '<a href="#"><span class="epkb-article-navigation__label">' . $prev_navigation_text . '</span><span class="epkb-article-navigation-article__title">
+									<span class="epkb-article-navigation__previous__icon ep_font_icon_document"></span>' . __( 'Demo Article', 'echo-knowledge-base' ) . '</span></a>';
+		$demo_next_link = '<a href="#"><span class="epkb-article-navigation__label">' . $next_navigation_text . '</span><span class="epkb-article-navigation-article__title">
+									<span class="epkb-article-navigation__next__icon ep_font_icon_document"></span>' . __( 'Demo Article', 'echo-knowledge-base' ) . ' </span></a>';
+
+		//Condition To set Demo for admin wizards
+		if ( isset($_POST['epkb-wizard-demo-data']) ) {
+		   self::prev_next_navigation_html ($styles, $demo_prev_link, $demo_next_link );
+		   return;
+		}
+
+		//get last category id
+		$breadcrumb_tree = EPKB_Templates_Various::get_article_breadcrumb( $kb_config, $post_id );
+		if ( empty($breadcrumb_tree) ) {
+		  return;
+		}
+
+		end($breadcrumb_tree);
+		$category_id = key($breadcrumb_tree);
+		if ( empty($category_id) ) {
+			return;
+		}
+
+		/* Fetch all article Ids in sequence */
+
+		// category and article sequence
+		$category_seq_data = EPKB_Utilities::get_kb_option( $kb_id, EPKB_Categories_Admin::KB_CATEGORIES_SEQ_META, array(), true );
+		$articles_seq_data = EPKB_Utilities::get_kb_option( $kb_id, EPKB_Articles_Admin::KB_ARTICLES_SEQ_META, array(), true );
+		if ( empty($category_seq_data) or empty($articles_seq_data) ) {
+			return;
+		}
+
+		// for WPML filter categories and articles given active language
+		if ( EPKB_Utilities::is_wpml_enabled( $kb_config ) && ! isset($_POST['epkb-wizard-demo-data']) ) {
+		    $category_seq_data = EPKB_WPML::apply_category_language_filter( $category_seq_data );
+		    $articles_seq_data = EPKB_WPML::apply_article_language_filter( $articles_seq_data );
+		}
+
+		// retrieve articles belonging to given (sub) category if any
+		$category_article_ids = array();
+		if ( ! empty($articles_seq_data[$category_id]) ) {
+		   foreach( $articles_seq_data[$category_id] as $key => $value ) {
+		       if ( $key > 1 ) {
+		           $category_article_ids[] = $key;
+		       }
+		   }
+		}
+
+		/* Fetch all article Ids in sequence End*/
+		$current_post_key = array_search($post_id, $category_article_ids);
+		if ( $current_post_key === false ) {
+		  return;
+		}
+
+		$prev_post_id = ! empty($category_article_ids[$current_post_key-1]) ? $category_article_ids[$current_post_key-1] : 0;
+		$next_post_id = ! empty($category_article_ids[$current_post_key+1]) ? $category_article_ids[$current_post_key+1] : 0;
+
+		/*** Code to get sequence no **/
+		$category_seq_array = self::epkb_get_array_keys_multiarray( $category_seq_data, $kb_config );
+
+		$repeat_cat_id = array(); // Array of articles id with seq_no
+		if ( ! empty($category_seq_array) ) {
+		   $repeat_id = array();
+
+		   foreach( $category_seq_array as $cat_seq_id ) {
+
+		       if ( ! empty($articles_seq_data[$cat_seq_id]) ) {
+		           foreach( $articles_seq_data[$cat_seq_id] as $key => $value ) {
+		               if ( $key > 1 ) {
+		                   $repeat_id[$key] = isset($repeat_id[$key]) ? $repeat_id[$key] + 1 : 1;
+		                   $repeat_cat_id[$key][$cat_seq_id] = $repeat_id[$key];
+		               }
+		           }
+		       }
+		   }
+		}
+		/*** Code to get sequence no END **/
+
+		// output the PREV/NEXT buttons
+
+		$prev_link = '';
+		if ( ! empty($prev_post_id) ) {
+
+		   $prev_seq_no = isset( $repeat_cat_id[$prev_post_id][$category_id] ) ? $repeat_cat_id[$prev_post_id][$category_id] : 1;
+		   $prev_link = get_permalink( $prev_post_id );
+		   $prev_link = empty($prev_seq_no) || $prev_seq_no < 2 ? $prev_link : add_query_arg( 'seq_no', $prev_seq_no, $prev_link );
+
+		   // linked articles have their own icon
+		   $article_title_icon = 'ep_font_icon_document';
+		   if ( has_filter('eckb_article_icon_filter' ) ) {
+		        $article_title_icon = apply_filters( 'eckb_article_icon_filter', $article_title_icon, $prev_post_id );
+		        $article_title_icon = empty( $article_title_icon ) ? 'ep_font_icon_document' : $article_title_icon;
+		   }
+
+		   $new_tab = '';
+			if ( has_filter('eckb_link_newtab_filter' ) ) {
+				$new_tab = apply_filters( 'eckb_link_newtab_filter', $prev_post_id );
+				$new_tab = esc_attr( $new_tab );
+			}
+
+		   	$prev_link =
+				'<a href="' . esc_url( $prev_link ) . '" ' . $new_tab . '>
+					<span class="epkb-article-navigation__label">' . $prev_navigation_text . '</span>
+					<span title="' . get_the_title( $prev_post_id ) . '" class="epkb-article-navigation-article__title">
+						<span class="epkb-article-navigation__previous__icon epkbfa ' . $article_title_icon . '"></span>
+						' . get_the_title( $prev_post_id ) . '
+					</span>
+				</a>';
+		}
+
+		$next_link = '';
+		if ( ! empty($next_post_id) ) {
+
+		   $next_seq_no = isset( $repeat_cat_id[$next_post_id][$category_id] ) ? $repeat_cat_id[$next_post_id][$category_id] : 1;
+		   $next_link = get_permalink( $next_post_id );
+		   $next_link = empty($next_seq_no) || $next_seq_no < 2 ? $next_link : add_query_arg( 'seq_no', $next_seq_no, $next_link );
+
+		   // linked articles have their own icon
+		   $article_title_icon = 'ep_font_icon_document';
+		   if ( has_filter('eckb_article_icon_filter' ) ) {
+		       $article_title_icon = apply_filters( 'eckb_article_icon_filter', $article_title_icon, $next_post_id );
+		       $article_title_icon = empty( $article_title_icon ) ? 'ep_font_icon_document' : $article_title_icon;
+		   }
+
+			$new_tab = '';
+			if ( has_filter('eckb_link_newtab_filter' ) ) {
+				$new_tab = apply_filters( 'eckb_link_newtab_filter', $next_post_id );
+            $new_tab = esc_attr( $new_tab );
+         }
+
+		   $next_link =
+			   '<a href="' . esc_url( $next_link ) . '" ' . $new_tab . '>
+					<span class="epkb-article-navigation__label">' . $next_navigation_text . '</span>
+					<span title="' . get_the_title( $next_post_id ) . '" class="epkb-article-navigation-article__title">
+						' . get_the_title( $next_post_id ) . '
+						<span class="epkb-article-navigation__next__icon epkbfa ' . $article_title_icon . '"></span>
+					</span>
+				</a>
+					
+			';
+		}
+
+		$prev_link = empty( $_POST['epkb-wizard-demo-data'] ) ? $prev_link : $demo_prev_link;
+		$next_link = empty( $_POST['epkb-wizard-demo-data'] ) ? $next_link : $demo_next_link;
+
+		self::prev_next_navigation_html( $styles, $prev_link, $next_link );
+	}
+
+   /**
+    * Output PREV/NEXT buttons html
+    * @param $styles
+    * @param $prev_link
+    * @param $next_link
+    */
+   private static function prev_next_navigation_html( $styles, $prev_link, $next_link ) {  ?>
+
+		<style id="epkb-article-navigation-styles" type="text/css"><?php echo $styles; ?></style>	   <?php
+		
+		$next_link_on_right = '';
+		// If no Previous link available assign class to move Next link to far right.
+		if ( empty($prev_link) ) {
+		   $next_link_on_right = 'epkb-article-navigation--next-link-right';
+		}	   ?>
+
+		<div class="epkb-article-navigation-container <?php echo $next_link_on_right; ?>">            <?php
+
+		if ( ! empty($prev_link) ) {  ?>
+		   <div class="epkb-article-navigation__previous">
+		       <?php echo $prev_link; ?>
+		   </div>                <?php
+		}
+
+		   if ( ! empty($next_link) ) {                ?>
+		       <div class="epkb-article-navigation__next">
+		           <?php echo $next_link; ?>
+		       </div> <?php
+		   }  ?>
+
+		</div>        <?php
+   }
+
 	// SEARCH BOX
 	public static function search_box( $args ) {
-		if ( self::is_article_structure_v2( $args['config'] ) && $args['config']['kb_main_page_layout'] != 'Categories' ) {
-			do_action( 'eckb-article-v2-search-box', $args );
+		if ( self::is_article_structure_v2( $args['config'] ) ) {
+			do_action( 'eckb-article-v2-search-box', $args );  // Elegant Layouts hook
 		}	
 	}
 
@@ -289,10 +530,10 @@ class EPKB_Articles_Setup {
 
 	/**
 	 * Display a message in the Widget Container, Indicating that there are no Widgets assigned to this element.
+	 * @param $widget_id
 	 */
-	public static function wizard_widget_demo_data() {
-
-		if ( ! empty( $_POST['epkb-wizard-demo-data'] ) && ! is_active_sidebar( 'eckb_articles_sidebar' ) ) { ?>
+	private static function wizard_widget_demo_data( $widget_id ) {
+		if ( ! empty( $_POST['epkb-wizard-demo-data'] ) && ! is_active_sidebar( $widget_id ) ) { ?>
 			<div class="eckb-no-widget">
 				<?php _e( 'No widgets', 'echo-widgets' ); ?><br>
 				<a href="<?php echo admin_url( 'widgets.php' ); ?>"><?php _e( 'Add your widgets here', 'echo-widgets' ); ?></a>
@@ -305,7 +546,8 @@ class EPKB_Articles_Setup {
 	 * @param $args
 	 */
 	public static function display_article_sidebar( $args ) {
- 
+
+		$widget_id = $args['config']['id'] == 1 ? 'eckb_articles_sidebar' : 'eckb_articles_sidebar_' . $args['config']['id'];
 		if ( $args['config']['templates_for_kb_widget_sidebar_defaults'] == 'on' ) {
 			$article_widget_sidebar_default_styles = 'eckb-article-widget-sidebar--default-styles';
 		} else {
@@ -314,8 +556,8 @@ class EPKB_Articles_Setup {
 
 		<div id="eckb-article-widget-sidebar-container" class="<?php echo $article_widget_sidebar_default_styles;?>">
 			<div class="eckb-article-widget-sidebar-body">				<?php
-				self:self::wizard_widget_demo_data();
-				dynamic_sidebar( 'eckb_articles_sidebar' );				?>
+				self::wizard_widget_demo_data( $widget_id );
+				dynamic_sidebar( $widget_id );				?>
 			</div>
 		</div>    <?php
 	}
@@ -593,7 +835,7 @@ class EPKB_Articles_Setup {
 		return
 	    EPKB_Utilities::is_elegant_layouts_enabled() &&
 	    ( $kb_config['kb_main_page_layout'] == EPKB_KB_Config_Layouts::SIDEBAR_LAYOUT                                                                       // Sidebar Layout on Main Page needs the sidebar all the time
-	      || ( $kb_config['kb_main_page_layout'] != EPKB_KB_Config_Layout_Categories::LAYOUT_NAME  && $sidebar_priority['elay_sidebar_left'] )              // Sidebar Layout for Basic/Tabs/Grid
+	      || ( $sidebar_priority['elay_sidebar_left'] )              // Sidebar Layout for Basic/Tabs/Grid
 	      || ( ! $sidebar_priority['elay_sidebar_left'] && ( ! empty($_REQUEST['action']) && $_REQUEST['action'] == 'epkb_wizard_update_order_view' ) ) );     // Ordering Wizard needs Sidebar
     }
 

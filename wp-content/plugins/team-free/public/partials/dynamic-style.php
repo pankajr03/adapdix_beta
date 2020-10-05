@@ -137,5 +137,5 @@ foreach ( $css as $style => $style_array ) {
 	}
 	$final_css .= '}';
 }
-// content the style as mobile images are not working correctly -->
-//echo '<style>' . $final_css . '</style>';?>
+
+echo '<style>' . $final_css . '</style>';

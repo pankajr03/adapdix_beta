@@ -117,7 +117,7 @@
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td >
-							<h4><a style="text-decoration: underline;" href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock Team Section In Pro Version</a></h4>
+							<h4><a style="text-decoration: underline;" href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Unlock Team Section In Pro Version</a></h4>
 						</td>
 					</tr>	
 				</table>

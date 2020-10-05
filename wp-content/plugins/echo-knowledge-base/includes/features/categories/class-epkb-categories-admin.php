@@ -88,6 +88,10 @@ class EPKB_Categories_Admin {
 			EPKB_Utilities::save_kb_option( $kb_id, EPKB_Articles_Admin::KB_ARTICLES_SEQ_META, $stored_article_ids, true );
 		}
 
+		//sync article seq 
+		$article_sequence = new EPKB_Articles_Admin();
+		$article_sequence->update_articles_sequence( $kb_id );
+
 		return true;
 	}
 

@@ -44,11 +44,11 @@ class Pgafu_Script {
 	 */
 	function pgafu_plugin_script() {		
 		
-		// Registring tooltip js
-		if( !wp_script_is( 'wpos-filterizr-js', 'registered' ) ) {
-			wp_register_script( 'wpos-filterizr-js', PGAFU_URL.'assets/js/filterizr.js', array('jquery'), PGAFU_VERSION, true );
+		// Registring isotope js
+		if( ! wp_script_is( 'wpos-isotope-js', 'registered' ) ) {
+			wp_register_script( 'wpos-isotope-js', PGAFU_URL.'assets/js/isotope.pkgd.min.js', array('jquery', 'imagesloaded'), PGAFU_VERSION, true );
 		}
-		
+				
 		// Registring public js
 		wp_register_script( 'pgafu-public-js', PGAFU_URL.'assets/js/pgafu-public.js', array('jquery'), PGAFU_VERSION, true );	
 		

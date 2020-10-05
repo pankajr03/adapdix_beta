@@ -18,6 +18,15 @@ class PGAFU_Admin {
 	function __construct() {
 		// Action to register admin menu
 		add_action( 'admin_menu', array($this, 'pgafu_register_menu'), 12 );
+
+		// Admin Init Processes
+		add_action( 'admin_init', array($this, 'pgafu_admin_init_process') );
+
+		// Filter to add row action in category table
+		add_filter( PGAFU_CAT.'_row_actions', array($this, 'pgafu_add_tax_row_data'), 10, 2 );
+
+		// Filter to add plugin links
+		add_filter( 'plugin_row_meta', array( $this, 'pgafu_plugin_row_meta' ), 10, 2 );
 	}
 
 	
@@ -34,7 +43,6 @@ class PGAFU_Admin {
 		
 		// Register plugin hire us page
 		add_submenu_page( 'pgafu-about', __('Hire Us', 'post-grid-and-filter-ultimate'), '<span style="color:#2ECC71">'.__('Hire Us', 'post-grid-and-filter-ultimate').'</span>', 'manage_options', 'pgafu-hireus', array($this, 'pgafu_hireus_page') );
-		
 	}
 
 	/**
@@ -57,7 +65,49 @@ class PGAFU_Admin {
 		include_once( PGAFU_DIR . '/includes/admin/settings/hire-us.php' );
 	}
 
-	
+	/**
+	 * Admin prior processes
+	 * 
+	 * @package Post grid and filter ultimate
+	 * @since 1.1
+	 */
+	function pgafu_admin_init_process() {
+
+		// If plugin notice is dismissed
+		if( isset($_GET['message']) && $_GET['message'] == 'pgafu-plugin-notice' ) {
+			set_transient( 'pgafu_install_notice', true, 604800 );
+		}
+	}
+
+	/**
+	 * Function to add category row action
+	 * 
+	 * @package Post grid and filter ultimate
+	 * @since 1.1
+	 */
+	function pgafu_add_tax_row_data( $actions, $tag ) {
+		return array_merge( array( 'wpos_id' => "ID: {$tag->term_id}" ), $actions );
+	}
+
+	/**
+	 * Function to unique number value
+	 * 
+	 * @package Post grid and filter ultimate
+	 * @since 1.0.0
+	 */
+	function pgafu_plugin_row_meta( $links, $file ) {
+
+		if ( $file == PGAFU_PLUGIN_BASENAME ) {
+
+			$row_meta = array(
+				'docs'    => '<a href="' . esc_url('https://docs.wponlinesupport.com/post-grid-and-filter-ultimate/?utm_source=post_grid_filter&utm_medium=plugin_list&utm_campaign=plugin_quick_link') . '" title="' . esc_attr( __( 'View Documentation', 'post-grid-and-filter-ultimate' ) ) . '" target="_blank">' . __( 'Docs', 'post-grid-and-filter-ultimate' ) . '</a>',
+				'support' => '<a href="' . esc_url('https://www.wponlinesupport.com/wordpress-support/?utm_source=post_grid_filter&utm_medium=plugin_list&utm_campaign=plugin_quick_link') . '" title="' . esc_attr( __( 'Premium Support - For any Customization', 'post-grid-and-filter-ultimate' ) ) . '" target="_blank">' . __( 'Premium Support', 'post-grid-and-filter-ultimate' ) . '</a>',
+			);
+			return array_merge( $links, $row_meta );
+		}
+		return (array) $links;
+	}
+
 }
 
 $pgafu_admin = new PGAFU_Admin();

@@ -119,7 +119,7 @@ $breadcrumb_style2 = EPKB_Utilities::get_inline_style( 'color:: breadcrumb_text_
             if ( empty($link) ) {
                 echo '<span ' . $breadcrumb_style2 . ' >' . esc_html( $text ) . '</span>';
             } else {
-                echo '<a href="' . esc_url($link) . '"><span ' . $breadcrumb_style2 . ' >' . esc_html( $text ) . '</span></a>';
+                echo '<a tabindex="0" href="' . esc_url($link) . '"><span ' . $breadcrumb_style2 . ' >' . esc_html( $text ) . '</span></a>';
             }
             echo '<span class="eckb-breadcrumb-link-icon ' . esc_html($kb_config['breadcrumb_icon_separator']) . '"></span>';
         } else {

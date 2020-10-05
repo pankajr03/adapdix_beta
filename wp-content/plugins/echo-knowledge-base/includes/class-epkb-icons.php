@@ -8,8 +8,8 @@
 class EPKB_Icons {
 
 	const CATEGORIES_ICONS = 'epkb_categories_icons_images';
-	const DEFAULT_CATEGORY_ICON_NAME = 'ep_font_icon_document';
-	const DEFAULT_CATEGORY_TYPE = 'font';
+	const DEFAULT_CATEGORY_ICON_NAME = 'ep_font_icon_folder';
+	const DEFAULT_CATEGORY_TYPE = 'font';   // OR 'image'
 	const DEFAULT_CATEGORY_IMAGE_SIZE = 'full';
 	const DEFAULT_CATEGORY_IMAGE_ID = 0;
 	const DEFAULT_IMAGE_SLUG = 'img/features-wizard/demo-icons/info-icon.png';

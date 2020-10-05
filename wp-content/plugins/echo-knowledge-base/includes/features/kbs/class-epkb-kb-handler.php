@@ -9,7 +9,8 @@ class EPKB_KB_Handler {
 
 	// name of KB shortcode
 	const KB_MAIN_PAGE_SHORTCODE_NAME = 'epkb-knowledge-base'; // changing this requires db update
-
+	const KB_BLOCK_NAME = 'echo-document-blocks/knowledge-base';
+	
 	// Prefix for custom post type name associated with given KB; this will never change
 	const KB_POST_TYPE_PREFIX = 'epkb_post_type_';  // changing this requires db update
 	const KB_CATEGORY_TAXONOMY_SUFFIX = '_category';  // changing this requires db update; do not translate
@@ -46,6 +47,7 @@ class EPKB_KB_Handler {
 		$update_kb_config = true;
 
 		// use default KB configuration ONLY if none exists
+		EPKB_Logging::disable_logging();
 		$kb_config = epkb_get_instance()->kb_config_obj->get_kb_config( $new_kb_id );
 		if ( is_wp_error( $kb_config ) || ! is_array($kb_config) ) {
 			$kb_config = EPKB_KB_Config_Specs::get_default_kb_config( $new_kb_id );
@@ -54,13 +56,15 @@ class EPKB_KB_Handler {
 			$kb_config['article_toc_enable'] = 'on';
 			$kb_config['show_articles_before_categories'] = 'on';
 			$kb_config['article-structure-version'] = 'version-2';
+            $kb_config['prev_next_navigation_enable'] = 'on';
 		} else if ( $kb_config['status'] == EPKB_KB_Status::BLANK ) {
 			$kb_config['status'] = EPKB_KB_Status::PUBLISHED;
 			$update_kb_config = true;
 		} else {
 			$update_kb_config = false;
 		}
-
+		EPKB_Logging::enable_logging();
+		
 		// 1. register custom post type for this knowledge base
 		$error = EPKB_Articles_CPT_Setup::register_custom_post_type( $kb_config, $new_kb_id );
 		if ( is_wp_error( $error ) ) {
@@ -101,7 +105,7 @@ class EPKB_KB_Handler {
 				$kb_config['kb_name'] = $post->post_title;
 				$kb_main_pages[ $post_id ] = $post->post_title;
 				$kb_config['kb_main_pages'] = $kb_main_pages;
-				$kb_config['kb_articles_common_path'] = $post->post_name;
+				$kb_config['kb_articles_common_path'] = urldecode(sanitize_title_with_dashes( $post->post_name, '', 'save' ));
 				$kb_config['categories_display_sequence'] = 'user-sequenced';
 				$update_kb_config = true;
 			}
@@ -126,27 +130,27 @@ class EPKB_KB_Handler {
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/access-manager/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=access-manager' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 
 			<h2>". __( 'Elegant Layouts', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Elegant Layouts adds Grid and Sidebar Layouts. Use Grid Layout or Sidebar Layout for KB Main page or combine Basic, Tabs, Grid and Sidebar layouts in a variety ways. Learn More.', 'echo-knowledge-base' ) . "
+			<p>". __( 'Elegant Layouts adds Grid and Sidebar Layouts. Use Grid Layout or Sidebar Layout for KB Main page or combine Basic, Tabs, Grid and Sidebar layouts in a variety ways. ', 'echo-knowledge-base' ) . "
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/elegant-layouts/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=elegant-layouts' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 			
 			<h2>". __( 'Multiple Knowledge Bases', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Create Multiple Knowledge Bases, one for each product, service, topic or department. Each Knowledgebase has separate articles, URLs, KB Main Page and admin screens. Learn More.', 'echo-knowledge-base' ) . "
+			<p>". __( 'Create Multiple Knowledge Bases, one for each product, service, topic or department. Each Knowledgebase has separate articles, URLs, KB Main Page and admin screens. ', 'echo-knowledge-base' ) . "
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/multiple-knowledge-bases/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=multiple-kbs' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 			
 			<h2>". __( 'Advanced Search', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Enhance users search experience and view search analytics including popular searches and no results searches. Learn More.', 'echo-knowledge-base' ) . "
+			<p>". __( 'Enhance users search experience and view search analytics including popular searches and no results searches. ', 'echo-knowledge-base' ) . "
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/advanced-search/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=advanced-search' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 			
 			<h2>". __( 'Article Rating and Feedback', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Let your readers rate the quality of your articles and submit insightful feedback. Utilize analytics on most and least rated articles. Learn More.', 'echo-knowledge-base' ) . "
-			<a href='https://www.echoknowledgebase.com/wordpress-plugin/article-rating-and-feedback/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=article-rating' target='_blank'>Learn More</a></p>
+			<p>". __( 'Let your readers rate the quality of your articles and submit insightful feedback. Utilize analytics on most and least rated articles. ', 'echo-knowledge-base' ) . "
+			<a href='https://www.echoknowledgebase.com/wordpress-plugin/article-rating-and-feedback/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=article-rating' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 			
 			<h2>". __( 'Widgets', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Add Knowledgebase Search, Most Recent Articles and other Widgets and Shortcodes to your articles, sidebars and pages. Learn More.', 'echo-knowledge-base' ) . "
+			<p>". __( 'Add Knowledgebase Search, Most Recent Articles and other Widgets and Shortcodes to your articles, sidebars and pages. ', 'echo-knowledge-base' ) . "
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/widgets/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=widgets' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>
 			
 			<h2>". __( 'Links Editor for PDFs and More', 'echo-knowledge-base' ) . "</h2>
-			<p>". __( 'Set Articles to links to PDFs, pages, posts and websites. On KB Main Page, choose icons for your articles. Learn More.', 'echo-knowledge-base' ) . "
+			<p>". __( 'Set Articles to links to PDFs, pages, posts and websites. On KB Main Page, choose icons for your articles. ', 'echo-knowledge-base' ) . "
 			<a href='https://www.echoknowledgebase.com/wordpress-plugin/links-editor-for-pdfs-and-more/?utm_source=plugin&utm_medium=addons&utm_content=home&utm_campaign=links-editor' target='_blank'>". __( 'Learn More', 'echo-knowledge-base' ) . "</a></p>";
 
 		$demo_category_parent_id = null;
@@ -490,7 +494,7 @@ class EPKB_KB_Handler {
 			$db_kb_config = new EPKB_KB_Config_DB();
 			$kb_ids = $db_kb_config->get_kb_ids();
 			if ( ! in_array( $kb_id, $kb_ids ) ) {
-				EPKB_Logging::add_log("Found current KB ID to be unknown", $kb_id);
+				//EPKB_Logging::add_log("Found current KB ID to be unknown", $kb_id);
 				return '';
 			}
 		}
@@ -765,6 +769,26 @@ class EPKB_KB_Handler {
 
 		// determine whether this page contains this plugin shortcode
 		$content = '';
+		
+		// search GT for KB Main Page block
+		if ( function_exists( 'parse_blocks' ) ) { // added  in wp 5.0
+			
+			$blocks = parse_blocks( $apost->post_content );
+			
+			if ( is_array($blocks) && count($blocks) ) {
+				foreach ( $blocks as $block ) {
+					if ( $block['blockName'] == self::KB_BLOCK_NAME ) {
+						if ( ! empty( $block['attrs']['kb_id'] ) ) {
+							return $block['attrs']['kb_id'];
+						} else {
+							return EPKB_KB_Config_DB::DEFAULT_KB_ID;
+						}
+					}
+				}
+			}
+		}
+
+		// find shortcode in post content or meta data
 		if ( has_shortcode( $apost->post_content, self::KB_MAIN_PAGE_SHORTCODE_NAME ) ) {
 			$content = $apost->post_content;
 		} else if ( isset($apost->ID) ) {

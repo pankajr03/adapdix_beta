@@ -13,95 +13,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
 add_action('admin_menu', 'pgafu_register_design_page');
 
 /**
-	 * Builds select drop down for form field: tax_term
-	 *
-	 * Note: prior to WP4.5 get_terms() accepted the taxonomy as a separate argument.  As of 4.5
-	 * get_terms() accepts one array of arguments with the taxonomy arg passed as an array value.
-	 * We're calling get_terms() using the older format for sites with older versions of WP.
-	 *
-	 * @uses WordPress get_terms()
-	 *
-	 * @access public
-	 *
-	 * @since 1.0
-	 *
-	 * @param string $taxonomy The registered name of the taxonomy. e.g., post_tag
-	 * #param string $label    The common name of the taxonomy. e.g., Post Tag
-	 * @param array  $instance Current settings.
-	 * @param object $widget   Widget object.
-	 */
-	function build_term_select( $taxonomy, $label, $instance, $widget )
-	{
-		$args = apply_filters( 'acatw_build_term_select_args', array( 'hide_empty' => 0, 'number' => 99 ) );
-		$args['fields'] = 'all'; // don't allow override
-		$args['taxonomy'] = $taxonomy; // don't allow override
-		$_terms = get_terms( $taxonomy, $args );
-
-		if( empty( $_terms ) || is_wp_error( $_terms ) ) {
-			return;
-		}
-		?>
-
-		<?php printf( '<p>%s:</p>', sprintf( __( '%s', 'advanced-categories-widget' ), $label ) ); ?>
-
-		<div class="widgin-multi-check">
-			<?php foreach( $_terms as $_term ) : ?>
-				<?php
-				$checked = (  ! empty( $instance['tax_term'][$_term->taxonomy][$_term->term_id] )) ? 'checked="checked"' : '' ;
-
-				printf( '<input id="%1$s" name="%2$s" value="%3$s" type="checkbox" %4$s/><label for="%1$s">%5$s (%6$s)</label><br />',
-					$widget->get_field_id( 'tax_term-' . $taxonomy . '-' . $_term->term_id ),
-					$widget->get_field_name( 'tax_term' ) . '['.$taxonomy.']['.$_term->term_id.']',
-					$_term->term_id,
-					$checked,
-					sprintf( __( '%s', 'advanced-categories-widget' ), $_term->name ),
-					$_term->count
-				);
-				?>
-			<?php endforeach; ?>
-		</div>
-		<?php
-	}
-
-
-	/**
-	 * Builds form field: tax_term
-	 *
-	 * @access public
-	 *
-	 * @since 1.0
-	 *
-	 * @param array  $instance Current settings.
-	 * @param object $widget   Widget object.
-	 */
- function build_field_tax_term( $instance, $widget )
-	{
-		ob_start();
-		?>
-
-		<?php
-		$taxonomies = Advanced_Categories_Widget_Utils::get_allowed_taxonomies();
-
-		if( count( $taxonomies ) ) :
-			foreach ( $taxonomies as $name => $label ) {
-				build_term_select( $name, $label, $instance, $widget );
-			}
-		endif;
-
-		?>
-
-		<?php
-		$field = ob_get_clean();
-
-		return $field;
-	}
-/**
  * Register plugin design page in admin menu
  * 
- * @package Album and Image Gallery Plus Lightbox
+ * @package Post grid and filter ultimate
  * @since 1.0.0
  */
-
 function pgafu_register_design_page() {
  	add_menu_page( __('Post Grid And Filter', 'post-grid-and-filter-ultimate'), __('Post Grid And Filter', 'post-grid-and-filter-ultimate'), 'manage_options', 'pgafu-about',  'pgafu_designs_page', 'dashicons-sticky', 6 );
 }
@@ -221,153 +137,121 @@ function pgafu_howitwork_page() { ?>
 	
 	<style type="text/css">
 		.wpos-pro-box .hndle{background-color:#0073AA; color:#fff;}
-		.wpos-pro-box .postbox{background:#dbf0fa none repeat scroll 0 0; border:1px solid #0073aa; color:#191e23;}
+		.wpos-pro-box.postbox{background:#dbf0fa none repeat scroll 0 0; border:1px solid #0073aa; color:#191e23;}
 		.postbox-container .wpos-list li:before{font-family: dashicons; content: "\f139"; font-size:20px; color: #0073aa; vertical-align: middle;}
 		.pgafu-wrap .wpos-button-full{display:block; text-align:center; box-shadow:none; border-radius:0;}
 		.pgafu-shortcode-preview{background-color: #e7e7e7; font-weight: bold; padding: 2px 5px; display: inline-block; margin:0 0 2px 0;}
 		.upgrade-to-pro{font-size:18px; text-align:center; margin-bottom:15px;}
 	</style>
 
-	<div class="post-box-container">
-		<div id="poststuff">
-			<div id="post-body" class="metabox-holder columns-2">
-			
-				<!--How it workd HTML -->
-				<div id="post-body-content">
-					<div class="metabox-holder">
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-								
-								
-								<h3 class="hndle">
-									<span><?php _e( 'How It Works - Display and shortcode', 'post-grid-and-filter-ultimate' ); ?></span>
-								</h3>
-								
-								<div class="inside">
-									
-									
-									
-									<!-- h3>
-										<span><?php _e( 'Categories Filter', 'post-grid-and-filter-ultimate' ); ?></span>
-									</h3>
-									
-									<div class="ci-select">
-										<?php 
-										$g_categories = get_categories();
-										$g_cat_id_name = array();
-										foreach ( $g_categories as $k=>$v ) {
-											$g_cat_id_name[$v->term_id] = $v->name;
-										}
-										wp_dropdown_categories( $g_cat_id_name );
+	<div id="poststuff">
+		<div id="post-body" class="metabox-holder columns-2">
 
-										?>
-									</div -->
+			<!--How it workd HTML -->
+			<div id="post-body-content">
+				<div class="meta-box-sortables">
+					<div class="postbox">
 
-									
-									<table class="form-table">
-										<tbody>
-											<tr>
-												<th>
-													<label><?php _e('Geeting Started with Post Slider', 'post-grid-and-filter-ultimate'); ?>:</label>
-												</th>
-												<td>
-													<ul>
-														<li><?php _e('Step-1. This plugin create a tab under "Post grid and filter ultimate – How It Works".', 'post-grid-and-filter-ultimate'); ?></li>
-														<li><?php _e('Step-2. This plugin get all the POST from WordPress post section with a simple shortcode', 'post-grid-and-filter-ultimate'); ?></li>
-													</ul>
-												</td>
-											</tr>
+						<h3 class="hndle">
+							<span><?php _e( 'How It Works - Display and shortcode', 'post-grid-and-filter-ultimate' ); ?></span>
+						</h3>
 
-											<tr>
-												<th>
-													<label><?php _e('How Shortcode Works', 'post-grid-and-filter-ultimate'); ?>:</label>
-												</th>
-												<td>
-													<ul>
-														<li><?php _e('Step-1. Create a page like Latet Post OR add the shortcode in a page.', 'post-grid-and-filter-ultimate'); ?></li>
-														<li><?php _e('Step-2. Put below shortcode as per your need.', 'post-grid-and-filter-ultimate'); ?></li>
-													</ul>
-												</td>
-											</tr>
+						<div class="inside">
+							<table class="form-table">
+								<tbody>
+									<tr>
+										<th>
+											<label><?php _e('Geeting Started with Post Slider', 'post-grid-and-filter-ultimate'); ?>:</label>
+										</th>
+										<td>
+											<ul>
+												<li><?php _e('Step-1. This plugin create a tab under "Post grid and filter ultimate – How It Works".', 'post-grid-and-filter-ultimate'); ?></li>
+												<li><?php _e('Step-2. This plugin display WordPres default standard POST with a simple shortcode.', 'post-grid-and-filter-ultimate'); ?></li>
+											</ul>
+										</td>
+									</tr>
 
-											<tr>
-												<th>
-													<label><?php _e('All Shortcodes', 'post-grid-and-filter-ultimate'); ?>:</label>
-												</th>
-												<td>
-													<span class="pgafu-shortcode-preview">[pgaf_post_grid]</span> – <?php _e('Post Grid Shortcode', 'post-grid-and-filter-ultimate'); ?><br>
-													<span class="pgafu-shortcode-preview">[pgaf_post_filter]</span> – <?php _e('Post grid Shortcode. Where you can use 4 designs', 'post-grid-and-filter-ultimate'); ?>
-												</td>
-											</tr>						
-												
-											<tr>
-												<th>
-													<label><?php _e('Need Support?', 'post-grid-and-filter-ultimate'); ?></label>
-												</th>
-												<td>
-													<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'post-grid-and-filter-ultimate'); ?></p> <br/>
-													<a class="button button-primary" href="https://www.wponlinesupport.com/plugins-documentation/post-grid-and-filter-ultimate/?utm_source=hp&event=doc" target="_blank"><?php _e('Documentation', 'post-grid-and-filter-ultimate'); ?></a>									
-													<a class="button button-primary" href="https://demo.wponlinesupport.com/post-grid-and-filter-ultimate-demo/?utm_source=hp&event=demo" target="_blank"><?php _e('Demo for Designs', 'post-grid-and-filter-ultimate'); ?></a>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div><!-- .inside -->
-							</div><!-- #general -->
-						</div><!-- .meta-box-sortables ui-sortable -->
-					</div><!-- .metabox-holder -->
-				</div><!-- #post-body-content -->
-				
-				<!--Upgrad to Pro HTML -->
-				<div id="postbox-container-1" class="postbox-container">
-					<div class="metabox-holder wpos-pro-box">
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-								<h3 class="hndle">
-									<span><?php _e( 'Upgrate to Pro', 'timeline-and-history-slider' ); ?></span>
-								</h3>
-								<div class="inside">										
-									<ul class="wpos-list">
-										<li>10 Designs for Post Grid, 10 Designs for Post Grid Filter.</li>
-										<li>2 - (Post Grid Shortcode, Post Filter Shortcode).</li>
-										<li>35+ Shortcode Parameters.</li>
-										<li>WP Templating Features.</li>
-										<li>Shortcode Generator.</li>
-										<li>Drag & Drop Post Order Change.</li>
-										<li>Gutenberg Block Supports.</li>
-										<li>Visual Composer/WPBakery Page Builder Supports.</li>
-										<li>Custom Read More link for Post.</li>
-										<li>Display Desired Post.</li>
-										<li>Exclude Some Posts.</li>
-										<li>Exclude Some Categories.</li>
-										<li>Post Order / Order By Parameters </li>s										
-										<li>Fully responsive</li>
-										<li>100% Multi language</li>
-									</ul>
-									<div class="upgrade-to-pro">Gain access to <strong>Post grid and filter ultimate</strong> included in <br /><strong>Essential Plugin Bundle</div>
-									<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/post-grid-filter-ultimate/?ref=WposPratik&utm_source=WP&utm_medium=WP-Plugins&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium ', 'timeline-and-history-slider'); ?></a>	
-									<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/post-grid-and-filter-with-popup-pro-demo/" target="_blank"><?php _e('View PRO Demo ', 'timeline-and-history-slider'); ?></a>			</p>								
-								</div><!-- .inside -->
-							</div><!-- #general -->
-						</div><!-- .meta-box-sortables ui-sortable -->
-					</div><!-- .metabox-holder -->
+									<tr>
+										<th>
+											<label><?php _e('How Shortcode Works', 'post-grid-and-filter-ultimate'); ?>:</label>
+										</th>
+										<td>
+											<ul>
+												<li><?php _e('Step-1. Create a page like Latest Post OR add the shortcode in a page.', 'post-grid-and-filter-ultimate'); ?></li>
+												<li><?php _e('Step-2. Put below shortcode as per your need.', 'post-grid-and-filter-ultimate'); ?></li>
+											</ul>
+										</td>
+									</tr>
 
-					<!-- Help to improve this plugin! -->
-					<div class="metabox-holder">
-						<div class="meta-box-sortables ui-sortable">
-							<div class="postbox">
-									<h3 class="hndle">
-										<span><?php _e( 'Help to improve this plugin!', 'post-grid-and-filter-ultimate' ); ?></span>
-									</h3>									
-									<div class="inside">										
-										<p>Enjoyed this plugin? You can help by rate this plugin <a href="https://wordpress.org/support/plugin/post-grid-and-filter-ultimate/reviews/?filter=5" target="_blank">5 stars!</a></p>
-									</div><!-- .inside -->
-							</div><!-- #general -->
-						</div><!-- .meta-box-sortables ui-sortable -->
-					</div><!-- .metabox-holder -->
-				</div><!-- #post-container-1 -->
+									<tr>
+										<th>
+											<label><?php _e('All Shortcodes', 'post-grid-and-filter-ultimate'); ?>:</label>
+										</th>
+										<td>
+											<span class="pgafu-shortcode-preview">[pgaf_post_grid]</span> – <?php _e('Post Grid Shortcode.', 'post-grid-and-filter-ultimate'); ?><br>
+											<span class="pgafu-shortcode-preview">[pgaf_post_filter]</span> – <?php _e('Post Filter Shortcode, which provide you to use 4 designs.', 'post-grid-and-filter-ultimate'); ?>
+										</td>
+									</tr>
 
-			</div><!-- #post-body -->
-		</div><!-- #poststuff -->
-	</div><!-- #post-box-container -->
+									<tr>
+										<th>
+											<label><?php _e('Need Support?', 'post-grid-and-filter-ultimate'); ?></label>
+										</th>
+										<td>
+											<p><?php _e('Check plugin document for shortcode parameters and demo for designs.', 'post-grid-and-filter-ultimate'); ?></p> <br/>
+											<a class="button button-primary" href="https://docs.wponlinesupport.com/post-grid-and-filter-ultimate/?utm_source=WP&event=doc" target="_blank"><?php _e('Documentation', 'post-grid-and-filter-ultimate'); ?></a>
+											<a class="button button-primary" href="https://demo.wponlinesupport.com/post-grid-and-filter-ultimate-demo/?utm_source=WP&event=demo" target="_blank"><?php _e('Demo for Designs', 'post-grid-and-filter-ultimate'); ?></a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div><!-- .inside -->
+					</div><!-- #general -->
+				</div><!-- .meta-box-sortables -->
+			</div><!-- #post-body-content -->
+
+			<!--Upgrad to Pro HTML -->
+			<div id="postbox-container-1" class="postbox-container">
+				<div class="meta-box-sortables">
+					<div class="postbox wpos-pro-box">
+						<h3 class="hndle">
+							<span><?php _e( 'Upgrate to Pro', 'post-grid-and-filter-ultimate' ); ?></span>
+						</h3>
+						<div class="inside">
+							<ul class="wpos-list">
+								<li><?php _e('10 Designs for Post Grid, 10 Designs for Post Grid Filter.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('2 - (Post Grid Shortcode, Post Filter Shortcode)', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('35+ Shortcode Parameters', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('WP Templating Features', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Shortcode Generator', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Drag & Drop Post Order Change.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Gutenberg Block Supports.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Visual Composer/WPBakery Page Builder Supports.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Custom Read More link for Post.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Display Desired Post.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Exclude Some Posts.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Exclude Some Categories.', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Post Order / Order By Parameters', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('Fully responsive', 'post-grid-and-filter-ultimate'); ?></li>
+								<li><?php _e('100% Multi language', 'post-grid-and-filter-ultimate'); ?></li>
+							</ul>
+							<div class="upgrade-to-pro"><?php sprintf('Gain access to <strong>Post grid and filter ultimate</strong> included in <br /><strong>Essential Plugin Bundle', 'post-grid-and-filter-ultimate'); ?></div>
+							<a class="button button-primary wpos-button-full" href="https://www.wponlinesupport.com/wp-plugin/post-grid-filter-ultimate/?ref=WposPratik&utm_source=WP&utm_medium=Post-Grid-and-Filter&utm_campaign=Upgrade-PRO" target="_blank"><?php _e('Go Premium', 'post-grid-and-filter-ultimate'); ?></a>
+							<p><a class="button button-primary wpos-button-full" href="https://demo.wponlinesupport.com/prodemo/post-grid-and-filter-with-popup-pro-demo/" target="_blank"><?php _e('View PRO Demo', 'post-grid-and-filter-ultimate'); ?></a></p>
+						</div><!-- .inside -->
+					</div><!-- #general -->
+
+					<div class="postbox">
+						<h3 class="hndle">
+							<span><?php _e( 'Help to improve this plugin!', 'post-grid-and-filter-ultimate' ); ?></span>
+						</h3>
+						<div class="inside">
+							<p><?php _e('Enjoyed this plugin? You can help by rate this plugin ', 'post-grid-and-filter-ultimate'); ?><a href="https://wordpress.org/support/plugin/post-grid-and-filter-ultimate/reviews/?filter=5#new-post" target="_blank"><?php _e('5 stars!', 'post-grid-and-filter-ultimate'); ?></a></p>
+						</div><!-- .inside -->
+					</div><!-- #general -->
+				</div><!-- .meta-box-sortables -->
+			</div><!-- #post-container-1 -->
+
+		</div><!-- #post-body -->
+	</div><!-- #poststuff -->
 <?php }

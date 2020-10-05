@@ -37,17 +37,15 @@ class EPKB_Categories_DB {
 
 		return array_values($terms);   // rearrange array keys
 	} */
-	
+
 	/**
 	 * Get all top-level categories
 	 *
 	 * @param $kb_id
-	 * @param string $hide_choice - if 'hide_empty' then do not return empty categories
-	 *
+	 * @param bool $hide_empty
 	 * @return array or empty array on error
-	 *
 	 */
-	static function get_top_level_categories( $kb_id, $hide_choice='hide_empty' ) {
+	static function get_top_level_categories( $kb_id, $hide_empty=false ) {
 
 		if ( ! EPKB_Utilities::is_positive_int( $kb_id ) ) {
 			EPKB_Logging::add_log( 'Invalid kb id', $kb_id );
@@ -56,7 +54,7 @@ class EPKB_Categories_DB {
 
 		$args = array(
 				'parent'        => '0',
-				'hide_empty'    => $hide_choice === 'hide_empty' // whether to return categories without articles
+				'hide_empty'    => $hide_empty // whether to return categories without articles
 		);
 		// Deprecated arguments from wp 4.5
 		$terms = get_terms( EPKB_KB_Handler::get_category_taxonomy_name( $kb_id ), $args );
@@ -68,6 +66,45 @@ class EPKB_Categories_DB {
 		}
 
 		return array_values($terms);   // rearrange array keys
+	}
+
+	/**
+	 * Get all categories that belong to given parent
+	 *
+	 * @param $kb_id
+	 * @param int $parent_id is parent category we use to find children
+	 * @param bool $hide_empty
+	 * @return array or empty array on error
+	 */
+	static function get_child_categories( $kb_id, $parent_id, $hide_empty=false ) {
+
+		if ( ! EPKB_Utilities::is_positive_int( $kb_id ) ) {
+			EPKB_Logging::add_log( 'Invalid kb id', $kb_id );
+			return array();
+		}
+
+		if ( ! EPKB_Utilities::is_positive_int( $parent_id ) ) {
+			EPKB_Logging::add_log( 'Invalid parent id', $parent_id );
+			return array();
+		}
+
+		$args = array(
+			'child_of'      => $parent_id,
+			'parent'        => $parent_id,
+			'hide_empty'    => $hide_empty
+		);
+		// Deprecated arguments from wp 4.5
+		$terms = get_terms( EPKB_KB_Handler::get_category_taxonomy_name( $kb_id ), $args );
+		if ( is_wp_error( $terms ) ) {
+			EPKB_Logging::add_log( 'failed to get terms for kb_id: ' . $kb_id . ', parent_id: ' . $parent_id, $terms );
+			return array();
+		}
+
+		if ( empty( $terms ) || ! is_array( $terms ) ) {
+			return array();
+		}
+
+		return array_values($terms);
 	}
 
 	/**
@@ -122,7 +159,7 @@ class EPKB_Categories_DB {
 
 		<div class="eckb-article-cat-layout-list eckb-article-cat-layout-list-reset">
 			<div class="eckb-article-cat-layout-list__inner">
-				<div class="eckb-acll__title"><?php _e( 'Categories', 'echo-knowledge-base' ); ?></div>
+				<div class="eckb-acll__title"><?php echo $kb_config['category_focused_menu_heading_text']; ?></div>
 				<ul>						<?php
 
 					// display each category in a list
@@ -165,45 +202,5 @@ class EPKB_Categories_DB {
 		</div>			<?php
 
 		return ob_get_clean();
-	}
-
-	/**
-	 * Get all categories that belong to given parent
-	 *
-	 * @param $kb_id
-	 * @param int $parent_id is parent category we use to find children
-	 * @param string $hide_choice
-	 *
-	 * @return array or empty array on error
-	 */
-	static function get_child_categories( $kb_id, $parent_id, $hide_choice = 'hide_empty' ) {
-
-		if ( ! EPKB_Utilities::is_positive_int( $kb_id ) ) {
-			EPKB_Logging::add_log( 'Invalid kb id', $kb_id );
-			return array();
-		}
-
-		if ( ! EPKB_Utilities::is_positive_int( $parent_id ) ) {
-			EPKB_Logging::add_log( 'Invalid parent id', $parent_id );
-			return array();
-		}
-
-		$args = array(
-				'child_of'      => $parent_id,
-				'parent'        => $parent_id,
-				'hide_empty'    => $hide_choice === 'hide_empty'
-		);
-		// Deprecated arguments from wp 4.5
-		$terms = get_terms( EPKB_KB_Handler::get_category_taxonomy_name( $kb_id ), $args );
-		if ( is_wp_error( $terms ) ) {
-			EPKB_Logging::add_log( 'failed to get terms for kb_id: ' . $kb_id . ', parent_id: ' . $parent_id, $terms );
-			return array();
-		}
-
-		if ( empty( $terms ) || ! is_array( $terms ) ) {
-			return array();
-		}
-
-		return array_values($terms);
 	}
 }

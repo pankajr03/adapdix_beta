@@ -229,7 +229,7 @@ class WP_Team_Premium {
 			</div>
 			<hr>
 			<div class="sp-wpteam-join-community sp-wpteam-text-center">
-				<h2>Join the <b>1000+</b> Happy Users Worldwide!</h2>
+				<h2>Join the <b>2000+</b> Happy Users Worldwide!</h2>
 				<a class="wpteam-upgrade-btn" target="_blank" href="https://shapedplugin.com/plugin/wp-team-pro/">Get Started Now</a>
 				<p>Every purchase comes with <b>7-day</b> money back guarantee and access to our incredibly Top-notch Support with lightening-fast response time and 100% satisfaction rate. One-Time payment, lifetime automatic update.</p>
 			</div>

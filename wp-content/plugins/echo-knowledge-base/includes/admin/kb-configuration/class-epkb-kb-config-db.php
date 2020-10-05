@@ -51,7 +51,7 @@ class EPKB_KB_Config_DB {
 		// retrieve all KB options for existing knowledge bases from WP Options table
 		$kb_options = $wpdb->get_results("SELECT option_value FROM $wpdb->options WHERE option_name LIKE '" . self::KB_CONFIG_PREFIX . "%'", ARRAY_A );
 		if ( empty($kb_options) || ! is_array($kb_options) ) {
-			EPKB_Logging::add_log("Did not retrieve any kb config. Using defaults (22)", $kb_options);
+			EPKB_Logging::add_log("Did not retrieve any kb config. Using defaults (22). Last error: " . $wpdb->last_error, $kb_options);
 			$kb_options = array();
 		}
 
@@ -124,7 +124,7 @@ class EPKB_KB_Config_DB {
 		// retrieve all KB option names for existing knowledge bases from WP Options table
 		$kb_option_names = $wpdb->get_results("SELECT option_name FROM $wpdb->options WHERE option_name LIKE '" . self::KB_CONFIG_PREFIX . "%'", ARRAY_A );
 		if ( empty($kb_option_names) || ! is_array($kb_option_names) ) {
-			EPKB_Logging::add_log("Did not retrieve any kb config. Try to deactivate and active KB plugin to see if the issue will be fixed (11)", $kb_option_names);
+			EPKB_Logging::add_log("Did not retrieve any kb config. Try to deactivate and active KB plugin to see if the issue will be fixed (11). Last error: " . $wpdb->last_error, $kb_option_names);
 			$kb_option_names = array();
 		}
 
@@ -335,7 +335,7 @@ class EPKB_KB_Config_DB {
 	 * @return array|WP_Error if configuration is missing or cannot be serialized
 	 */
 	private function save_kb_config( array $config, $kb_id ) {
-        /** @var $wpdb Wpdb */
+		/** @var $wpdb Wpdb */
 		global $wpdb;
 
 		if ( empty($config) || ! is_array($config) ) {

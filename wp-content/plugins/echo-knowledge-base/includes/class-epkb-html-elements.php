@@ -743,6 +743,48 @@ class EPKB_HTML_Elements {
 	// Other Elements------------------------------------------------------------------------------------------/
 
 	/*
+		HTML Notification box with Title and Body text.
+
+		Copied HTML / CSS from CREL Plugin
+		$values:
+		@param: string $value['id']            ( Optional ) Container ID, used for targeting with other JS
+		@param: string $value['type']          ( Required ) ( error, success, warning, info )
+		@param: string $value['title']         ( Required ) The big Bold Main text
+		@param: HTML   $value['desc']          ( Required ) Any HTML P, List etc...
+		@since version 6.8.0
+	 */
+	public function notification_box_basic( $args = array() ) {
+
+		$icon = '';
+		switch ( $args['type']) {
+			case 'error':   $icon = 'epkbfa-exclamation-triangle';
+			break;
+			case 'success': $icon = 'epkbfa-check-circle';
+			break;
+			case 'warning': $icon = 'epkbfa-exclamation-circle';
+			break;
+			case 'info':    $icon = 'epkbfa-info-circle';
+			break;
+
+		}
+
+		?>
+
+		<div <?php echo isset($args['id']) ? 'id="'.$args['id'].'"' : ''; ?>class="epkb-notification-box-basic <?php echo 'epkb-notification-box-basic--'.$args['type']; ?>">
+
+				<div class="epkb-notification-box-basic__icon">
+					<div class="epkb-notification-box-basic__icon__inner epkbfa <?php echo $icon; ?>"></div>
+				</div>
+
+				<div class="epkb-notification-box-basic__body">
+					<h4 class="epkb-notification-box-basic__body__title"><?php echo $args['title']; ?></h4>
+					<div class="epkb-notification-box-basic__body__desc"><?php echo $args['desc']; ?></div>
+				</div>
+
+		</div>    <?php
+	}
+
+	/*
 		HTML Notification box with paragraph / checkbox options and submit / cancel buttons.
 		$values:
 		@param: string $value['id']            ( Required ) Container ID, used for targeting with other JS
@@ -902,23 +944,128 @@ class EPKB_HTML_Elements {
 	}
 
 	/*
-		HTML Callout Box.
+		HTML Info Box Version 2
 		$values:
-		@param: string $value['id']            ( optional ) Container ID, used for targeting with other JS
-		@param: string $value['title']         ( Required ) The text while its collapsed
-		@param: string $value['callout_type']  ( Required ) The look of the box, Types include: success, attention, error, warning, info, default
-		@param: HTML   $value['content']       ( Required ) Any HTML P, List etc...
+		@param: string $icon            Icon to display
+		@param: string $title           The text title
+		@param: string $dec             Text for box
+		@param: string $buttonText      Text for Button
+		@param: string $buttonURL       Link
 	 */
-    public function callout( $args = array() ){
-	    $id = '';
-        if ( isset( $args['id'] ) ){
-            $id = 'id="'.$args['id'].'"';
-        }
-        ?>
+	public function info_box_v2( $icon, $title, $dec, $buttonText, $buttonURL ) { ?>
 
-        <div <?php echo $id ?> class="callout callout_<?php echo $args['callout_type']; ?>">
-                <h4><?php echo $args['title']; ?></h4>
-	            <?php echo $args['content']; ?>
-        </div>    <?php
-    }
+		<div class="epkb-admin-info-box">
+
+			<div class="epkb-admin-info-box__header">
+				<div class="epkb-admin-info-box__header__icon <?php echo $icon; ?>"></div>
+				<div class="epkb-admin-info-box__header__title"><?php echo $title; ?></div>
+			</div>
+
+			<div class="epkb-admin-info-box__body">
+				<p><?php echo $dec; ?></p>
+				<?php if ( $buttonText ) { ?>
+					<a href="<?php echo $buttonURL; ?>" target="_blank" class="epkb-aibb-btn epkb-aibb-btn--blue"><?php echo $buttonText; ?></a>
+				<?php } ?>
+			</div>
+
+		</div>	<?php 
+	}
+
+	/*
+		HTML Info Box with image
+		$values:
+		@param: string $icon            Icon to display
+		@param: string $title           The text title
+		@param: string $dec             Text for box
+		@param: string $buttonText      Text for Button
+		@param: string $buttonURL       Link
+		@param: string $img_url         URL of image.
+	 */
+	public function info_box_with_img( $icon, $title, $dec, $buttonText, $buttonURL, $img_url ) { ?>
+
+		<div class="epkb-admin-info-box-img">
+
+			<div class="epkb-admin-info-box-img__header">
+				<div class="epkb-admin-info-box-img__header__icon <?php echo $icon; ?>"></div>
+				<div class="epkb-admin-info-box-img__header__title"><?php echo $title; ?></div>
+			</div>
+
+			<div class="epkb-admin-info-box-img__body">
+				<img class="epkb-admin-info-box-img__body__img" src="<?php echo $img_url; ?>" alt="Info box image">
+				<p><?php echo $dec; ?></p>
+				<?php if ( $buttonText ) { ?>
+					<a href="<?php echo $buttonURL; ?>" target="_blank" class="epkb-aibb-btn epkb-aibb-btn--blue"><?php echo $buttonText; ?></a>
+				<?php } ?>
+			</div>
+
+		</div>	<?php
+	}
+
+	/*
+		HTML Advertisement Box
+		This box will have a title, image, either a description or list a button and more info link.
+		$values:
+	    @param: string $args['id']              ( Optional ) Container ID, used for targeting with other JS
+	    @param: string $args['class']           ( Optional ) Container CSS, used for targeting with CSS
+	    @param: string $args['icon']            ( Optional ) Icon to display ( from this list: https://fontawesome.com/v4.7.0/icons/ )
+	    @param: string $args['title']           ( Required ) The text title
+	    @param: string $args['img_url']         ( Required ) URL of image.
+	    @param: string $args['desc']            ( Optional ) Paragraph Text
+	    @param: array  $args['list']            ( Optional ) array() of list items.
+
+	    @param: string $args['btn_text']        ( Optional ) Button Text
+	    @param: string $args['btn_url']         ( Optional ) Button URL
+	    @param: string $args['btn_color']       ( Required ) blue,yellow,orange,red,green
+
+		@param: string $args['more_info_text']  ( Optional ) More Info Text
+	    @param: string $args['more_info_url']   ( Optional ) More Info URL
+	    @param: string $args['more_info_color'] ( Required ) blue,yellow,orange,red,green
+	 */
+	public function advertisement_ad_box( $args ) {
+
+		$args = $this->add_defaults( $args );		?>
+
+		<div id="<?php echo $args['id']; ?>" class="epkb-admin-ad-container <?php echo $args['class']; ?>">
+
+			<!----- Header ----->
+			<div class="epkb-aa__header-container">
+				<div class="epkb-header__icon epkbfa <?php echo $args['icon']; ?>"></div>
+				<div class="epkb-header__title"><?php echo $args['title']; ?></div>
+			</div>
+
+			<!----- Body ---=--->
+			<div class="epkb-aa__body-container">
+
+				<img class="epkb-body__img" src="<?php echo $args['img_url']; ?>" alt="<?php echo $args['title']; ?>">
+
+				<p class="epkb-body__desc"><?php echo $args['desc']; ?></p>
+
+				<ul class="epkb-body__check-mark-list-container">					<?php
+					if ( $args['list'] ) {
+						foreach ($args['list'] as $item) {
+							echo '<li class="epkb-check-mark-list__item">';
+							echo '<span class="epkb-check-mark-list__item__icon epkbfa epkbfa-check"></span>';
+							echo '<span class="epkb-check-mark-list__item__text">' . $item . '</span>';
+							echo '</li>';
+						}
+					}					?>
+				</ul>
+
+				<?php if ( $args['btn_text'] ) { ?>
+					<a href="<?php echo $args['btn_url']; ?>" target="_blank" class="epkb-body__btn epkb-body__btn--<?php echo $args['btn_color']; ?>"><?php echo $args['btn_text']; ?></a>
+				<?php } ?>
+
+				<?php if ( $args['more_info_text'] ) { ?>
+					<a href="<?php echo $args['more_info_url']; ?>" target="_blank" class="epkb-body__link epkb-body__link--<?php echo $args['more_info_color']; ?>">
+						<span class="epkb-body__link__icon epkbfa epkbfa-info-circle"></span>
+						<span class="epkb-body__link__text"><?php echo $args['more_info_text']; ?></span>
+						<span class="epkb-body__link__icon-after epkbfa epkbfa-angle-double-right"></span>
+
+					</a>
+				<?php } ?>
+
+			</div>
+
+		</div>	<?php
+	}
 }

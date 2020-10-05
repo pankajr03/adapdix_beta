@@ -32,7 +32,8 @@ class EPKB_KB_Config_Category {
 
 		if ( $main_page_layout == 'Sidebar' ) { ?>
 			<div class="epkb-term-options-message">
-				<p><i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i> <?php _e( 'Sidebar Layout does not use icons for categories.', 'echo-knowledge-base'); ?></p>
+			<i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i>
+			<p><?php _e( 'Sidebar Layout does not use icons for categories.', 'echo-knowledge-base'); ?></p>
 			</div><?php
 			return;
 		}
@@ -58,7 +59,8 @@ class EPKB_KB_Config_Category {
 		// not all categories have icons
 		$category_level = $this->get_level( $category );
 		$hide_block = false;
-		$hide_reason = __('The icon will NOT show on the front-end for this category. ', 'echo-knowledge-base');
+		
+		$hide_reason = __('The icon will NOT show on the front-end KB pages for this category. ', 'echo-knowledge-base');
 		
 		if ( $main_page_layout == 'Tabs' ) {
 			if ( $category_level !== 2 ) {
@@ -77,7 +79,9 @@ class EPKB_KB_Config_Category {
 		}
 		
 		$categories_icons = EPKB_Utilities::get_kb_option( $this->kb_id, EPKB_Icons::CATEGORIES_ICONS, array(), true );
-
+		
+		$is_crel_active = defined( 'CREATIVE_ADDONS_VERSION' );
+		
 		if ( ! $is_new_category  && ! empty( $categories_icons[$category->term_id] ) ) {
 			$active_icon_name =empty( $categories_icons[$category->term_id]['name'] ) ? EPKB_Icons::DEFAULT_CATEGORY_ICON_NAME : $categories_icons[$category->term_id]['name'];
 			$active_icon_type = empty( $categories_icons[$category->term_id]['type'] ) ? EPKB_Icons::DEFAULT_CATEGORY_TYPE : $categories_icons[$category->term_id]['type'];
@@ -95,7 +99,15 @@ class EPKB_KB_Config_Category {
 				<label><?php _e( 'Category Icon', 'echo-knowledge-base' ); ?></label>
 			</<?php echo $is_new_category ? 'div' : 'th'; ?>>
 			<<?php echo $is_new_category ? 'div' : 'td'; ?>>
-				<div class="epkb-categories-icons" <?php if ($hide_block) echo 'style="display:none;"'; ?>>
+				<?php if ( $is_crel_active ) { 
+					$this->category_icon_message( 'epkb-icons-are-enabled','These icons will be used also for Elementor KB Categories Widget', '', ''); 
+				}
+				$this->category_icon_message( 'epkb-icons-are-enabled','Category Icons are <strong>enabled.</strong>', $this->get_on_off_icons_link( $main_page_layout ) , 'Turn Category Icons OFF'); ?>
+                <div class="epkb-term-options-message" <?php if ( ! $hide_block) echo 'style="display:none;"'; ?>>
+                    <i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i>
+                    <p><?php echo $hide_reason; ?></p>
+                </div>
+				<div class="epkb-categories-icons <?php if ( $is_crel_active ) echo 'epkb-categories-icons--visible'; ?>" <?php if ($hide_block ) echo 'style="display:none;"'; ?>>
 					<div class="epkb-categories-icons__tabs-header">
 						<div class="epkb-categories-icons__button <?php echo ( $active_icon_type == 'font' ) ? 'epkb-categories-icons__button--active' : ''; ?>" id="epkb_font_icon" data-type="font">
 							<?php _e( 'Font Icon', 'echo-knowledge-base' ); ?>
@@ -103,8 +115,7 @@ class EPKB_KB_Config_Category {
 						<div class="epkb-categories-icons__button <?php echo ( $active_icon_type == 'image' ) ? 'epkb-categories-icons__button--active' : ''; ?>" id="epkb_image_icon" data-type="image">
 							<?php _e( 'Image Icon', 'echo-knowledge-base' ); ?>
 						</div>
-					</div>  <?php
-					$this->category_icon_message( 'epkb-icons-are-enabled','Category Icons are <strong>enabled.</strong>', $this->get_on_off_icons_link( $main_page_layout ) , 'Turn Category Icons OFF'); ?>
+					</div>
 					<div class="epkb-categories-icons__tab-body epkb-categories-icons__tab-body--font  <?php echo ( $active_icon_type == 'font' ) ? 'epkb-categories-icons__tab-body--active' : ''; ?>"><?php EPKB_Icons::get_icons_pack_html( true, $active_icon_name ); ?></div>
 					<div class="epkb-categories-icons__tab-body epkb-categories-icons__tab-body--image <?php echo ( $active_icon_type == 'image' ) ? 'epkb-categories-icons__tab-body--active' : ''; ?>"><?php $this->display_image_block( $active_image_id, $active_image_size ); ?></div>
 					
@@ -114,18 +125,17 @@ class EPKB_KB_Config_Category {
 					<input type="hidden" name="epkb_head_category_level" id="epkb_head_category_level" value="<?php echo $category_level; ?>">
 					<input type="hidden" name="epkb_head_category_template" id="epkb_head_category_template" value="<?php echo $main_page_layout; ?>">
 				</div>
-				<div class="epkb-term-options-message" <?php if ( ! $hide_block) echo 'style="display:none;"'; ?>>
-					<p><i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i> <?php echo $hide_reason; ?></p>
-				</div>
+
 			</<?php echo $is_new_category ? 'div' : 'td'; ?>>
 		</<?php echo $is_new_category ? 'div' : 'tr'; ?>> <?php 
 	}
 
-	function category_icon_message( $class, $message , $url , $urlText ){ ?>
+	function category_icon_message( $class, $message , $url , $urlText ) { ?>
 
 		<div class="epkb-term-options-message <?php echo $class; ?>">
+			<i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i>
 			<p>
-				<i class="epkbfa epkbfa-info-circle" aria-hidden="true"></i>				<?php
+				<?php
 				_e( $message, 'echo-knowledge-base');
 
 				if ( ! empty($url) ) {   ?>

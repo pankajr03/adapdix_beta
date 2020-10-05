@@ -27,10 +27,14 @@ function epkb_add_plugin_menus() {
 
 	add_submenu_page( 'edit.php?post_type=' . $post_type_name, __( 'Add-ons - Echo Knowledge Base', 'echo-knowledge-base' ), __( 'Add-ons', 'echo-knowledge-base' ),
                         'manage_options', 'epkb-add-ons', array( new EPKB_Add_Ons_Page(), 'display_add_ons_page') );
-
+	
 	add_submenu_page( 'edit.php?post_type=' . $post_type_name, __( 'New Features - Echo Knowledge Base', 'echo-knowledge-base' ), EPKB_New_Features_Page::get_menu_item_title(),
                         'manage_options', 'epkb-new-features', array( new EPKB_New_Features_Page(), 'display_new_features_page') );
-
+	
+	if ( EPKB_Manage_KB_Page::is_show_core_kbs_page() ) {
+		add_submenu_page( 'edit.php?post_type=' . $post_type_name, __( 'Manage KBs - Echo Knowledge Base', 'echo-knowledge-base' ), __( 'Manage KBs', 'echo-knowledge-base' ),
+							'manage_options', 'epkb-manage-kb', array( new EPKB_Manage_KB_Page(), 'display_manage_kb_page') );
+	}
 }
 add_action( 'admin_menu', 'epkb_add_plugin_menus', 10 );
 
@@ -107,6 +111,10 @@ function epkb_add_page_tabs() {
 		// New Features page
 		case 'EKB_SCREEN_page_epkb-new-features':
 			return;
+		
+		// Manage KBs
+		case 'EKB_SCREEN_page_epkb-manage-kb':
+			return;
 
 		// Analytics page
 		case 'EKB_SCREEN_page_epkb-plugin-analytics':
@@ -128,7 +136,7 @@ add_action( 'all_admin_notices', 'epkb_add_page_tabs', 99999 );
  * @param $disable_kb_buttons
  * @param $screen_id
  *
- * @return int
+ * @return void
  */
 function epkb_display_kb_navigation_tabs( $current_kb_id, $tab_url_base, $disable_kb_buttons, $screen_id ) {	?>
 
@@ -162,7 +170,7 @@ function epkb_display_kb_navigation_tabs( $current_kb_id, $tab_url_base, $disabl
 			}
 
 			// add button-link to the multiple kb plugin 
-			if ( ! defined( 'EM'.'KB_PLUGIN_NAME' ) &&  count($all_kb_configs) == 1 ) {
+			if ( ! defined( 'EM'.'KB_PLUGIN_NAME' ) && count($all_kb_configs) == 1 ) {
 				$active_kb_configs[] = array(
 					'id' => 0,
 					'kb_name' => __( 'Get Additional Knowledge Bases', 'echo-knowledge-base' ),

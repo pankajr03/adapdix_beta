@@ -373,7 +373,7 @@
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td >
-							<h4>Unlock More 500+ Google Fonts In pro version <a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Buy Now</a></h4>
+							<h4>Unlock More 500+ Google Fonts In pro version <a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Buy Now</a></h4>
 						</td>
 					</tr>
 				</table>
@@ -418,7 +418,7 @@
 					</tr>
 					<tr class="radio-span" style="border-bottom:none;">
 						<td >
-							<h4>Unlock More 500+ Google Fonts In pro version <a href="http://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Buy Now</a></h4>
+							<h4>Unlock More 500+ Google Fonts In pro version <a href="https://wpshopmart.com/plugins/coming-soon-pro/" target="_blank">Buy Now</a></h4>
 						</td>
 					</tr>
 				</table>

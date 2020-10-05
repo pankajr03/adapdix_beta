@@ -180,6 +180,11 @@ class EPKB_Logging {
 			} else if ( isset($trace['class']) && isset($trace['function']) && $trace['class'] != 'WP_Hook' && strpos($line, 'class-wp-hook.php') !== false) {
 				//  we run some class with function via hook and want to find the function that was called from some class 
 				$r_class = new ReflectionClass($trace['class']);
+
+				if ( ! function_exists($trace['function']) ) {
+					continue;
+				}
+
 				$method = $r_class->getMethod($trace['function']);
 				$line = $method->getFileName() . ' [' . $method->getStartLine() . "] - " . $function;
 				

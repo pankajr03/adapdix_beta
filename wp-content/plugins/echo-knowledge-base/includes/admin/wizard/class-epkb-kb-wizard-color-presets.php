@@ -13,7 +13,7 @@ class EPKB_KB_Wizard_Color_Presets {
 			// general
 			'background_color'                    => '#FFFFFF',
 
-			// aearch Box
+			// search Box
 			'search_title_font_color'             => '#FFFFFF',
 			'search_background_color'             => '#f7941d',
 			'search_text_input_background_color'  => '#FFFFFF',
@@ -156,7 +156,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_body_background_color' => '#FFFFFF', // Articles Container - Background
 		'section_border_color'          => '#eeee22', // Articles Container - Border
 		'article_font_color'            => '#3a3a3a', // Articles - Text
-		'article_icon_color'            => '#becc00'  // Articles - Icon
+		'article_icon_color'            => '#becc00', // Articles - Icon
+        'back_navigation_text_color'    => '#eded00', // Articles - Back Navigation
+        'breadcrumb_text_color'         => '#eded00', // Articles - Breadcrumb
 	); // Yellow Preset
 
 	// BLUE
@@ -187,6 +189,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'         => '#868686',
 		'section_category_icon_color'         => '#868686',
 		'section_head_category_icon_color'    => '#53ccfb',
+
+        'back_navigation_text_color'          => '#53ccfb', // Articles - Back Navigation
+        'breadcrumb_text_color'               => '#53ccfb', // Articles - Breadcrumb
 	);
 
 	public static $preset_medium_blue = array(
@@ -220,7 +225,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_body_background_color' => '#FFFFFF', // Articles Container - Background
 		'section_border_color'          => '#039be5', // Articles Container - Border
 		'article_font_color'            => '#333333', // Articles - Text
-		'article_icon_color'            => '#039be5'  // Articles - Icon
+		'article_icon_color'            => '#039be5', // Articles - Icon
+        'back_navigation_text_color'    => '#1e73be', // Articles - Back Navigation
+        'breadcrumb_text_color'         => '#1e73be', // Articles - Breadcrumb
 	); // Blue Preset
 
 	public static $preset_dark_blue = array(
@@ -250,6 +257,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'         => '#868686',
 		'section_category_icon_color'         => '#868686',
 		'section_head_category_icon_color'    => '#FFFFFF',
+
+        'back_navigation_text_color'          => '#4398ba', // Articles - Back Navigation
+        'breadcrumb_text_color'               => '#4398ba', // Articles - Breadcrumb
 	);
 
 	// GREEN light
@@ -283,6 +293,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		// Articles
 		'section_body_background_color' => '#FFFFFF', // Articles Container - Background
 		'section_border_color'          => '#dbdbdb', // Articles Container - Border
+
+        'back_navigation_text_color'    => '#bfdac1', // Articles - Back Navigation
+        'breadcrumb_text_color'         => '#bfdac1', // Articles - Breadcrumb
 	); // Green Preset
 
 	// GREEN medium
@@ -317,7 +330,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_body_background_color' => '#FFFFFF', // Articles Container - Background
 		'section_border_color'          => '#dddddd', // Articles Container - Border
 		'article_font_color'            => '#333333', // Articles - Text
-		'article_icon_color'            => '#81d742'  // Articles - Icon
+		'article_icon_color'            => '#81d742', // Articles - Icon
+        'back_navigation_text_color'    => '#81d742', // Articles - Back Navigation
+        'breadcrumb_text_color'         => '#81d742', // Articles - Breadcrumb
 	); // Green Preset
 
 	// GREEN dark
@@ -351,6 +366,8 @@ class EPKB_KB_Wizard_Color_Presets {
 		// Articles
 		'section_body_background_color' => '#edf4ee', // Articles Container - Background
 		'section_border_color'          => '#dbdbdb', // Articles Container - Border
+        'back_navigation_text_color'    => '#628365', // Articles - Back Navigation
+        'breadcrumb_text_color'         => '#628365', // Articles - Breadcrumb
 	); // Green Preset
 
 	// RED
@@ -381,6 +398,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'           =>  '#868686',
 		'section_category_icon_color'           =>  '#868686',
 		'section_head_category_icon_color'      =>  '#ffffff',
+
+        'back_navigation_text_color'            =>  '#CC0000', // Articles - Back Navigation
+        'breadcrumb_text_color'                 =>  '#CC0000', // Articles - Breadcrumb
 	);
 
 	public static $preset_medium_red = array(
@@ -410,6 +430,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'           =>  '#868686',
 		'section_category_icon_color'           =>  '#868686',
 		'section_head_category_icon_color'      =>  '#fb8787',
+
+        'back_navigation_text_color'            =>  '#fb8787', // Articles - Back Navigation
+        'breadcrumb_text_color'                 =>  '#fb8787', // Articles - Breadcrumb
 	);
 
 	public static $preset_dark_red = array(
@@ -439,6 +462,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'           =>  '#868686',
 		'section_category_icon_color'           =>  '#868686',
 		'section_head_category_icon_color'      =>  '#ffffff',
+
+        'back_navigation_text_color'            =>  '#fb6262', // Articles - Back Navigation
+        'breadcrumb_text_color'                 =>  '#fb6262', // Articles - Breadcrumb
 	);
 
 	// GRAY
@@ -469,6 +495,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'           =>  '#868686',
 		'section_category_icon_color'           =>  '#868686',
 		'section_head_category_icon_color'      =>  '#000000 ',
+
+        'back_navigation_text_color'            =>  '#686868', // Articles - Back Navigation
+        'breadcrumb_text_color'                 =>  '#686868', // Articles - Breadcrumb
 	);
 
 	public static $preset_medium_gray = array(
@@ -498,6 +527,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		'section_category_font_color'           =>  '#868686',
 		'section_category_icon_color'           =>  '#000000',
 		'section_head_category_icon_color'      =>  '#000000',
+
+        'back_navigation_text_color'            =>  '#686868', // Articles - Back Navigation
+        'breadcrumb_text_color'                 =>  '#686868', // Articles - Breadcrumb
 	);
 
 	public static $preset_dark_gray = array(
@@ -529,6 +561,9 @@ class EPKB_KB_Wizard_Color_Presets {
 		// Articles
 		'section_body_background_color'         => '#FFFFFF', // Articles Container - Background
 		'section_border_color'                  => '#dddddd', // Articles Container - Border
+
+        'back_navigation_text_color'            => '#34424c', // Articles - Back Navigation
+        'breadcrumb_text_color'                 => '#34424c', // Articles - Breadcrumb
 	); // Grey Preset
 
 }

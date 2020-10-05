@@ -3,7 +3,7 @@
  * Plugin Name: Knowledge Base for Documents and FAQs
  * Plugin URI: https://www.echoknowledgebase.com
  * Description: Echo Knowledge Base is super easy to configure, works well with themes and can handle a variety of article hierarchies.
- * Version: 6.4.2
+ * Version: 6.8.1
  * Author: Echo Plugins
  * Author URI: https://www.echoknowledgebase.com
  * Text Domain: echo-knowledge-base
@@ -43,12 +43,12 @@ final class Echo_Knowledge_Base {
 	/* @var Echo_Knowledge_Base */
 	private static $instance;
 
-	public static $version = '6.4.2';
+	public static $version = '6.8.1';
 	public static $plugin_dir;
 	public static $plugin_url;
 	public static $plugin_file = __FILE__;
 	public static $needs_min_add_on_version = array( 'LAY' => '1.2.1', 'MKB' => '1.10.0', 'RTD' => '1.0.0', 'IDG' => '1.0.0', 'BLK' => '1.0.0',
-													 'SEA' => '1.0.0', 'PRF' => '1.0.0' );
+													 'SEA' => '1.0.0', 'PRF' => '1.0.0', 'PIE' => '1.0.0' );
 
 	/* @var EPKB_KB_Config_DB */
 	public $kb_config_obj;
@@ -128,7 +128,11 @@ final class Echo_Knowledge_Base {
 
 		// ADMIN or CLI
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {	// || ( defined( 'REST_REQUEST' ) && REST_REQUEST )
-			$this->setup_backend_classes();
+            if ( $this->is_kb_plugin_active_for_network( 'echo-knowledge-base/echo-knowledge-base.php' ) ) {
+                add_action( 'plugins_loaded', array( self::$instance, 'setup_backend_classes' ), 11 );
+            } else {
+                $this->setup_backend_classes();
+            }
 			return;
 		}
 
@@ -162,6 +166,7 @@ final class Echo_Knowledge_Base {
 			new EPKB_Settings_Controller();
 			return;
 		}
+		
 	}
 
 	/**
@@ -204,12 +209,22 @@ final class Echo_Knowledge_Base {
 			new EPKB_KB_Config_Category();
 			return;
 		}
+
+		if ( $action == 'epkb_deactivate_feedback' ) {
+			new EPKB_Deactivate_Feedback();
+			return;
+		}
+
+		if ( $action == 'epkb_dismiss_ongoing_notice' ) {
+			new EPKB_Admin_Notices( true );
+			return;
+		}
 	}
 
 	/**
 	 * Setup up classes when on ADMIN pages
 	 */
-	private function setup_backend_classes() {
+	public function setup_backend_classes() {
 		global $pagenow;
 
 		$is_kb_request = EPKB_KB_Handler::is_kb_request();
@@ -247,29 +262,8 @@ final class Echo_Knowledge_Base {
 		require_once self::$plugin_dir . 'includes/admin/admin-menu.php';
 		require_once self::$plugin_dir . 'includes/admin/admin-functions.php';
 
-		// admin other classes
-		$classes = array(
-			// class name=0, loading=1 (backend/admin-bar), pages=2, admin_action=3, KB post type required=4
-		);
-
-		foreach( $classes as $class_info ) {
-
-			if ( $class_info[4] && ! $is_kb_request ) {
-				continue;
-			}
-
-			// INDIVIDUAL PAGES: if feature available on a specific page then ensure the page is being loaded
-			if ( ( ( ! empty($class_info[2]) && ! in_array($pagenow, $class_info[2]) )  ||
-			       ( ! empty($_REQUEST['page']) && ! in_array($_REQUEST['page'], $class_info[2]) )
-				 ) &&
-			     ( empty($class_info[3]) || empty($_REQUEST['action']) || ! in_array($_REQUEST['action'], $class_info[3]) ) ) {
-				continue;
-			}
-
-			$new_class = $class_info[0];
-			if ( class_exists($new_class) ) {
-				new $new_class();
-			}
+		if ( ! empty($pagenow) && in_array( $pagenow, [ 'plugins.php', 'plugins-network.php' ] ) ) {
+			new EPKB_Deactivate_Feedback();
 		}
 	}
 
@@ -302,6 +296,19 @@ final class Echo_Knowledge_Base {
 			// EPKB_Utilities::save_wp_option( EPKB_Settings_Controller::EPKB_DEBUG, true, true );
 		}
 	}
+
+    private function is_kb_plugin_active_for_network( $plugin ) {
+        if ( ! is_multisite() ) {
+            return false;
+        }
+
+        $plugins = get_site_option( 'active_sitewide_plugins' );
+        if ( isset( $plugins[ $plugin ] ) ) {
+            return true;
+        }
+
+        return false;
+    }
 }
 
 /**

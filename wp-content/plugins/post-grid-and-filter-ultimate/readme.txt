@@ -1,8 +1,8 @@
 ===  Post grid and filter ultimate ===
-Tags: post grid, post, post filter, post category filter, custom post grid, grid display, grid, content grid, filter, post designs, grid designs
+Tags: post grid, post, post filter, post category filter, custom post grid, grid display, grid, content grid, filter, post designs, grid designs, wponlinesupport
 Contributors: wponlinesupport, anoopranawat, pratik-jain
 Requires at least: 4.0
-Tested up to: 5.3.2
+Tested up to: 5.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -100,6 +100,16 @@ Check [Demo and Features](https://demo.wponlinesupport.com/post-grid-and-filter-
 2. Post grid filter view.
 
 == Changelog ==
+
+= 1.2 (27, August 2020) =
+* [+] New - Added Gutenberg block support. Now use plugin easily with Gutenberg!
+* [+] New - Added 'align' and 'extra_class' parameter for slider shortcode. Now both slider shortcode are support twenty-ninteent and twenty-twenty theme gutenberg block align and additional class feature.
+* [+] New - Add new JavaScript Filterize method for post filter shortcode.
+* [*] Tweak - Code optimization and performance improvements.
+* [*] Template File - Main design file has been updated. If you have override template file then verify with latest copy.
+
+= 1.1.5 (14, July 2020) =
+* [*] Follow WordPress Detailed Plugin Guidelines for Offload Media and Analytics Code.
 
 = 1.1.4 (31, Dec 2019) =
 * [*] Replaced wp_reset_query() with wp_reset_postdata() in both shortcodes.

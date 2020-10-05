@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Responsive Coming Soon
- * Version: 1.9
+ * Version: 1.9.2
  * Description: Responsive Coming Soon plugin is Modern and responsive Coming Soon page with full-sized background image slideshow, countdown timer and unlimited color scheme.
  * Author: wpshopmart
  * Author URI: https://wpshopmart.com/

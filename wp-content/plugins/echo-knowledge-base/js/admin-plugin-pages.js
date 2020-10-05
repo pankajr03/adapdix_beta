@@ -215,7 +215,7 @@ jQuery(document).ready(function($) {
 				//<-- Header -->
 				'<div class="epkb-admin-dbl__header">' +
 				'<div class="epkb-admin-dbl-icon epkbfa epkbfa-hourglass-half"></div>'+
-				(message ? '<div class="<div class="epkb-admin-dbl-text">' + message + '</div>' : '' ) +
+				(message ? '<div class="epkb-admin-text">' + message + '</div>' : '' ) +
 				'</div>'+
 
 				'</div>' +
@@ -495,4 +495,93 @@ jQuery(document).ready(function($) {
 			}
 		});
 	}
+	
+	/** KB Manage Page */ 
+	if ( $('.epkb-manage-kb-container').length ) {
+		
+		// Main tabs (left panel)
+		$('.epkb-manage-tabs__button__title').click(function(){
+
+			let kb_id = $(this).data('kb_id');
+
+			if ( kb_id == 'undefined' || !kb_id ) {
+				return true;
+			}
+
+			$('.epkb-manage-tabs__button').removeClass('active');
+			$(this).parent().addClass('active');
+			if ( $(this).attr('href') == '#' ) {
+				$('#epkb-activate-kb').find('.epkb-dialog-box-form').toggleClass( 'epkb-dialog-box-form--active' );
+				return false;
+			}
+
+			epkb_loading_Dialog( 'show', 'Loading...' );
+			
+			$('.epkb-manage-content').removeClass('active');
+			$( $(this).data('target') ).addClass('active');
+
+			return this.href != '#';
+		});
+		
+		// Top panel tabs 
+		$('.epkb-manage-content__tab-button').click(function(){
+			$(this).parent().find('.epkb-manage-content__tab-button').removeClass('active');
+			$(this).addClass('active');
+			
+			$(this).closest('.epkb-manage-content').find('.epkb-manage-content__tab').removeClass('active');
+			$( $(this).data('target') ).addClass('active');
+			
+			return false;
+		});
+		
+		// Delete KB dialog
+		$('.epkb-delete-kbs .error-btn').click(function(){
+			$(this).closest('.epkb-delete-kbs').find( '.epkb-dialog-box-form' ).toggleClass( 'epkb-dialog-box-form--active' );
+			return false;
+		});
+		$('.epkb-delete-kbs .epkb-dbf__footer__accept__btn').click(function(){
+			if ( $(this).closest('form').length ) {
+				$(this).closest('form').submit();
+			}
+		});
+
+		// Activate KB dialog
+		$('#epkb-activate-kb').find('.epkb-dbf__footer__accept__btn').click(function() {
+			let $kb_id = $('.epkb-manage-tabs__button.active').find('.epkb-manage-tabs__button__title').data('kb_id');
+			$('#epkb-activate-kb').find('input[name=emkb_kb_id]').val($kb_id);
+
+			let activate_form = $('#epkb-activate-kb').find('form');
+			activate_form.attr('method','post');
+			activate_form.submit();
+		});
+
+		$('.epkb-dbf__close, .epkb-dbf__footer__cancel__btn').click(function(){
+			$(this).closest( '.epkb-dialog-box-form' ).toggleClass( 'epkb-dialog-box-form--active' );
+			let $kb_id =jQuery('.epkb-manage-content').data('kb_id');
+			$('.epkb-manage-tabs__button').removeClass('active');
+			$('.epkb-manage-tabs__button__title[data-kb_id="'+$kb_id+'"]').parent().addClass('active');
+		});
+	}
+
+	//Admin Notice
+	$('.epkb-notice-remind').on('click',function(e){
+		e.preventDefault();
+		$(this).parent().parent().remove();
+	});
+
+	//Dismiss ongoing notice
+	$(document).on( 'click', '.epkb-notice-dismiss', function( event ) {
+		event.preventDefault();
+		$('.notice-'+$(this).data('notice-id')).slideUp();
+		var postData = {
+			action: 'epkb_dismiss_ongoing_notice',
+			epkb_dismiss_id: $(this).data('notice-id')
+		};
+		$.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: ajaxurl,
+			data: postData
+		});
+	} );
 });
