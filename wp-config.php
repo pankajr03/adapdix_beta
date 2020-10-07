@@ -20,7 +20,7 @@
 
 // ** MySQL settings ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'adapdixdb_1' );
+define( 'DB_NAME', 'adapdix_beta' );
 
 /** MySQL database username */
 define( 'DB_USER', 'root' );
@@ -62,7 +62,7 @@ define( 'WP_CACHE_KEY_SALT', '>xbR<#_ZXF[nyVy4cJrbcU(4ezeK;[q$y6y#CYv01di7cEV}8=
  * You can have multiple installations in one database if you give each
  * a unique prefix. Only numbers, letters, and underscores please!
  */
-$table_prefix = 'trade_';
+$table_prefix = 'wpbeta_';
 /*
 define( 'WPMS_ON', true );
 define( 'WPMS_SMTP_PASS', 'Chaos2019#' );

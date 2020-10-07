@@ -1360,7 +1360,8 @@ function init()
 
 {
 
-	add_image_size('pageBanner', 1440, 810, true);
+    add_image_size('pageBanner', 1440, 810, true);
+    add_image_size('pageBannerMobile', 400, 420, true);
 
     /*$post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'];
 
