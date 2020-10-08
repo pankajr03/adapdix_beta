@@ -168,6 +168,9 @@ class WP_Fatal_Error_Handler {
 	 * @param true|WP_Error $handled Whether Recovery Mode handled the fatal error.
 	 */
 	protected function display_default_error_template( $error, $handled ) {
+		echo "<pre>";
+		print_r($error);
+		die;
 		if ( ! function_exists( '__' ) ) {
 			wp_load_translations_early();
 		}
