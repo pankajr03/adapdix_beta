@@ -146,6 +146,10 @@ div.career-text .lead {
   min-height: 698px;
 }
 
+.feature-boxs {
+  margin-bottom: 30px;
+}
+
 .b-devbotom {
   background-image: none;
 }
@@ -156,7 +160,7 @@ div.career-text .lead {
 }
 
 .developer-bg {
-  background-image: url(img/header_img/header-bg1.png);
+  /*background-image: url(img/header_img/header-bg1.png);*/
   background-position: right;
   background-repeat: no-repeat;
 }
@@ -494,10 +498,10 @@ div#logindiv form#loginform input[type="submit"] {
   }
 
   .devlop-bg .banner-mob-part {
-    background-image: url(img/header_img/mobile/header-bg7.png) !important;
+    /*background-image: url(img/header_img/mobile/header-bg7.png) !important;*/
   }
   .developer-bg {
-    background-image: url(img/header_img/mobile/header-bg1.png) !important;
+    /* background-image: url(img/header_img/mobile/header-bg1.png) !important; */
   }
 
   .product-banner-bg {
@@ -508,7 +512,7 @@ div#logindiv form#loginform input[type="submit"] {
     background-image: url(img/header_img/mobile/header-bg9.png) !important;
   }
   .company-banner-bg {
-    background-image: url(img/header_img/mobile/header-bg10.png);
+    /* background-image: url(img/header_img/mobile/header-bg10.png); */
   }
 
   .product-banner-bg .banner-mob-part {

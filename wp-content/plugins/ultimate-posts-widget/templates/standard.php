@@ -59,7 +59,10 @@
 						<div class="feature-boxs ">
                            <span class="box-head-title"><?php echo $postcategory[$post->ID]?></span>
                            <h5 class="mb-3"><?php the_title(); ?></h5>
-                           <div class="featured_content_p_height"><?php the_excerpt()?></div>
+                           <div class="featured_content_p_height">
+						   <?php //the_excerpt()?>
+						   <?php echo wp_trim_words(get_the_content(), $excerpt_length)?>
+						   </div>
 						   <?php 
 						   $aq_block_1_arr = get_post_meta($post->ID, 'aq_block_1');
 						   $aq_block_1_url = $aq_block_1_arr[0];

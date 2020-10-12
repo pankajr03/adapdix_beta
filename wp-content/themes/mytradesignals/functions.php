@@ -2601,11 +2601,12 @@ function pageBanner($args) {
 	$subtitle = $args['subtitle'];
 	$button_text = $args['button_text'];
 	$button_link = $args['button_link'];
-	$photo = $args['photo'];
+    $photo = $args['photo'];
+    $photo_mobile = $args['photo_mobile'];
 	?>
 	
 	<header>
-		<div class="developer-bg company-banner-mob devlop-bg" style="background-image: url(<?php echo $photo?>)">
+		<div class="developer-bg company-banner-mob devlop-bg">
 			<div class=" custom-container">
 				<div class="row header-banner lines-bg align-content-center header-responive m-0">
 					<div class="col-md-6 banner-text p-0 banner-mob-part">
@@ -2621,6 +2622,17 @@ function pageBanner($args) {
 			</div>
 		</div>
 	</header>
+    <style>
+    .developer-bg {
+        background-image: url(<?php echo $photo?>) !important;
+    }
+    @media (max-width: 767px) {
+       .developer-bg {
+         background-image: url(<?php echo $photo_mobile?>) !important;
+        }
+    }
+     
+    </style>
 
 <?php
 }
@@ -2630,7 +2642,8 @@ function pageBannerCompany($args) {
 	$subtitle = $args['subtitle'];
 	$button_text = $args['button_text'];
 	$button_link = $args['button_link'];
-	$photo = $args['photo'];
+    $photo = $args['photo'];
+    $photo_mobile = $args['photo_mobile'];
 	?>
 	
 	<header>
@@ -2658,6 +2671,18 @@ function pageBannerCompany($args) {
             </div>
         </div>
     </header>
+    <style>
+    .developer-bg {
+        background-image: url(<?php echo $photo?>) !important;
+    }
+    @media (max-width: 767px) {
+       .developer-bg {
+         background-image: url(<?php echo $photo_mobile?>) !important;
+        }
+    }
+     
+    </style>
+
 <?php
 }
 

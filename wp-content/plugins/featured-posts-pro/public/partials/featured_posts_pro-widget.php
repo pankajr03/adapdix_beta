@@ -25,7 +25,10 @@
                                 <div class="feature-boxs feature-boxhome">
                                     <span class="box-head-title"><?php echo $cat_name?></span>
                                     <h5 class="mb-3"><?php get_the_title() ? the_title() : the_ID(); ?></h5> 
-                                       <p class=""><?php the_excerpt();?></p>
+                                       <p class="">
+									   	<?php //the_excerpt();?>
+										<?php echo wp_trim_words(get_the_content(), 18)?>
+									   </p>
                                        <a href="<?php echo $aq_block_1_url?>" class="tearn-btn"><?php echo $link_name?></a>
                                 </div>
                             
